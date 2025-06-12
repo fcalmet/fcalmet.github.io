@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<!--
+	 Copyright (C) 2025 by Fernando Calmet
+
+	 Author: Fernando Calmet
+
+	 This program is free software; you can redistribute it and/or modify
+	 it under the terms of the GNU General Public License as published by
+	 the Free Software Foundation, either version 3 of the License, or
+	 (at your option) any later version.
+
+	 This program is distributed in the hope that it will be useful,
+	 but WITHOUT ANY WARRANTY; without even the implied warranty of
+	 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	 GNU General Public License for more details.
+
+	 You should have received a copy of the GNU General Public License
+	 along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<html lang="en">
+  <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>MELD score</title>
+	<style>
+     body { font-family: sans-serif; }
+	 td.top { vertical-align: top; }
+	 td.right { text-align: right; }
+	 input {
+	   padding: 5px;
+	   margin: 5px;
+       font-size: 16px;
+	 }
+	 input.whole { width: 200px; }
+	 input.half { width: 88px; }
+     button {
+       padding: 10px;
+       font-size: 16px;
+     }
+	 button.plus {
+       padding: 4.5px;
+	 }
+	 ul {
+	   display: grid;
+	   gap: 10px;
+	 }
+	 #report {
+	   font-family: sans-serif;
+       font-size: 16px;
+	   padding: 10px;
+	   width: 1000px;
+	   height: 300px;
+	 }
+	</style>
+  </head>
+  <body>
+	<h1>MELD score</h1>
+	<table>
+	  <tr>
+		<td class="right">Gender:</td>
+		<td>
+		  <input type="radio" name="sex" checked>Male
+		  <input type="radio" name="sex">Female
+		</td>
+	  </tr>
+	  <tr>
+		<td class="right">Renal replacement therapy:</td>
+		<td>
+		  <input type="radio" name="rrt">Yes
+		  <input type="radio" name="rrt" checked>No
+		</td>
+	  </tr>
+	  <tr>
+		<td class="right">Creatinine:</td>
+		<td><input class="whole" type="number" oninput="validateFloat(this)" id="creatinine" value="1.0" step="0.1" placeholder="mg/dL"></td>
+	  </tr>
+	  <tr>
+		<td class="right">Bilirubin:</td>
+		<td><input class="whole" type="number" oninput="validateFloat(this)" id="bilirubin" value="1.0" step="0.1" placeholder="mg/dL"></td>
+	  </tr>
+	  <tr>
+		<td class="right">INR:</td>
+		<td><input class="whole" type="number" oninput="validateFloat(this)" id="inr" value="1.0" step="0.1"></td>
+	  </tr>
+	  <tr>
+		<td class="right">Sodium:</td>
+		<td><input class="whole" type="number" oninput="validateInteger(this)" id="sodium" value="135" placeholder="mEq/L"></td>
+	  </tr>
+	  <tr>
+		<td class="right">Albumin:</td>
+		<td><input class="whole" type="number" oninput="validateFloat(this)" id="albumin" value="3.5" step="0.1" placeholder="g/dL"></td>
+	  </tr>
+
+	  <tr><td>&nbsp;</td></tr>
+	  <tr><td class="right" colspan="2">
+		<button onclick="clearAll()">Clear</button>
+		<button onclick="calculateAll()">Calculate</button>
+	  </td></tr>
+	</table>
+
+	<hr>
+
+	<h2>Results</h2>
+	<p id="result"></p>
+  </body>
+
+  <script>
+   function validateInteger(input) {
+     input.value = input.value.replace(/[^0-9]/g, '');
+   }
+   function validateFloat(input) {
+     input.value = input.value.replace(/[^.0-9]/g, '');
+   }
+
+   function clearAll() {
+	 /* alert('1'); */
+     const inputs = document.querySelectorAll('input');
+     inputs.forEach(function(input) {
+       input.value = '';
+     });
+	 document.getElementsByName('sex')[0].checked = true;
+	 document.getElementsByName('rrt')[1].checked = true;
+	 document.getElementById('report').value = '';
+   }
+
+   function getMeld(creatinine, bilirubin, inr, isRrt) {
+	 if (isRrt) creatinine = 4.0
+	 let meld = 9.57 * Math.log(Math.max(creatinine, 1.0))
+			  + 3.78 * Math.log(Math.min(Math.max(bilirubin, 1.0), 4.0))
+			  + 11.2 * Math.log(inr)
+			  + 6.43
+	 return Math.round(meld)
+   }
+
+   function getMeldMortality(meld) {
+	 return meld < 10 ? 0.019
+		  : meld < 20 ? 0.060
+		  : meld < 30 ? 0.196
+		  : meld < 40 ? 0.526 : 0.713
+   }
+
+   function getMeldNa(creatinine, bilirubin, inr, sodium, isRrt) {
+	 let meldNa = getMeld(creatinine, bilirubin, inr, isRrt)
+	 if (meldNa > 11) {
+	   meldNa = meldNa + 1.32 * (137 - sodium) - (0.033 * meldNa * (137 - sodium))
+	 }
+	 return Math.round(meldNa)
+   }
+
+   function getMeld3(creatinine, bilirubin, inr, sodium, albumin, isRrt, isFemale) {
+	 if (isRrt) creatinine = 3.0
+	 let logBilirubin = Math.log(Math.max(bilirubin, 1.0))
+	 let logCreatinine = Math.log(Math.min(Math.max(creatinine, 1.0), 3.0))
+	 let logInr = Math.log(Math.max(inr, 1.0))
+	 let nSodium = 137 - Math.min(Math.max(sodium, 125), 137)
+	 let nAlbumin = 3.5 - Math.min(Math.max(albumin, 1.5), 3.5)
+	 let meld3 = (isFemale ? 1.33 : 0.0)
+			   + 4.56 * logBilirubin
+			   + 0.82 * nSodium
+			   - 0.24 * nSodium * logBilirubin
+			   + 9.09 * logInr
+			   + 11.14 * logCreatinine
+			   + 1.85 * nAlbumin
+			   - 1.83 * nAlbumin * logCreatinine
+			   + 6
+	 return Math.round(meld3)
+   }
+
+   function getMeld3Survival(meld3, days) {
+	 let s0 = 0
+	 switch (days) {
+	   case 15: s0 = 0.991; break;
+	   case 30: s0 = 0.981; break;
+	   case 45: s0 = 0.971; break;
+	   case 60: s0 = 0.963; break;
+	   case 75: s0 = 0.955; break;
+	   case 90: s0 = 0.946; break;
+	 }
+	 return s0 ** Math.exp(0.17698 * meld3 - 3.56)
+   }
+
+   function toPercent(p) {
+	 return (p * 100).toFixed(1) + "%"
+   }
+
+   function calculateAll() {
+	 let creatinine = parseFloat(document.getElementById('creatinine').value) || 0;
+	 let bilirubin = parseFloat(document.getElementById('bilirubin').value) || 0;
+	 let inr = parseFloat(document.getElementById('inr').value) || 0;
+	 let albumin = parseFloat(document.getElementById('albumin').value) || 0;
+	 let sodium = parseFloat(document.getElementById('sodium').value) || 0;
+
+	 let isFemale = document.getElementsByName('sex')[1].checked;
+	 let isRrt = document.getElementsByName('rrt')[0].checked;
+
+	 let meld = getMeld(creatinine, bilirubin, inr, isRrt)
+	 let meldMortality = getMeldMortality(meld)
+	 let meldNa = getMeldNa(creatinine, bilirubin, inr, sodium, isRrt)
+	 let meld3 = getMeld3(creatinine, bilirubin, inr, sodium, albumin, isRrt, isFemale)
+
+	 document.getElementById('result').innerHTML =
+	   `MELD: ${meld}<br>
+        90-day mortality: ${toPercent(meldMortality)}<br><br>
+        MELD-Na: ${meldNa}<br><br>
+        MELD 3.0: ${meld3}<br>
+        15-day survival: ${toPercent(getMeld3Survival(meld3, 15))}<br>
+        30-day survival: ${toPercent(getMeld3Survival(meld3, 30))}<br>
+        45-day survival: ${toPercent(getMeld3Survival(meld3, 45))}<br>
+        60-day survival: ${toPercent(getMeld3Survival(meld3, 60))}<br>
+        75-day survival: ${toPercent(getMeld3Survival(meld3, 75))}<br>
+        90-day survival: ${toPercent(getMeld3Survival(meld3, 90))}`
+   }
+
+  </script>
+</html>

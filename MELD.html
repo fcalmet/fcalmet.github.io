@@ -26,6 +26,7 @@
      body { font-family: sans-serif; }
 	 td.top { vertical-align: top; }
 	 td.right { text-align: right; }
+	 td.whole { width: 200px; }
 	 input {
 	   padding: 5px;
 	   margin: 5px;
@@ -198,17 +199,22 @@
 	 let meldNa = getMeldNa(creatinine, bilirubin, inr, sodium, isRrt)
 	 let meld3 = getMeld3(creatinine, bilirubin, inr, sodium, albumin, isRrt, isFemale)
 
-	 document.getElementById('result').innerHTML =
-	   `MELD: ${meld}<br>
-        90-day mortality: ${toPercent(meldMortality)}<br><br>
-        MELD-Na: ${meldNa}<br><br>
-        MELD 3.0: ${meld3}<br>
-        15-day survival: ${toPercent(getMeld3Survival(meld3, 15))}<br>
-        30-day survival: ${toPercent(getMeld3Survival(meld3, 30))}<br>
-        45-day survival: ${toPercent(getMeld3Survival(meld3, 45))}<br>
-        60-day survival: ${toPercent(getMeld3Survival(meld3, 60))}<br>
-        75-day survival: ${toPercent(getMeld3Survival(meld3, 75))}<br>
-        90-day survival: ${toPercent(getMeld3Survival(meld3, 90))}`
+	 document.getElementById('result').innerHTML = `
+	   <table>
+		 <tr><td class="whole">MELD:</td><td>${meld}</td></tr>
+		 <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;90-day mortality:</td><td>${toPercent(meldMortality)}</td></tr>
+		 <tr><td colspan="2"><hr></td></tr>
+		 <tr><td>MELD-Na:</td><td>${meldNa}</td></tr>
+		 <tr><td colspan="2"><hr></td></tr>
+		 <tr><td>MELD 3.0:</td><td>${meld3}</td></tr>
+		 <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;15-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 15))}</td></tr>
+		 <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;30-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 30))}</td></tr>
+		 <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;45-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 45))}</td></tr>
+		 <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;60-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 60))}</td></tr>
+		 <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;75-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 75))}</td></tr>
+		 <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;90-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 90))}</td></tr>
+		 <tr><td colspan="2"><hr></td></tr>
+	   </table>`
    }
 
   </script>

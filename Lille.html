@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<!--
+	 Copyright (C) 2025 by Fernando Calmet
+
+	 Author: Fernando Calmet
+
+	 This program is free software; you can redistribute it and/or modify
+	 it under the terms of the GNU General Public License as published by
+	 the Free Software Foundation, either version 3 of the License, or
+	 (at your option) any later version.
+
+	 This program is distributed in the hope that it will be useful,
+	 but WITHOUT ANY WARRANTY; without even the implied warranty of
+	 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	 GNU General Public License for more details.
+
+	 You should have received a copy of the GNU General Public License
+	 along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<html lang="en">
+  <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Lille Model Calculator</title>
+	<style>
+     body {
+       font-family: 'Inter', sans-serif;
+       background-color: #f3f4f6;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       min-height: 100vh;
+       padding: 1rem;
+       -webkit-font-smoothing: antialiased;
+       -moz-osx-font-smoothing: grayscale;
+     }
+
+	 .app-container {
+       background-color: #ffffff;
+       padding: 2rem;
+       border-radius: 0.5rem;
+       box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+       max-width: 64rem;
+       width: 100%;
+     }
+
+     .page-title {
+       font-size: 1.875rem;
+       font-weight: 700;
+       color: #1f2937;
+       margin-bottom: 1.5rem;
+       text-align: center;
+     }
+
+	 .main-container {
+       display: flex;
+       flex-direction: column;
+       gap: 2rem;
+     }
+
+	 @media (min-width: 768px) {
+       .main-container {
+         flex-direction: row;
+       }
+       .form-section,
+       .result-section {
+         width: calc(50% - 1rem);
+       }
+     }
+
+	 .form-section {
+       flex-shrink: 0;
+     }
+
+	 h2 {
+       font-size: 1.25rem;
+       font-weight: 600;
+       color: #374151;
+       margin-bottom: 1rem;
+     }
+
+	 .input-group, .radio-group {
+	   display: flex;
+	   align-items: center;
+	   margin-bottom: 1rem;
+	   gap: 1rem;
+     }
+
+	 label {
+       color: #374151;
+       font-size: 0.875rem;
+       font-weight: 700;
+	   width: 50%;
+     }
+
+	 input[type="number"] {
+       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+       -webkit-appearance: none;
+       -moz-appearance: none;
+       appearance: none;
+       border: 1px solid #d1d5db;
+       border-radius: 0.25rem;
+       width: 50%;
+       padding: 0.5rem 0.75rem;
+       color: #374151;
+       line-height: 1.25;
+       outline: none;
+     }
+     input[type="number"]:focus {
+       box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+     }
+
+	 .radio-group-label {
+	   width: 50%;
+	   color: #374151;
+	   font-size: 0.875rem;
+	   font-weight: 700;
+	 }
+
+	 .radio-options {
+	   display: flex;
+	   width: 50%;
+	   gap: 1rem;
+	 }
+
+     input[type="radio"] {
+       color: #2563eb;
+     }
+
+     .radio-text {
+       color: #374151;
+	   font-size: 0.875rem;
+     }
+
+	 .calculate-button {
+       margin-top: 1.5rem;
+       width: 100%;
+       background-color: #2563eb;
+       color: #ffffff;
+	   font-size: 1rem;
+       font-weight: 700;
+       padding: 0.5rem 1rem;
+       border-radius: 0.25rem;
+       outline: none;
+       cursor: pointer;
+       transition: background-color 150ms ease-in-out;
+     }
+     .calculate-button:hover {
+       background-color: #1d4ed8;
+       box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+     }
+
+     .result-section {
+       background-color: #eff6ff;
+       padding: 1.5rem;
+       border-radius: 0.5rem;
+       border: 1px solid #bfdbfe;
+       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+       display: flex;
+	   flex-direction: column;
+       align-items: center;
+       justify-content: center;
+       color: #1f2937;
+       min-height: 150px;
+     }
+
+	 .result-table {
+       width: 100%;
+       font-size: 1.125rem;
+       border-collapse: collapse;
+     }
+     .result-table td {
+       padding: 0.5rem 0;
+     }
+
+	 .result-table hr {
+       border: 0;
+       height: 1px;
+       background-color: #cbd5e1;
+       margin: 1rem 0;
+     }
+
+	</style>
+  </head>
+  <body>
+	<div class="app-container">
+	  <h1 class="page-title">Lille Model Calculator</h1>
+
+	  <div class="main-container">
+
+		<div class="form-section">
+		  <div class="input-group">
+			<label for="age">Age:</label>
+			<input type="number" id="age" value="18" step="1" autocomplete="off">
+		  </div>
+		  <div class="input-group">
+			<label for="albumin">Albumin:</label>
+			<input type="number" id="albumin" value="4.0" step="0.1" autocomplete="off">
+		  </div>
+		  <div class="input-group">
+			<label for="bilirubin0">Bilirubin (day 0):</label>
+			<input type="number" id="bilirubin0" value="1.0" step="0.1" autocomplete="off">
+		  </div>
+		  <div class="input-group">
+			<label for="bilirubin7">Bilirubin (day 7):</label>
+			<input type="number" id="bilirubin7" value="1.0" step="0.1" autocomplete="off">
+		  </div>
+		  <div class="input-group">
+			<label for="creatinine">Creatinine:</label>
+			<input type="number" id="creatinine" value="1.0" step="0.1" autocomplete="off">
+		  </div>
+		  <div class="input-group">
+			<label for="pt">PT:</label>
+			<input type="number" id="pt" value="12.0" step="0.1" autocomplete="off">
+		  </div>
+
+          <button onclick="calculateAll()" class="calculate-button">
+            Calculate
+          </button>
+		</div>
+
+		<div id="result" class="result-section">
+		  <h2>Results</h2>
+		</div>
+
+	  </div>
+
+	</div>
+
+	<script>
+	 function getLille(age, albumin, bilirubin0, bilirubin7, creatinine, pt) {
+	   let r = 3.19 - 0.101 * age
+             + 0.147 * albumin
+             + 0.0165 * (bilirubin0 - bilirubin7)
+             - 0.206 * (creatinine > 1.3 ? 1 : 0)
+             - 0.0065 * bilirubin0
+             - 0.0096 * pt
+	   let lille = Math.exp(-r) / (1 + Math.exp(-r))
+	   return lille
+	 }
+
+	 function getLilleMortality(lille) {
+	   return lille > 0.45 ? 0.25 : 0.85
+	 }
+
+	 function toPercent(p, decimals = 0) {
+	   return (p * 100).toFixed(decimals) + "%"
+	 }
+
+	 function calculateAll() {
+
+	   let age = parseFloat(document.getElementById('age').value) || 0;
+	   let albumin = parseFloat(document.getElementById('albumin').value) || 0;
+	   let bilirubin0 = parseFloat(document.getElementById('bilirubin0').value) || 0;
+	   let bilirubin7 = parseFloat(document.getElementById('bilirubin7').value) || 0;
+	   let creatinine = parseFloat(document.getElementById('creatinine').value) || 0;
+	   let pt = parseFloat(document.getElementById('pt').value) || 0;
+
+
+	   let lille = getLille(age, albumin, bilirubin0, bilirubin7, creatinine, pt)
+	   let lilleMortality = getLilleMortality(lille)
+
+	   document.getElementById('result').innerHTML = `
+		 <table class="result-table">
+		   <tr><td width="50%">Lille Score:</td><td>${lille.toFixed(3)}</td></tr>
+		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;6-month survival:</td><td>${toPercent(lilleMortality)}</td></tr>
+		   <tr><td colspan="2"><hr></td></tr>
+		   <tr><td colspan="2">6-month predicted survival</td></tr>
+		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;Score &lt;0.45</td><td>85%</td></tr>
+		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;Score &gt;0.45</td><td>25%</td></tr>
+		 </table>
+	   `
+	 }
+	</script>
+  </body>
+</html>

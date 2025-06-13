@@ -21,184 +21,337 @@
   <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>MELD score</title>
+	<title>MELD Score Calculator</title>
 	<style>
-     body { font-family: sans-serif; }
-	 td.right { text-align: right; }
-	 .whole { width: 200px; }
-	 input {
-	   padding: 5px;
-	   margin: 5px;
-       font-size: 16px;
-	 }
-     button {
-       padding: 10px;
-       font-size: 16px;
+     body {
+       font-family: 'Inter', sans-serif;
+       background-color: #f3f4f6;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       min-height: 100vh;
+       padding: 1rem;
+       -webkit-font-smoothing: antialiased;
+       -moz-osx-font-smoothing: grayscale;
      }
+
+	 .app-container {
+       background-color: #ffffff;
+       padding: 2rem;
+       border-radius: 0.5rem;
+       box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+       max-width: 64rem;
+       width: 100%;
+     }
+
+     .page-title {
+       font-size: 1.875rem;
+       font-weight: 700;
+       color: #1f2937;
+       margin-bottom: 1.5rem;
+       text-align: center;
+     }
+
+	 .main-container {
+       display: flex;
+       flex-direction: column;
+       gap: 2rem;
+     }
+
+	 @media (min-width: 768px) {
+       .main-container {
+         flex-direction: row;
+       }
+       .form-section,
+       .result-section {
+         width: calc(50% - 1rem);
+       }
+     }
+
+	 .form-section {
+       flex-shrink: 0;
+     }
+
+	 h2 {
+       font-size: 1.25rem;
+       font-weight: 600;
+       color: #374151;
+       margin-bottom: 1rem;
+     }
+
+	 .input-group, .radio-group {
+	   display: flex;
+	   align-items: center;
+	   margin-bottom: 1rem;
+	   gap: 1rem;
+     }
+
+	 label {
+       color: #374151;
+       font-size: 0.875rem;
+       font-weight: 700;
+	   width: 50%;
+     }
+
+	 input[type="number"] {
+       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+       -webkit-appearance: none;
+       -moz-appearance: none;
+       appearance: none;
+       border: 1px solid #d1d5db;
+       border-radius: 0.25rem;
+       width: 50%;
+       padding: 0.5rem 0.75rem;
+       color: #374151;
+       line-height: 1.25;
+       outline: none;
+     }
+     input[type="number"]:focus {
+       box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+     }
+
+	 .radio-group-label {
+	   width: 50%;
+	   color: #374151;
+	   font-size: 0.875rem;
+	   font-weight: 700;
+	 }
+
+	 .radio-options {
+	   display: flex;
+	   width: 50%;
+	   gap: 1rem;
+	 }
+
+     input[type="radio"] {
+       color: #2563eb;
+     }
+
+     .radio-text {
+       color: #374151;
+	   font-size: 0.875rem;
+     }
+
+	 .calculate-button {
+       margin-top: 1.5rem;
+       width: 100%;
+       background-color: #2563eb;
+       color: #ffffff;
+	   font-size: 1rem;
+       font-weight: 700;
+       padding: 0.5rem 1rem;
+       border-radius: 0.25rem;
+       outline: none;
+       cursor: pointer;
+       transition: background-color 150ms ease-in-out;
+     }
+     .calculate-button:hover {
+       background-color: #1d4ed8;
+       box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+     }
+
+     .result-section {
+       background-color: #eff6ff; /* Equivalent to bg-blue-50 */
+       padding: 1.5rem; /* Equivalent to p-6 */
+       border-radius: 0.5rem; /* Equivalent to rounded-lg */
+       border: 1px solid #bfdbfe; /* Equivalent to border border-blue-200 */
+       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Equivalent to shadow-md */
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       color: #1f2937; /* Equivalent to text-gray-800 */
+       min-height: 150px; /* To give it some initial height */
+     }
+
+	 .result-table {
+       width: 100%;
+       font-size: 1.125rem; /* Equivalent to text-lg */
+       border-collapse: collapse; /* Ensure lines are clean */
+     }
+     .result-table td {
+       padding: 0.5rem 0; /* Adjust padding for table cells */
+     }
+
+	 .result-table hr {
+       border: 0;
+       height: 1px;
+       background-color: #cbd5e1; /* A light grey */
+       margin: 1rem 0;
+     }
+
 	</style>
   </head>
   <body>
-	<h1>MELD score</h1>
-	<table>
-	  <tr>
-		<td class="right">Gender:</td>
-		<td>
-		  <input type="radio" name="sex" checked>Male
-		  <input type="radio" name="sex">Female
-		</td>
-	  </tr>
-	  <tr>
-		<td class="right">Renal replacement therapy:</td>
-		<td>
-		  <input type="radio" name="rrt">Yes
-		  <input type="radio" name="rrt" checked>No
-		</td>
-	  </tr>
-	  <tr>
-		<td class="right">Creatinine:</td>
-		<td><input class="whole" type="number" oninput="validateFloat(this)" id="creatinine" value="1.0" step="0.1" placeholder="mg/dL"></td>
-	  </tr>
-	  <tr>
-		<td class="right">Bilirubin:</td>
-		<td><input class="whole" type="number" oninput="validateFloat(this)" id="bilirubin" value="1.0" step="0.1" placeholder="mg/dL"></td>
-	  </tr>
-	  <tr>
-		<td class="right">INR:</td>
-		<td><input class="whole" type="number" oninput="validateFloat(this)" id="inr" value="1.0" step="0.1"></td>
-	  </tr>
-	  <tr>
-		<td class="right">Sodium:</td>
-		<td><input class="whole" type="number" oninput="validateInteger(this)" id="sodium" value="135" placeholder="mEq/L"></td>
-	  </tr>
-	  <tr>
-		<td class="right">Albumin:</td>
-		<td><input class="whole" type="number" oninput="validateFloat(this)" id="albumin" value="3.5" step="0.1" placeholder="g/dL"></td>
-	  </tr>
+	<div class="app-container">
+	  <h1 class="page-title">MELD Score Calculator</h1>
 
-	  <tr><td>&nbsp;</td></tr>
-	  <tr><td class="right" colspan="2">
-		<button onclick="clearAll()">Clear</button>
-		<button onclick="calculateAll()">Calculate</button>
-	  </td></tr>
-	</table>
+	  <div class="main-container">
 
-	<hr>
+		<div class="form-section">
+		  <div class="input-group">
+			<label for="creatinine">Creatinine:</label>
+			<input type="number" id="creatinine" value="1.0" step="0.1" autocomplete="off">
+		  </div>
+		  <div class="input-group">
+			<label for="creatinine">Bilirubin:</label>
+			<input type="number" id="bilirubin" value="1.0" step="0.1" autocomplete="off">
+		  </div>
+		  <div class="input-group">
+			<label for="creatinine">INR:</label>
+			<input type="number" id="inr" value="1.0" step="0.1" autocomplete="off">
+		  </div>
+		  <div class="input-group">
+			<label for="creatinine">Albumin:</label>
+			<input type="number" id="albumin" value="4.0" step="0.1" autocomplete="off">
+		  </div>
+		  <div class="input-group">
+			<label for="creatinine">Sodium:</label>
+			<input type="number" id="sodium" value="140" step="1" autocomplete="off">
+		  </div>
 
-	<h2>Results</h2>
-	<p id="result"></p>
+		  <div class="radio-group">
+			<span class="radio-group-label">Sex:</span>
+			<div class="radio-options">
+			  <label class="radio-label">
+				<input type="radio" name="sex" value="male" checked>
+				<span class="radio-text">Male</span>
+			  </label>
+			  <label class="radio-label">
+				<input type="radio" name="sex" value="female">
+				<span class="radio-text">Female</span>
+			  </label>
+			</div>
+		  </div>
+
+
+		  <div class="radio-group">
+			<span class="radio-group-label">RRT:</span>
+			<div class="radio-options">
+			  <label class="radio-label">
+				<input type="radio" name="rrt" value="no" checked>
+				<span class="radio-text">No</span>
+			  </label>
+			  <label class="radio-label">
+				<input type="radio" name="rrt" value="yes">
+				<span class="radio-text">Yes</span>
+			  </label>
+			</div>
+		  </div>
+
+          <button onclick="calculateAll()" class="calculate-button">
+            Calculate
+          </button>
+		</div>
+
+		<div id="result" class="result-section">
+		  <h2>Results</h2>
+		</div>
+
+	  </div>
+
+	</div>
+
+	<script>
+	 /*
+	  *  	 function validateInteger(input) {
+	  *        input.value = input.value.replace(/[^0-9]/g, '');
+	  *  	 }
+	  *
+	  *  	 function validateFloat(input) {
+	  *        input.value = input.value.replace(/[^.0-9]/g, '');
+	  *  	 }
+	  *  */
+	 function getMeld(creatinine, bilirubin, inr, isRrt) {
+	   if (isRrt) creatinine = 4.0
+	   let meld = 9.57 * Math.log(Math.max(creatinine, 1.0))
+				+ 3.78 * Math.log(Math.min(Math.max(bilirubin, 1.0), 4.0))
+				+ 11.2 * Math.log(inr)
+				+ 6.43
+	   return Math.round(meld)
+	 }
+
+	 function getMeldMortality(meld) {
+	   return meld < 10 ? 0.019
+				   : meld < 20 ? 0.060
+						  : meld < 30 ? 0.196
+								 : meld < 40 ? 0.526 : 0.713
+	 }
+
+	 function getMeldNa(creatinine, bilirubin, inr, sodium, isRrt) {
+	   let meldNa = getMeld(creatinine, bilirubin, inr, isRrt)
+	   if (meldNa > 11) {
+		 meldNa = meldNa + 1.32 * (137 - sodium) - (0.033 * meldNa * (137 - sodium))
+	   }
+	   return Math.round(meldNa)
+	 }
+
+	 function getMeld3(creatinine, bilirubin, inr, sodium, albumin, isRrt, isFemale) {
+	   if (isRrt) creatinine = 3.0
+	   let logBilirubin = Math.log(Math.max(bilirubin, 1.0))
+	   let logCreatinine = Math.log(Math.min(Math.max(creatinine, 1.0), 3.0))
+	   let logInr = Math.log(Math.max(inr, 1.0))
+	   let nSodium = 137 - Math.min(Math.max(sodium, 125), 137)
+	   let nAlbumin = 3.5 - Math.min(Math.max(albumin, 1.5), 3.5)
+	   let meld3 = (isFemale ? 1.33 : 0.0)
+				 + 4.56 * logBilirubin
+				 + 0.82 * nSodium
+				 - 0.24 * nSodium * logBilirubin
+				 + 9.09 * logInr
+				 + 11.14 * logCreatinine
+				 + 1.85 * nAlbumin
+				 - 1.83 * nAlbumin * logCreatinine
+				 + 6
+	   return Math.round(meld3)
+	 }
+
+	 function getMeld3Survival(meld3, days) {
+	   let s0 = 0
+	   switch (days) {
+		 case 15: s0 = 0.991; break;
+		 case 30: s0 = 0.981; break;
+		 case 45: s0 = 0.971; break;
+		 case 60: s0 = 0.963; break;
+		 case 75: s0 = 0.955; break;
+		 case 90: s0 = 0.946; break;
+	   }
+	   return s0 ** Math.exp(0.17698 * meld3 - 3.56)
+	 }
+
+	 function toPercent(p) {
+	   return (p * 100).toFixed(1) + "%"
+	 }
+
+	 function calculateAll() {
+	   let creatinine = parseFloat(document.getElementById('creatinine').value) || 0;
+	   let bilirubin = parseFloat(document.getElementById('bilirubin').value) || 0;
+	   let inr = parseFloat(document.getElementById('inr').value) || 0;
+	   let albumin = parseFloat(document.getElementById('albumin').value) || 0;
+	   let sodium = parseFloat(document.getElementById('sodium').value) || 0;
+
+	   let isFemale = document.querySelector('input[name="sex"][value="female"]').checked;
+	   let isRrt = document.querySelector('input[name="rrt"][value="yes"]').checked;
+
+	   let meld = getMeld(creatinine, bilirubin, inr, isRrt)
+	   let meldMortality = getMeldMortality(meld)
+	   let meldNa = getMeldNa(creatinine, bilirubin, inr, sodium, isRrt)
+	   let meld3 = getMeld3(creatinine, bilirubin, inr, sodium, albumin, isRrt, isFemale)
+
+	   document.getElementById('result').innerHTML = `
+		 <table class="result-table">
+		   <tr><td width="50%">MELD:</td><td>${meld}</td></tr>
+		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;90-day mortality:</td><td>${toPercent(meldMortality)}</td></tr>
+		   <tr><td colspan="2"><hr></td></tr>
+		   <tr><td>MELD-Na:</td><td>${meldNa}</td></tr>
+		   <tr><td colspan="2"><hr></td></tr>
+		   <tr><td>MELD 3.0:</td><td>${meld3}</td></tr>
+		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;15-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 15))}</td></tr>
+		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;30-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 30))}</td></tr>
+		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;45-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 45))}</td></tr>
+		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;60-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 60))}</td></tr>
+		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;75-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 75))}</td></tr>
+		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;90-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 90))}</td></tr>
+		 </table>`
+	 }
+	</script>
   </body>
-
-  <script>
-   function validateInteger(input) {
-     input.value = input.value.replace(/[^0-9]/g, '');
-   }
-   function validateFloat(input) {
-     input.value = input.value.replace(/[^.0-9]/g, '');
-   }
-
-   function clearAll() {
-	 /* alert('1'); */
-     const inputs = document.querySelectorAll('input');
-     inputs.forEach(function(input) {
-       input.value = '';
-     });
-	 document.getElementsByName('sex')[0].checked = true;
-	 document.getElementsByName('rrt')[1].checked = true;
-	 document.getElementById('report').value = '';
-   }
-
-   function getMeld(creatinine, bilirubin, inr, isRrt) {
-	 if (isRrt) creatinine = 4.0
-	 let meld = 9.57 * Math.log(Math.max(creatinine, 1.0))
-			  + 3.78 * Math.log(Math.min(Math.max(bilirubin, 1.0), 4.0))
-			  + 11.2 * Math.log(inr)
-			  + 6.43
-	 return Math.round(meld)
-   }
-
-   function getMeldMortality(meld) {
-	 return meld < 10 ? 0.019
-		  : meld < 20 ? 0.060
-		  : meld < 30 ? 0.196
-		  : meld < 40 ? 0.526 : 0.713
-   }
-
-   function getMeldNa(creatinine, bilirubin, inr, sodium, isRrt) {
-	 let meldNa = getMeld(creatinine, bilirubin, inr, isRrt)
-	 if (meldNa > 11) {
-	   meldNa = meldNa + 1.32 * (137 - sodium) - (0.033 * meldNa * (137 - sodium))
-	 }
-	 return Math.round(meldNa)
-   }
-
-   function getMeld3(creatinine, bilirubin, inr, sodium, albumin, isRrt, isFemale) {
-	 if (isRrt) creatinine = 3.0
-	 let logBilirubin = Math.log(Math.max(bilirubin, 1.0))
-	 let logCreatinine = Math.log(Math.min(Math.max(creatinine, 1.0), 3.0))
-	 let logInr = Math.log(Math.max(inr, 1.0))
-	 let nSodium = 137 - Math.min(Math.max(sodium, 125), 137)
-	 let nAlbumin = 3.5 - Math.min(Math.max(albumin, 1.5), 3.5)
-	 let meld3 = (isFemale ? 1.33 : 0.0)
-			   + 4.56 * logBilirubin
-			   + 0.82 * nSodium
-			   - 0.24 * nSodium * logBilirubin
-			   + 9.09 * logInr
-			   + 11.14 * logCreatinine
-			   + 1.85 * nAlbumin
-			   - 1.83 * nAlbumin * logCreatinine
-			   + 6
-	 return Math.round(meld3)
-   }
-
-   function getMeld3Survival(meld3, days) {
-	 let s0 = 0
-	 switch (days) {
-	   case 15: s0 = 0.991; break;
-	   case 30: s0 = 0.981; break;
-	   case 45: s0 = 0.971; break;
-	   case 60: s0 = 0.963; break;
-	   case 75: s0 = 0.955; break;
-	   case 90: s0 = 0.946; break;
-	 }
-	 return s0 ** Math.exp(0.17698 * meld3 - 3.56)
-   }
-
-   function toPercent(p) {
-	 return (p * 100).toFixed(1) + "%"
-   }
-
-   function calculateAll() {
-	 let creatinine = parseFloat(document.getElementById('creatinine').value) || 0;
-	 let bilirubin = parseFloat(document.getElementById('bilirubin').value) || 0;
-	 let inr = parseFloat(document.getElementById('inr').value) || 0;
-	 let albumin = parseFloat(document.getElementById('albumin').value) || 0;
-	 let sodium = parseFloat(document.getElementById('sodium').value) || 0;
-
-	 let isFemale = document.getElementsByName('sex')[1].checked;
-	 let isRrt = document.getElementsByName('rrt')[0].checked;
-
-	 let meld = getMeld(creatinine, bilirubin, inr, isRrt)
-	 let meldMortality = getMeldMortality(meld)
-	 let meldNa = getMeldNa(creatinine, bilirubin, inr, sodium, isRrt)
-	 let meld3 = getMeld3(creatinine, bilirubin, inr, sodium, albumin, isRrt, isFemale)
-
-	 document.getElementById('result').innerHTML = `
-	   <table>
-		 <tr><td class="whole">MELD:</td><td>${meld}</td></tr>
-		 <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;90-day mortality:</td><td>${toPercent(meldMortality)}</td></tr>
-		 <tr><td colspan="2"><hr></td></tr>
-		 <tr><td>MELD-Na:</td><td>${meldNa}</td></tr>
-		 <tr><td colspan="2"><hr></td></tr>
-		 <tr><td>MELD 3.0:</td><td>${meld3}</td></tr>
-		 <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;15-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 15))}</td></tr>
-		 <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;30-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 30))}</td></tr>
-		 <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;45-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 45))}</td></tr>
-		 <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;60-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 60))}</td></tr>
-		 <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;75-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 75))}</td></tr>
-		 <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;90-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 90))}</td></tr>
-		 <tr><td colspan="2"><hr></td></tr>
-	   </table>`
-   }
-
-  </script>
 </html>

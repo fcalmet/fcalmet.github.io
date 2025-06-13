@@ -157,6 +157,7 @@
        border: 1px solid #bfdbfe;
        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
        display: flex;
+	   flex-direction: column;
        align-items: center;
        justify-content: center;
        color: #1f2937;
@@ -317,8 +318,8 @@
 	   return s0 ** Math.exp(0.17698 * meld3 - 3.56)
 	 }
 
-	 function toPercent(p) {
-	   return (p * 100).toFixed(1) + "%"
+	 function toPercent(p, decimals = 0) {
+	   return (p * 100).toFixed(decimals) + "%"
 	 }
 
 	 function calculateAll() {
@@ -339,17 +340,17 @@
 	   document.getElementById('result').innerHTML = `
 		 <table class="result-table">
 		   <tr><td width="50%">MELD:</td><td>${meld}</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;90-day mortality:</td><td>${toPercent(meldMortality)}</td></tr>
+		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;90-day mortality:</td><td>${toPercent(meldMortality, 1)}</td></tr>
 		   <tr><td colspan="2"><hr></td></tr>
 		   <tr><td>MELD-Na:</td><td>${meldNa}</td></tr>
 		   <tr><td colspan="2"><hr></td></tr>
 		   <tr><td>MELD 3.0:</td><td>${meld3}</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;15-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 15))}</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;30-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 30))}</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;45-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 45))}</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;60-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 60))}</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;75-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 75))}</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;90-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 90))}</td></tr>
+		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;15-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 15), 1)}</td></tr>
+		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;30-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 30), 1)}</td></tr>
+		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;45-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 45), 1)}</td></tr>
+		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;60-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 60), 1)}</td></tr>
+		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;75-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 75), 1)}</td></tr>
+		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;90-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 90), 1)}</td></tr>
 		 </table>`
 	 }
 	</script>

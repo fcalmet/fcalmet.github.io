@@ -25,6 +25,7 @@ document.getElementById('footer-nav').innerHTML = `<ul>
 		<li><a href="index.html">Home</a></li>
 		<li><a href="Fib-4.html">Fib-4</a></li>
 		<li><a href="Lille.html">Lille model</a></li>
+		<li><a href="MDF.html">Maddrey score</a></li>
 		<li><a href="MELD.html">MELD score</a></li>
 	  </ul>`
 
@@ -136,6 +137,37 @@ function calculateLille() {
 		   <tr><td colspan="2">6-month predicted survival</td></tr>
 		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;Score &lt;0.45</td><td>85%</td></tr>
 		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;Score &gt;0.45</td><td>25%</td></tr>
+		 </table>`)
+}
+
+/*******************/
+/** Maddrey score **/
+/*******************/
+
+function getMdf(pt, ptRef, bilirubin) {
+	return mdf = 4.6 * (pt - ptRef) + bilirubin
+}
+
+function getMdfInterpretation(mdf) {
+	return (mdf > 32 ? 'Poor' : 'Good') + ' prognosis'
+}
+
+function calculateMdf() {
+	let pt = parseFloat(document.getElementById('pt').value) || -1;
+	let ptRef = parseFloat(document.getElementById('pt-ref').value) || -1;
+	let bilirubin = parseFloat(document.getElementById('bilirubin').value) || -1;
+
+	if (pt < 0) return error('Missing patient\'s PT', 'pt');
+	if (ptRef < 0) return error('Missing control PT', 'pt-ref');
+	if (bilirubin < 0) return error('Missing bilirubin', 'bilirubin');
+
+	let mdf = getMdf(pt, ptRef, bilirubin)
+	let mdfInterpretation = getMdfInterpretation(mdf)
+
+	setResult(`
+		 <table class="results">
+		   <tr><td>Maddrey score: ${mdf.toFixed()}</td></tr>
+		   <tr><td>${mdfInterpretation}</td></tr>
 		 </table>`)
 }
 

@@ -23,6 +23,7 @@
 
 document.getElementById('footer-nav').innerHTML = `<ul>
 		<li><a href="index.html">Home</a></li>
+		<li><a href="APRI.html">APRI</a></li>
 		<li><a href="Fib-4.html">Fib-4</a></li>
 		<li><a href="Lille.html">Lille model</a></li>
 		<li><a href="MDF.html">Maddrey score</a></li>

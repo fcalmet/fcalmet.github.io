@@ -19,106 +19,48 @@
 -->
 <html lang="en">
   <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Fib-4 Calculator</title>
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="style.css" />
   </head>
   <body>
-	<div class="app-container">
-	  <h1 class="page-title">Fib-4 Calculator</h1>
-
-	  <div class="main-container">
-
-		<div class="form-section">
-		  <div class="input-group">
-			<label for="age">Age:</label>
-			<input type="number" id="age" value="18" step="1" autocomplete="off">
-		  </div>
-		  <div class="input-group">
-			<label for="platelets">Platelet count:</label>
-			<input type="number" id="platelets" value="150" autocomplete="off">
-		  </div>
-		  <div class="input-group">
-			<label for="ast">AST:</label>
-			<input type="number" id="ast" value="30" autocomplete="off">
-		  </div>
-		  <div class="input-group">
-			<label for="alt">ALT:</label>
-			<input type="number" id="alt" value="30" autocomplete="off">
-		  </div>
-
-
-		  <div class="radio-group">
-			<span class="radio-group-label">Etiology:</span>
-			<div class="radio-options">
-			  <label class="radio-label">
-				<input type="radio" name="isMasld" value="masld" checked>
-				<span class="radio-text">MASLD</span>
-			  </label>
-			  <label class="radio-label">
-				<input type="radio" name="isMasld" value="other">
-				<span class="radio-text">Other</span>
-			  </label>
-			</div>
-		  </div>
-
-          <button onclick="calculateAll()" class="calculate-button">
-            Calculate
-          </button>
+	<h1>Fib-4 Calculator</h1>
+	<div class="app-container two">
+	  <div class="panel">
+		<div class="text-field">
+          <label for="age">Age:</label>
+          <input type="number" id="age" autocomplete="off" />
 		</div>
-
-		<div id="result" class="result-section">
-		  <h2>Results</h2>
+		<div class="text-field">
+          <label for="platelets">Platelets <em>(10<sup>9</sup>/L)</em>:</label>
+          <input type="number" id="platelets" autocomplete="off" />
 		</div>
-
+		<div class="text-field">
+          <label for="ast"><span title="Aspartate transaminase">AST</span> <em>(U/L)</em>:</label>
+          <input type="number" id="ast" autocomplete="off" />
+		</div>
+		<div class="text-field">
+          <label for="alt"><span title="Alanine transaminase">ALT</span> <em>(U/L)</em>:</label>
+          <input type="number" id="alt" autocomplete="off" />
+		</div>
+		<div class="radio-field">
+		  <label for="isMasld">Etiology:</label>
+		  <div id="isMasld">
+			<label><input type="radio" name="isMasld" value="masld" checked /> MASLD</label>
+			<label><input type="radio" name="isMasld" value="other" /> Other</label>
+		  </div>
+		</div>
+        <button onclick="calculateFib4()" class="calculate-button">
+          Calculate
+        </button>
 	  </div>
-
+	  <div class="panel results">
+		<h2>Results</h2>
+		<div id="result"></div>
+	  </div>
 	</div>
-
-	<script>
-	 function getFib4(age, platelets, ast, alt) {
-	   return (age * ast) / (platelets * Math.sqrt(alt))
-	 }
-
-	 function getFib4Interpretation(fib4, age, isMasld = true) {
-	   let uln = isMasld ? 2.67 : 3.25
-	   let lln = isMasld ? (age < 65 ? 1.3 : 2.0) : 1.45
-	   let interpretation = ''
-	   if (fib4 < lln) {
-		 interpretation = 'No advanced fibrosis'
-	   } else if (fib4 > uln) {
-		 interpretation = 'Advanced fibrosis'
-	   } else {
-		 interpretation = 'Indeterminate result'
-	   }
-	   if (isMasld && age < 35) {
-		 interpretation += ' (low accuracy in individuals aged <35)'
-	   }
-	   return interpretation
-	 }
-
-	 function toPercent(p, decimals = 0) {
-	   return (p * 100).toFixed(decimals) + "%"
-	 }
-
-	 function calculateAll() {
-
-	   let age = parseFloat(document.getElementById('age').value) || 0;
-	   let platelets = parseFloat(document.getElementById('platelets').value) || 0;
-	   let ast = parseFloat(document.getElementById('ast').value) || 0;
-	   let alt = parseFloat(document.getElementById('alt').value) || 0;
-	   let isMasld = document.querySelector('input[name="isMasld"][value="masld"]').checked;
-
-	   let fib4 = getFib4(age, platelets, ast, alt)
-	   let fib4interpretation = getFib4Interpretation(fib4, age, isMasld)
-
-	   document.getElementById('result').innerHTML = `
-		 <table class="result-table">
-		   <tr><td>Fib-4: ${fib4.toFixed(3)}</td></tr>
-		   <tr><td>${fib4interpretation}</td></tr>
-		 </table>`
-	 }
-	</script>
+	<footer id="footer-nav"></footer>
+	<script src="hepatology.js"></script>
   </body>
 </html>

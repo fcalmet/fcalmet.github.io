@@ -1,115 +1,189 @@
+/*
+  Copyright (C) 2025 by Fernando Calmet
+
+  Author: Fernando Calmet
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: sans-serif;
     background-color: #f3f4f6;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 1rem;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
-.app-container {
-    background-color: #ffffff;
-    padding: 2rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    max-width: 64rem;
-    width: 100%;
-}
-
-.page-title {
-    font-size: 1.875rem;
-    font-weight: 700;
-    color: #1f2937;
-    margin-bottom: 1.5rem;
+h1 {
+	margin: 30px;
     text-align: center;
 }
 
-.main-container {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-@media (min-width: 768px) {
-    .main-container {
-        flex-direction: row;
-    }
-    .form-section,
-    .result-section {
-        width: calc(50% - 1rem);
-    }
-}
-
-.form-section {
-    flex-shrink: 0;
-}
-
 h2 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #374151;
-    margin-bottom: 1rem;
+    text-align: center;
 }
 
-.input-group, .radio-group {
+* {
+	box-sizing: border-box;
+}
+
+/* Layout Responsiveness - 4 panels */
+.app-container {
+	display: grid;
+	grid-template-columns: 1fr;
+    padding: 2rem;
+	gap: 2rem;
+    border-radius: 0.5rem;
+	background-color: white;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    width: 100%;
+}
+
+.app-container.one {
+	max-width: 60vw;
+	margin: 0 auto;
+}
+
+.app-container.two {
+	max-width: 80vw;
+	margin: 0 auto;
+}
+
+@media (min-width: 600px) {
+	.app-container.four {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.app-container.three {
+		grid-template-columns: 1fr 1fr;
+	}
+	.app-container.three > :nth-child(3) {
+		grid-column: 1 / -1; /* spans full width */
+	}
+}
+
+@media (min-width: 1200px) {
+	.app-container.four {
+		grid-template-columns: repeat(4, 1fr);
+	}
+	.app-container.three {
+		grid-template-columns: repeat(3, 1fr);
+	}
+	.app-container.three > :nth-child(3) {
+		grid-column: auto;
+	}
+	.app-container.two {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+/* Text Fields */
+.text-field {
 	display: flex;
+}
+.text-field label,
+.text-field input {
+	width: calc(50% - 4px);
+	margin: 2px;
+}
+.text-field input.time {
+	width: calc(25% - 4px);
+	margin: 2px;
+}
+
+label, input {
+	padding: 1px;
+	margin: 2px;
+}
+
+/* Radio Button Fields */
+.radio-field {
+	display: flex;
+}
+.radio-field > label {
+	width: 50%;
+}
+.radio-field > div {
+	display: flex;
+	justify-content: space-evenly;
+	flex: 1;
+}
+
+.radio-field, .text-field {
+	min-height: 1.8rem;
 	align-items: center;
-	margin-bottom: 1rem;
-	gap: 1rem;
+}
+
+/* Tooltip Items */
+label[title] {
+	text-decoration: underline dashed;
+}
+
+.copy-icon {
+	cursor: pointer;
+	font-size: 0.9em;
+}
+
+/* Formatting */
+ul.icd-10 {
+	list-style-type: none;
+	text-align: center;
+	padding: 0;
+}
+
+.panel {
+	margin: 0.5rem;
+	display: flex;
+	flex-direction: column;
+}
+
+.panel.results {
+    background-color: #eff6ff;
+    border-radius: 0.5rem;
+    border: 1px solid #bfdbfe;
+	padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+	align-items: center;
 }
 
 label {
-    color: #374151;
-    font-size: 0.875rem;
-    font-weight: 700;
-	width: 50%;
+	font-size: 0.875rem;
 }
 
-input[type="number"] {
+textarea {
+	font-family: sans-serif;
+	width: 100%;
+	resize: vertical;
+	min-height: 10rem;
+	flex-grow: 1;
+}
+
+input[type="number"],
+input[type="text"],
+textarea {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    border: 1px solid #d1d5db;
+    border: 1px solid lightgray;
     border-radius: 0.25rem;
-    width: 50%;
-    padding: 0.5rem 0.75rem;
-    color: #374151;
+    padding: 0.5rem;
     line-height: 1.25;
     outline: none;
 }
-input[type="number"]:focus {
+
+input[type="number"]:focus,
+input[type="text"]:focus,
+textarea:focus {
     box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
 }
 
-.radio-group-label {
-	width: 50%;
-	color: #374151;
-	font-size: 0.875rem;
-	font-weight: 700;
-}
-
-.radio-options {
-	display: flex;
-	width: 50%;
-	gap: 1rem;
-}
-
-input[type="radio"] {
-    color: #2563eb;
-}
-
-.radio-text {
-    color: #374151;
-	font-size: 0.875rem;
-}
-
-.calculate-button {
+button {
     margin-top: 1.5rem;
-    width: 100%;
     background-color: #2563eb;
     color: #ffffff;
 	font-size: 1rem;
@@ -120,37 +194,94 @@ input[type="radio"] {
     cursor: pointer;
     transition: background-color 150ms ease-in-out;
 }
-.calculate-button:hover {
+
+button.copy-report {
+    width: 50%;
+}
+
+button:hover {
     background-color: #1d4ed8;
     box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
 }
 
-.result-section {
-    background-color: #eff6ff;
-    padding: 1.5rem;
-    border-radius: 0.5rem;
-    border: 1px solid #bfdbfe;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    display: flex;
-	flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #1f2937;
-    min-height: 150px;
-}
-
-.result-table {
+#symptomTable {
     width: 100%;
-    font-size: 1.125rem;
     border-collapse: collapse;
 }
-.result-table td {
-    padding: 0.5rem 0;
+
+#symptomTable td input {
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.result-table hr {
-    border: 0;
-    height: 1px;
-    background-color: #cbd5e1;
-    margin: 1rem 0;
+#symptomTable tr td:nth-child(1) {
+    width: 50%;
+}
+
+#symptomTable tr td:nth-child(2),
+#symptomTable tr td:nth-child(3),
+#symptomTable tr td:nth-child(4) {
+    width: 16.66%;
+}
+
+/* Footer navigation */
+footer {
+    text-align: center;
+    margin: 20px;
+}
+
+footer ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    justify-content: center;
+    gap: 20px;
+	max-width: 80vw;
+	margin: 0 auto;
+}
+
+footer ul li {
+	flex: 1;
+}
+
+footer ul li a {
+    color: #0077b6;
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: block;
+}
+
+footer ul li a:hover {
+	color: #023e8a;
+    background-color: #e0e0e0;
+}
+
+/* Index navigation */
+div.toc h2 {
+	font-size: 1.75rem;
+}
+
+div.toc ul {
+	display: flex;
+	flex-direction: column;
+	list-style: none;
+	align-items: center;
+	padding: 0;
+}
+
+div.toc li {
+	font-size: 1.25em;
+	margin: 0.5rem;
+}
+
+div.toc li a {
+	color: #0077b6;
+	text-decoration: none;
+}
+
+div.toc li a:hover {
+	color: #023e8a;
+	text-decoration-line: underline;
 }

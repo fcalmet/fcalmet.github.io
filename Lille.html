@@ -19,99 +19,49 @@
 -->
 <html lang="en">
   <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Lille Model Calculator</title>
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="style.css" />
   </head>
   <body>
-	<div class="app-container">
-	  <h1 class="page-title">Lille Model Calculator</h1>
-
-	  <div class="main-container">
-
-		<div class="form-section">
-		  <div class="input-group">
-			<label for="age">Age:</label>
-			<input type="number" id="age" value="18" step="1" autocomplete="off">
-		  </div>
-		  <div class="input-group">
-			<label for="albumin">Albumin:</label>
-			<input type="number" id="albumin" value="4.0" step="0.1" autocomplete="off">
-		  </div>
-		  <div class="input-group">
-			<label for="bilirubin0">Bilirubin (day 0):</label>
-			<input type="number" id="bilirubin0" value="1.0" step="0.1" autocomplete="off">
-		  </div>
-		  <div class="input-group">
-			<label for="bilirubin7">Bilirubin (day 7):</label>
-			<input type="number" id="bilirubin7" value="1.0" step="0.1" autocomplete="off">
-		  </div>
-		  <div class="input-group">
-			<label for="creatinine">Creatinine:</label>
-			<input type="number" id="creatinine" value="1.0" step="0.1" autocomplete="off">
-		  </div>
-		  <div class="input-group">
-			<label for="pt">PT:</label>
-			<input type="number" id="pt" value="12.0" step="0.1" autocomplete="off">
-		  </div>
-
-          <button onclick="calculateAll()" class="calculate-button">
-            Calculate
-          </button>
+	<h1>Lille Model Calculator</h1>
+	<div class="app-container two">
+	  <div class="panel">
+		<div class="text-field">
+          <label for="age">Age:</label>
+          <input type="number" id="age" autocomplete="off" />
 		</div>
-
-		<div id="result" class="result-section">
-		  <h2>Results</h2>
+		<div class="text-field">
+          <label for="albumin">Albumin <em>(g/dL)</em>:</label>
+          <input type="number" id="albumin" autocomplete="off" />
 		</div>
-
+		<div class="text-field">
+          <label for="bilirubin0">Bilirubin (day 0) <em>(mg/dL)</em>:</label>
+          <input type="number" id="bilirubin0" autocomplete="off" />
+		</div>
+		<div class="text-field">
+          <label for="bilirubin7">Bilirubin (day 7) <em>(mg/dL)</em>:</label>
+          <input type="number" id="bilirubin7" autocomplete="off" />
+		</div>
+		<div class="text-field">
+          <label for="creatinine">Creatinine <em>(mg/dL)</em>:</label>
+          <input type="number" id="creatinine" autocomplete="off" />
+		</div>
+		<div class="text-field">
+          <label for="pt"><span title="Prothrombin time">PT</span> <em>(seconds)</em>:</label>
+          <input type="number" id="pt" autocomplete="off" />
+		</div>
+        <button onclick="calculateLille()" class="calculate-button">
+          Calculate
+        </button>
 	  </div>
-
+	  <div class="panel results">
+		<h2>Results</h2>
+		<div id="result"></div>
+	  </div>
 	</div>
-
-	<script>
-	 function getLille(age, albumin, bilirubin0, bilirubin7, creatinine, pt) {
-	   let r = 3.19 - 0.101 * age
-             + 0.147 * albumin
-             + 0.0165 * (bilirubin0 - bilirubin7)
-             - 0.206 * (creatinine > 1.3 ? 1 : 0)
-             - 0.0065 * bilirubin0
-             - 0.0096 * pt
-	   let lille = Math.exp(-r) / (1 + Math.exp(-r))
-	   return lille
-	 }
-
-	 function getLilleMortality(lille) {
-	   return lille > 0.45 ? 0.25 : 0.85
-	 }
-
-	 function toPercent(p, decimals = 0) {
-	   return (p * 100).toFixed(decimals) + "%"
-	 }
-
-	 function calculateAll() {
-
-	   let age = parseFloat(document.getElementById('age').value) || 0;
-	   let albumin = parseFloat(document.getElementById('albumin').value) || 0;
-	   let bilirubin0 = parseFloat(document.getElementById('bilirubin0').value) || 0;
-	   let bilirubin7 = parseFloat(document.getElementById('bilirubin7').value) || 0;
-	   let creatinine = parseFloat(document.getElementById('creatinine').value) || 0;
-	   let pt = parseFloat(document.getElementById('pt').value) || 0;
-
-
-	   let lille = getLille(age, albumin, bilirubin0, bilirubin7, creatinine, pt)
-	   let lilleMortality = getLilleMortality(lille)
-
-	   document.getElementById('result').innerHTML = `
-		 <table class="result-table">
-		   <tr><td width="50%">Lille Score:</td><td>${lille.toFixed(3)}</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;6-month survival:</td><td>${toPercent(lilleMortality)}</td></tr>
-		   <tr><td colspan="2"><hr></td></tr>
-		   <tr><td colspan="2">6-month predicted survival</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;Score &lt;0.45</td><td>85%</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;Score &gt;0.45</td><td>25%</td></tr>
-		 </table>`
-	 }
-	</script>
+	<footer id="footer-nav"></footer>
+	<script src="hepatology.js"></script>
   </body>
 </html>

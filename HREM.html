@@ -1,6 +1,5 @@
-<!DOCTYPE html>
-<!--
-	 Copyright (C) 2025 by Fernando Calmet
+<!doctype html>
+<!-- Copyright (C) 2025 by Fernando Calmet
 
 	 Author: Fernando Calmet
 
@@ -19,414 +18,187 @@
 -->
 <html lang="en">
   <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Esophageal Manometry</title>
-	<style>
-     body { font-family: sans-serif; }
-	 td.top { vertical-align: top; }
-	 td.right { text-align: right; }
-	 input {
-	   padding: 5px;
-	   margin: 5px;
-       font-size: 16px;
-	 }
-	 input.whole { width: 200px; }
-	 input.half { width: 88px; }
-     button {
-       padding: 10px;
-       font-size: 16px;
-     }
-	 button.plus {
-       padding: 4.5px;
-	 }
-	 ul {
-	   display: grid;
-	   gap: 10px;
-	 }
-	 #report {
-	   font-family: sans-serif;
-       font-size: 16px;
-	   padding: 10px;
-	   width: 1000px;
-	   height: 300px;
-	 }
-	</style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>High-resolution Esophageal Manometry</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-	<h1>Esophageal Manometry</h1>
-	<table><tr><td class="top">
-	  <table>
-		<tr><td colspan="2"><h2>Swallows</h2></td></tr>
-		<tr>
-		  <td class="right">Supine swallows:</td>
-		  <td><input class="whole" type="number" oninput="validateInteger(this)" id="supine" value="10"></td>
-		</tr>
-		<tr>
-		  <td class="right">Upright swallows:</td>
-		  <td><input class="whole" type="number" oninput="validateInteger(this)" id="upright" value="5"></td>
-		</tr>
+	<h1>High-resolution Esophageal Manometry</h1>
+	<div class="app-container four">
+	  <div class="panel">
+		<h2>Swallows</h2>
+		<div class="text-field">
+		  <label for="supine">Supine swallows:</label>
+		  <input type="number" id="supine" value="10" autocomplete="off" />
+		</div>
+		<div class="text-field">
+		  <label for="upright">Upright swallows:</label>
+		  <input type="number" id="upright" value="5" autocomplete="off" />
+		</div>
 
-		<tr><td colspan="2"><h2>UES/LES</h2></td></tr>
-		<tr>
-		  <td class="right">UES mean basal pressure (34-104 mmHg):</td>
-		  <td><input class="whole" type="number" step="0.1" id="uesPressure"></td>
-		</tr>
-		<tr>
-		  <td class="right">UES mean IRP (<12 mmHg):</td>
-		  <td><input class="whole" type="number" step="0.1" id="uesIRP"></td>
-		</tr>
-		<tr>
-		  <td class="right">LES mean basal pressure (13-43 mmHg):</td>
-		  <td><input class="whole" type="number" step="0.1" id="lesPressure"></td>
-		</tr>
-		<tr>
-		  <td class="right">LES median IRP, supine (<15 mmHg):</td>
-		  <td><input class="whole" type="number" step="0.1" id="lesIRPsupine"><!-- <button class="plus" onclick="insertMedian('lesIRPsupine')">+</button> --></td>
-		</tr>
-		<tr>
-		  <td class="right">LES median IRP, upright (<12 mmHg):</td>
-		  <td><input class="whole" type="number" step="0.1" id="lesIRPupright"><!-- <button class="plus" onclick="insertMedian('lesIRPupright')">+</button> --></td>
-		</tr>
-		<tr>
-		  <td class="right">Intrabolus pressurization, supine (n):</td>
-		  <td><input class="whole" type="number" oninput="validateInteger(this)" id="ibp"></td>
-		</tr>
-		<tr>
-		  <td class="right">Hiatal hernia size (cm):</td>
-		  <td><input class="whole" type="number" step="0.1" id="hh"></td>
-		</tr>
-	  </table>
+		<h2><span title="Upper esophageal sphincter">UES</span>/<span title="Lower esophageal sphincter">LES</span></h2>
+		<div class="text-field">
+		  <label for="uesPressure"><span title="Upper esophageal sphincter">UES</span> mean basal pressure:<br />&nbsp; <em>(34-104 mmHg)</em></label>
+		  <input type="number" id="uesPressure" autocomplete="off" />
+		</div>
+		<div class="text-field">
+		  <label for="uesIRP"><span title="Upper esophageal sphincter">UES</span> mean <span title="Integrated relaxation pressure">IRP</span>:<br />&nbsp; <em>(&lt;12 mmHg)</em></label>
+		  <input type="number" id="uesIRP" autocomplete="off" />
+		</div>
+		<div class="text-field">
+		  <label for="lesPressure"><span title="Lower esophageal sphincter">LES</span> mean basal pressure:<br />&nbsp; <em>(13-43 mmHg)</em></label>
+		  <input type="number" id="lesPressure" autocomplete="off" />
+		</div>
+		<div class="text-field">
+		  <label for="lesIRPsupine"><span title="Lower esophageal sphincter">LES</span> median <span title="Integrated relaxation pressure">IRP</span>, supine:<br />&nbsp; <em>(&lt;15 mmHg)</em></label>
+		  <input type="number" id="lesIRPsupine" autocomplete="off" />
+		</div>
+		<div class="text-field">
+		  <label for="lesIRPupright"><span title="Lower esophageal sphincter">LES</span> median <span title="Integrated relaxation pressure">IRP</span>, upright:<br />&nbsp; <em>(&lt;12 mmHg)</em></label>
+		  <input type="number" id="lesIRPupright" autocomplete="off" />
+		</div>
+		<div class="text-field">
+		  <label for="ibp"><span title="Intrabolus pressurization">IBP</span>, supine:<br />&nbsp; <em>(n)</em></label>
+		  <input type="number" id="ibp" autocomplete="off" />
+		</div>
+		<div class="text-field">
+		  <label for="hh">Hiatal hernia size (cm):</label>
+		  <input type="number" id="hh" autocomplete="off" />
+		</div>
+	  </div>
 
-	</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="top">
+	  <div class="panel">
 
-	  <table>
-		<tr><td colspan="2"><h2>Esophageal motility</h2></td></tr>
-		<tr>
-		  <td class="right">Failed (%):</td>
-		  <td><input class="whole" type="number" step="0.1" id="failed"></td>
-		</tr>
-		<tr>
-		  <td class="right">Weak (%):</td>
-		  <td><input class="whole" type="number" step="0.1" id="weak"></td>
-		</tr>
-		<tr>
-		  <td class="right">Ineffective (%):</td>
-		  <td><input class="whole" type="number" step="0.1" id="ineffective"></td>
-		</tr>
-		<tr>
-		  <td class="right">Panesophageal pressurization (%):</td>
-		  <td><input class="whole" type="number" step="0.1" id="panesophageal"></td>
-		</tr>
-		<tr>
-		  <td class="right">Premature contraction (%):</td>
-		  <td><input class="whole" type="number" step="0.1" id="premature"></td>
-		</tr>
-		<tr>
-		  <td class="right">Fragmented (%):</td>
-		  <td><input class="whole" type="number" step="0.1" id="fragmented"></td>
-		</tr>
-		<tr>
-		  <td class="right">Intact (%):</td>
-		  <td><input class="whole" type="number" step="0.1" id="intact"></td>
-		</tr>
-		<tr>
-		  <td class="right">Hypercontractile swallows, supine (n):</td>
-		  <td><input class="whole" type="number" oninput="validateInteger(this)" id="hypercontractile"></td>
-		</tr>
-		<tr>
-		  <td class="right">Mean DCI (500-8000 mmHg·cm·s):</td>
-		  <td><input class="whole" type="number" step="0.1" id="dci"></td>
-		</tr>
-		<tr>
-		  <td class="right">Incomplete bolus clearance (%):</td>
-		  <td><input class="whole" type="number" step="0.1" id="ibc"></td>
-		</tr>
-	  </table>
+		<h2>Esophageal motility</h2>
+		<div class="text-field">
+		  <label for="failed">Failed (%):</label>
+		  <input type="number" id="failed" autocomplete="off" />
+		</div>
+		<div class="text-field">
+		  <label for="weak">Weak (%):</label>
+		  <input type="number" id="weak" autocomplete="off" />
+		</div>
+		<div class="text-field">
+		  <label for="ineffective">Ineffective (%):</label>
+		  <input type="number" id="ineffective" autocomplete="off" />
+		</div>
+		<div class="text-field">
+		  <label for="panesophageal">Panesophageal pressurization (%):</label>
+		  <input type="number" id="panesophageal" autocomplete="off" />
+		</div>
+		<div class="text-field">
+		  <label for="premature">Premature contraction (%):</label>
+		  <input type="number" id="premature" autocomplete="off" />
+		</div>
+		<div class="text-field">
+		  <label for="fragmented">Fragmented (%):</label>
+		  <input type="number" id="fragmented" autocomplete="off" />
+		</div>
+		<div class="text-field">
+		  <label for="intact">Intact (%):</label>
+		  <input type="number" id="intact" autocomplete="off" />
+		</div>
+		<div class="text-field">
+		  <label for="hypercontractile">Hypercontractile swallows, supine (n):</label>
+		  <input type="number" id="hypercontractile" autocomplete="off" />
+		</div>
+		<div class="text-field">
+		  <label for="dci">Mean <span title="Distal contractile integral">DCI</span> (500-8000 mmHg·cm·s):</label>
+		  <input type="number" id="dci" autocomplete="off" />
+		</div>
+		<div class="text-field">
+		  <label for="ibc">Incomplete bolus clearance (%):</label>
+		  <input type="number" id="ibc" autocomplete="off" />
+		</div>
+	  </div>
 
-	</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="top">
+	  <div class="panel">
+		<h2>Multiple rapid swallows (MRS) maneuver</h2>
+		<div class="radio-field">
+		  <label for="mrsBody">Deglutitive inhibition of esophageal body:</label>
+		  <div id="mrsBody">
+			<label><input type="radio" name="mrsBody" value="yes" checked /> Yes</label>
+			<label><input type="radio" name="mrsBody" value="no" /> No</label>
+		  </div>
+		</div>
+		<div class="radio-field">
+		  <label for="mrsLes">Deglutitive inhibition of <span title="Lower esophageal sphincter">LES</span>:</label>
+		  <div class="button-options">
+			<label><input type="radio" name="mrsLes" value="yes" /> Yes</label>
+			<label><input type="radio" name="mrsLes" value="no" checked /> No</label>
+		  </div>
+		</div>
+		<div class="radio-field">
+		  <label for="mrsPep">Panesophageal pressurization:</label>
+		  <div class="button-options">
+			<label><input type="radio" name="mrsPep" value="yes" checked /> Yes</label>
+			<label><input type="radio" name="mrsPep" value="no" /> No</label>
+		  </div>
+		</div>
+		<div class="radio-field">
+		  <label for="mrsAug">Post-<span title="Multiple rapid swallows">MRS</span> contraction augmentation:</label>
+		  <div class="button-options">
+			<label><input type="radio" name="mrsAug" value="yes" checked /> Yes</label>
+			<label><input type="radio" name="mrsAug" value="no" /> No</label>
+		  </div>
+		</div>
 
-	  <table>
-		<tr><td colspan="2"><h2>Multiple rapid swallows (MRS) maneuver</h2></td></tr>
-		<tr>
-		  <td class="right">Deglutitive inhibition of esophageal body:</td>
-		  <td>
-			<input type="radio" name="mrsBody" checked>Yes
-			<input type="radio" name="mrsBody">No
-		  </td>
-		</tr>
-		<tr>
-		  <td class="right">Deglutitive inhibition of LES:</td>
-		  <td>
-			<input type="radio" name="mrsLes" checked>Yes
-			<input type="radio" name="mrsLes">No
-		  </td>
-		</tr>
-		<tr>
-		  <td class="right">Panesophageal pressurization:</td>
-		  <td>
-			<input type="radio" name="mrsPep">Yes
-			<input type="radio" name="mrsPep" checked>No
-		  </td>
-		</tr>
-		<tr>
-		  <td class="right">Post-MRS contraction augmentation:</td>
-		  <td>
-			<input type="radio" name="mrsAug" checked>Yes
-			<input type="radio" name="mrsAug">No
-		  </td>
-		</tr>
+		<h2>Rapid drink challenge (RDC)</h2>
+		<div class="radio-field">
+		  <label for="rdcBody">Deglutitive inhibition of esophageal body:</label>
+		  <div class="button-options">
+			<label><input type="radio" name="rdcBody" value="yes" checked /> Yes</label>
+			<label><input type="radio" name="rdcBody" value="no" /> No</label>
+		  </div>
+		</div>
+		<div class="radio-field">
+		  <label for="rdcLes">Deglutitive inhibition of <span title="Lower esophageal sphincter">LES</span>:</label>
+		  <div class="button-options">
+			<label><input type="radio" name="rdcLes" value="yes" /> Yes</label>
+			<label><input type="radio" name="rdcLes" value="no" checked /> No</label>
+		  </div>
+		</div>
+		<div class="radio-field">
+		  <label for="rdcPep">Panesophageal pressurization:</label>
+		  <div class="button-options">
+			<label><input type="radio" name="rdcPep" value="yes" checked /> Yes</label>
+			<label><input type="radio" name="rdcPep" value="no" /> No</label>
+		  </div>
+		</div>
+		<div class="radio-field">
+		  <label for="rdcShort">Esophageal shortening:</label>
+		  <div class="button-options">
+			<label><input type="radio" name="rdcShort" value="yes" /> Yes</label>
+			<label><input type="radio" name="rdcShort" value="no" checked /> No</label>
+		  </div>
+		</div>
 
-		<tr><td colspan="2"><h2>Rapid drink challenge (RDC)</h2></td></tr>
-		<tr>
-		  <td class="right">Deglutitive inhibition of esophageal body:</td>
-		  <td>
-			<input type="radio" name="rdcBody" checked>Yes
-			<input type="radio" name="rdcBody">No
-		  </td>
-		</tr>
-		<tr>
-		  <td class="right">Deglutitive inhibition of LES:</td>
-		  <td>
-			<input type="radio" name="rdcLes" checked>Yes
-			<input type="radio" name="rdcLes">No
-		  </td>
-		</tr>
-		<tr>
-		  <td class="right">Panesophageal pressurization:</td>
-		  <td>
-			<input type="radio" name="rdcPep">Yes
-			<input type="radio" name="rdcPep" checked>No
-		  </td>
-		</tr>
-		<tr>
-		  <td class="right">Esophageal shortening:</td>
-		  <td>
-			<input type="radio" name="rdcShort">Yes
-			<input type="radio" name="rdcShort" checked>No
-		  </td>
-		</tr>
+		<h2>Report options</h2>
+		<div class="radio-field">
+		  <label for="subtypes">Include motility disorder subtypes:</label>
+		  <div class="button-options">
+			<label><input type="radio" name="subtypes" value="yes" checked /> Yes</label>
+			<label><input type="radio" name="subtypes" value="no" /> No</label>
+		  </div>
+		</div>
 
-		<tr><td colspan="2"><h2>Report options</h2></td></tr>
-		<tr>
-		  <td class="right">Include motility disorder subtypes</td>
-		  <td>
-			<input type="radio" name="subtypes" checked>Yes
-			<input type="radio" name="subtypes">No
-		  </td>
-		</tr>
+		<button type="button" onclick="createHremReport()">Create Report</button>
+	  </div>
 
-		<tr><td colspan="2">
-		  <h2>ICD-10 codes</h2>
-		  <ul>
-			<li>GERD (ICD-10: K21.9)</li>
-			<li>Esophageal dysmotility (ICD-10: K22.4)</li>
-		  </ul>
-		</td></tr>
+	  <div class="panel results">
+		<h2><span title="International Classification of Diseases, 10th Revision">ICD-10</span> Codes</h2>
+		<ul class="icd-10">
+		  <li>GERD (ICD-10: K21.9) <span class="copy-icon" onclick="copyToClipboard(this)">📋</span></li>
+		  <li>Esophageal dysmotility (ICD-10: K22.4) <span class="copy-icon" onclick="copyToClipboard(this)">📋</span></li>
+		</ul>
 
-		<tr><td>&nbsp;</td></tr>
-		<tr><td class="right" colspan="2">
-		  <button onclick="clearAll()">Clear All</button>
-		  <button onclick="createReport()">Create Report</button>
-		</td></tr>
-
-	  </table>
-	</td></tr></table>
-	<hr>
-
-	<h2>Report</h2>
-	<textarea id="report"></textarea>
-
-	<hr>
-	<a href="ARM.html">Anorectal manometry</a> |
-	Esophageal manometry |
-	<a href="pH.html">Wireless pH monitoring</a> |
-	<a href="pHZ.html">Catheter-based pH/impedance monitoring</a>
+		<h2>Report</h2>
+		<textarea id="report"></textarea>
+		<button type="button" class="copy-report" onclick="copyReport()">Copy Report</button>
+	  </div>
+	</div>
+	<footer id="footer-nav"></footer>
+	<script src="motility.js"></script>
   </body>
-
-  <script>
-   function validateInteger(input) {
-     input.value = input.value.replace(/[^0-9]/g, '');
-   }
-
-   /*
-   function insertMedian(textbox) {
-	 navigator.clipboard.readText()
-			  .then(text => {
-				document.getElementById(textbox).value = calculateMedian(text);
-			  })
-   }
-   */
-
-   function calculateMedian(numbersString) {
-     const validNumbers = numbersString.split(/\s+/).map(Number).filter(number => !isNaN(number));
-     validNumbers.sort((a, b) => a - b);
-     const length = validNumbers.length;
-     if (length === 0)
-       return NaN;
-     else if (length % 2 == 0)
-       return (validNumbers[length / 2 - 1] + validNumbers[length / 2]) / 2;
-     else
-       return validNumbers[Math.floor(length / 2)];
-   }
-
-   function clearAll() {
-	 /* alert('1'); */
-     var inputs = document.querySelectorAll('input');
-     inputs.forEach(function(input) {
-       input.value = '';
-     });
-	 document.getElementById('supineSwallows').value = "10";
-	 document.getElementById('uprightSwallows').value = "5";
-	 for (var id of ['mrsBody', 'mrsLes', 'mrsAug', 'rdcBody', 'rdcLes'])
-	   document.getElementsByName(id)[0].checked = true;
-	 for (var id of ['mrsPep', 'rdcPep', 'rdcShort'])
-	   document.getElementsByName(id)[1].checked = true;
-	 document.getElementById('report').value = '';
-   }
-
-   function createReport() {
-     var supine = parseInt(document.getElementById('supine').value) || 0;
-	 var upright = parseInt(document.getElementById('upright').value) || 0;
-
-	 var uesPressure = parseFloat(document.getElementById('uesPressure').value) || 0.0;
-     var uesIRP = parseFloat(document.getElementById('uesIRP').value) || 0.0;
-     var lesPressure = parseFloat(document.getElementById('lesPressure').value) || 0.0;
-     var lesIRPsupine = parseFloat(document.getElementById('lesIRPsupine').value) || 0.0;
-     var lesIRPupright = parseFloat(document.getElementById('lesIRPupright').value) || 0.0;
-	 var uesPressureL = 34; var uesPressureU = 104;
-	 var uesIRPU = 12;
-	 var lesPressureL = 13; var lesPressureU = 43;
-	 var lesIRPsupineU = 15; var lesIRPuprightU = 12;
-
-	 var failed = parseFloat(document.getElementById('failed').value) || 0.0;
-     var weak = parseFloat(document.getElementById('weak').value) || 0.0;
-     var panesophageal = parseFloat(document.getElementById('panesophageal').value) || 0.0;
-     var premature = parseFloat(document.getElementById('premature').value) || 0.0;
-     var fragmented = parseFloat(document.getElementById('fragmented').value) || 0.0;
-     var ineffective = weak + fragmented;
-     var intact = parseFloat(document.getElementById('intact').value) || 0.0;
-     var hypercontractile = (parseInt(document.getElementById('hypercontractile').value) || 0) * 100 / supine;
-	 var weakU = 70; var failedU = 50;
-
-     var ibp = (parseInt(document.getElementById('ibp').value) || 0) * 100 / supine;
-     var dci = parseFloat(document.getElementById('dci').value) || 0.0;
-     var ibc = parseFloat(document.getElementById('ibc').value) || 0.0;
-     var hh = parseFloat(document.getElementById('hh').value) || 0.0;
-	 var ibpU = 20;
-
-	 var mrsBody = document.getElementsByName('mrsBody')[0].checked;
-	 var mrsLes = document.getElementsByName('mrsLes')[0].checked;
-	 var mrsPep = document.getElementsByName('mrsPep')[0].checked;
-	 var mrsAug = document.getElementsByName('mrsAug')[0].checked;
-
-	 var rdcBody = document.getElementsByName('rdcBody')[0].checked;
-	 var rdcLes = document.getElementsByName('rdcLes')[0].checked;
-	 var rdcPep = document.getElementsByName('rdcPep')[0].checked;
-	 var rdcShort = document.getElementsByName('rdcShort')[0].checked;
-
-	 var subtypes = document.getElementsByName('subtypes')[0].checked;
-
-	 var diagnosis = 0; // Normal
-	 var egjooSubtype = 0; // EGJOO with no evidence of disordered peristalsis
-	 if (lesIRPsupine >= lesIRPsupineU && lesIRPupright >= lesIRPuprightU && ibp >= ibpU) {
-	   if (failed == 100) {
-		 diagnosis = 1; // Achalasia type 1
-		 if (panesophageal >= 20)
-		   diagnosis = 2; // Achalasia type 2
-		 else if (premature >= 20)
-		   diagnosis = 3; // Achalasia type 3
-	   } else {
-		 diagnosis = 4; // EGJ outflow obstruction
-		 if (premature >= 20)
-		   egjooSubtype = 1; // EGJOO with spastic features
-		 else if (hypercontractile >= 20)
-		   egjooSubtype = 2; // EGJOO with hypercontractile features
-		 else if (ineffective >= 70 || failed >= 50)
-		   egjooSubtype = 3; // EGJOO with ineffective motility
-	   }
-	 } else {
-	   if (failed == 100)
-		 diagnosis = 5; // Absent contractility
-	   else if (premature >= 20)
-		 diagnosis = 6; // Distal esophageal spasm
-	   else if (hypercontractile >= 20)
-		 diagnosis = 7; // Hypercontractile esophagus
-	   else if (ineffective >= 70 || failed >= 50)
-		 diagnosis = 8; // Ineffective esophageal motility
-	 }
-
-	 var i = 0;
-	 var report = "Interpretation / Findings\n"
-				+ ++i + ". " + (uesPressure < uesPressureL ? "Hypo" : (uesPressure > uesPressureU ? "Hyper" : "Normo"))
-				+ "tensive UES with " + (uesIRP < uesIRPU ? "" : "in") + "adequate relaxation.\n"
-				+ ++i + ". " + (lesPressure < lesPressureL ? "Hypo" : (lesPressure > lesPressureU ? "Hyper" : "Normo")) + "tensive LES with ";
-
-	 if (lesIRPsupine < lesIRPsupineU) {
-	   report += "adequate relaxation while supine " + (lesIRPupright < lesIRPuprightU ? "and upright.\n" : "although elevated IRP while upright.\n");
-	 } else {
-	   if (lesIRPupright < lesIRPuprightU)
-		 report += "elevated IRP while supine which normalizes while upright.\n"
-	   else
-		 report += "inadequate relaxation while supine and upright"
-				 + (ibp < ibpU ? ", likely artifactual in absence of intrabolus pressurization.\n"
-						: " with intrabolus pressurization in " + ibp.toFixed(1) + "% of swallows.\n");
-	 }
-	 switch (diagnosis) {
-	   case 0:
-	   case 4: report += ++i + ". Normal peristalsis with " + (intact < 100 ? "most" : "all") + " swallows with a mean DCI of " + dci.toFixed(1) + " mmHg·cm·s.\n"; break;
-	   case 1:
-	   case 5: report += ++i + ". 100% failed peristalsis.\n"; break;
-	   case 2: report += ++i + ". 100% failed peristalsis with panesophageal pressurization in " + panesophageal.toFixed(1) + "% of swallows.\n"; break;
-	   case 3: report += ++i + ". 100% failed peristalsis with premature/spastic contractions in " + premature.toFixed(1) + "% of swallows.\n"; break;
-	   case 6: report += ++i + ". Frequent premature contractions in " + premature.toFixed(1) + "% of swallows with a mean DCI of " + dci.toFixed(1) + " mmHg·cm·s.\n"; break;
-	   case 7: report += ++i + ". Frequent hypercontractile peristalsis in " + hypercontractile.toFixed(1) + "% of supine swallows with a mean DCI of " + dci.toFixed(1) + " mmHg·cm·s.\n"; break;
-	   case 8:
-		 report += ++i + ". Frequent " + (failed >= 50 ? "failed" : "ineffective") + " peristalsis in " + (failed >= 50 ? failed : ineffective).toFixed(1) + "% of swallows.\n";
-		 break;
-	 }
-	 report += ++i + ". " + (ibc > 0 ? "Inc" : "C") + "omplete bolus clearance achieved with " + (ibc < 100 ? ibc.toFixed(1) + "%" : "all") + " swallows.\n"
-			 + ++i + ". " + (mrsBody && mrsLes && !mrsPep && mrsAug ? "N" : "Abn") + "ormal multiple rapid swallows (MRS) maneuver with"
-			 + (mrsBody ? "" : "out") + " deglutitive inhibition of esophageal body, with"
-			 + (mrsLes ? "" : "out") + " deglutitive inhibition of LES, with"
-			 + (mrsPep ? "" : "out") + " panesophageal pressurization, and with"
-			 + (mrsAug ? "" : "out") + " post-MRS contraction augmentation.\n"
-			 + ++i + ". " + (rdcBody && rdcLes && !rdcPep && !rdcShort ? "N" : "Abn") + "ormal rapid drink challenge (RDC) with"
-			 + (rdcBody ? "" : "out") + " deglutitive inhibition of esophageal body, with"
-			 + (rdcLes ? "" : "out") + " deglutitive inhibition of LES, with"
-			 + (rdcPep ? "" : "out") + " panesophageal pressurization, and with"
-			 + (rdcShort ? "" : "out") + " esophageal shortening.\n"
-			 + ++i + ". " + (hh > 0 ? "Hiatal hernia measuring " + hh.toFixed(1) + " cm.\n" : "No hiatal hernia.\n");
-
-	 report += "\nImpressions\n";
-	 if (diagnosis == 0) {
-	   report += "1. " + (hh > 0 ? "Hiatal hernia (" + hh.toFixed(1) + " cm).\n2. Otherwise u" : "U" ) + "nremarkable high-resolution esophageal manometry.\n"
-	 } else {
-	   switch (diagnosis) {
-		 case 1: report += "1. Achalasia type I.\n"; break;
-		 case 2: report += "1. Achalasia type II.\n"; break;
-		 case 3: report += "1. Achalasia type III.\n"; break;
-		 case 4:
-		   report += "1. Manometric EGJ outflow obstruction (EGJOO)"
-		   if (subtypes) {
-			 switch (egjooSubtype) {
-			   case 0: report += " with no evidence of disordered peristalsis"; break;
-			   case 1: report += " with spastic features"; break;
-			   case 2: report += " with hypercontractile features"; break;
-			   case 3: report += " with ineffective motility"; break;
-			 }
-		   }
-		   report += ". Of note, a clinically relevant diagnosis of EGJOO requires the presence of relevant symptoms (dysphagia and/or non-cardiac chest pain) and supportive testing (timed barium esophagram and/or functional lumen imaging probe).\n"; break;
-		 case 5: report += "1. Absent contractility.\n"; break;
-		 case 6: report += "1. Manometric distal esophageal spasm (DES). Of note, a clinically relevant diagnosis of DES requires the presence of relevant symptoms (dysphagia and/or non-cardiac chest pain).\n"; break;
-		 case 7: report += "1. Manometric hypercontractile esophagus (HE). Of note, a clinically relevant diagnosis of HE requires the presence of relevant symptoms (dysphagia and/or non-cardiac chest pain).\n"; break;
-		 case 8: report += "1. Ineffective esophageal motility.\n"; break;
-	   }
-	   if (hh > 0)
-		 report += "2. Hiatal hernia (" + hh.toFixed(1) + " cm).\n";
-	 }
-	 document.getElementById('report').value = report;
-	 navigator.clipboard.writeText(report);
-   }
-  </script>
 </html>

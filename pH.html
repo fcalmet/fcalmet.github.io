@@ -1,6 +1,5 @@
-<!DOCTYPE html>
-<!--
-	 Copyright (C) 2025 by Fernando Calmet
+<!doctype html>
+<!-- Copyright (C) 2025 by Fernando Calmet
 
 	 Author: Fernando Calmet
 
@@ -19,302 +18,90 @@
 -->
 <html lang="en">
   <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Wireless pH monitoring</title>
-	<style>
-     body { font-family: sans-serif; }
-	 td.top { vertical-align: top; }
-	 td.right { text-align: right; }
-	 input {
-	   padding: 5px;
-	   margin: 5px;
-       font-size: 16px;
-	 }
-	 input.whole { width: 200px; }
-	 input.half { width: 88px; }
-     button {
-       padding: 10px;
-       font-size: 16px;
-     }
-     th { font-weight: normal; }
-	 #report {
-	   font-family: sans-serif;
-       font-size: 16px;
-	   padding: 10px;
-	   width: 1000px;
-	   height: 300px;
-	 }
-	</style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wireless pH monitoring</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
+  <body onload="createEmptySymptomTable()">
 	<h1>Wireless pH monitoring</h1>
-	<table><tr><td class="top">
-	  <table>
-		<tr><td colspan="2"><h2>pH monitoring</h2></td></tr>
-		<tr>
-		  <td class="right">PPIs:</td>
-		  <td>
-			<input type="radio" name="ppi">Yes
-			<input type="radio" name="ppi" checked>No
-		  </td>
-		  <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		</tr>
-		<tr>
-		  <td class="right">Analysis time:</td>
-		  <td>
-			<input class="half" type="number" oninput="validateInteger(this)" id="analysisTimeH" placeholder="HH">
-			<input class="half" type="number" oninput="validateInteger(this)" id="analysisTimeM" placeholder="MM">
-		  </td>
-		</tr>
-		<tr>
-		  <td class="right">Total acid exposure time (<4-6%):</td>
-		  <td><input class="whole" type="number" step="0.1" id="aetTotal"></td>
-		</tr>
-		<tr>
-		  <td class="right">AET upright (<7.3%):</td>
-		  <td><input class="whole" type="number" step="0.1" id="aetUpright"></td>
-		</tr>
-		<tr>
-		  <td class="right">AET supine (<1.4%):</td>
-		  <td><input class="whole" type="number" step="0.1" id="aetSupine"></td>
-		</tr>
-		<tr>
-		  <td class="right">Longest reflux (minutes):</td>
-		  <td><input class="whole" type="number" step="0.1" id="longestReflux"></td>
-		</tr>
-		<tr>
-		  <td class="right">DeMeester score (<14.7):</td>
-		  <td><input class="whole" type="number" step="0.1" id="deMeester"></td>
-		</tr>
-	  </table>
-	</td>
-	<td class="top">
-	  <datalist id="symptomList">
-		<option value="Heartburn"></option>
-		<option value="Regurgitation"></option>
-		<option value="Belching"></option>
-		<option value="Chest pain"></option>
-		<option value="Cough"></option>
-		<option value="Globus"></option>
-		<option value="Hiccup"></option>
-		<option value="Mucus sensation"></option>
-		<option value="Nausea"></option>
-		<option value="Phlegm sensation"></option>
-		<option value="Shortness of breath"></option>
-		<option value="Sore throat"></option>
-		<option value="Spasm sensation"></option>
-		<option value="Throat clearing"></option>
-		<option value="Vomiting"></option>
-	  </datalist>
-	  <table id="symptomTable">
-		<tr><td colspan="2"><h2>Symptoms</h2></td></tr>
-		<tr><th>Symptom</th><th>n</th><th>SI (%)</th><th>SAP (%)</th>
-		  <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
-	  </table>
-	</td>
-	<td class="top">
-	  <table>
-		<tr><td colspan="2"><h2>ICD-10 codes</h2></td></tr>
-		<tr><td><ul><li>GERD (ICD-10: K21.9)</li></ul></td></tr>
-	  </table>
-	</td>
-	</tr>
-	<tr><td class="right" colspan="2">
-	  <button onclick="addSymptom()">Add Symptoms</button>
-	  <button onclick="clearAll()">Clear All</button>
-	  <button onclick="createReport()">Create Report</button>
-	</td></tr>
-	</table>
-	<hr>
+	<div class="app-container three">
+	  <div class="panel">
+		<h2>pH monitoring</h2>
+		<div class="radio-field">
+		  <label for="mrsBody"><span title="Proton pump inhibitors">PPIs</span>:</label>
+		  <div id="ppi">
+			<label><input type="radio" name="ppi" value="yes" /> Yes</label>
+			<label><input type="radio" name="ppi" value="no" checked /> No</label>
+		  </div>
+		</div>
+		<div class="text-field">
+		  <label for="discomfort">Analysis time:</label>
+		  <input type="number" id="analysisTimeH" class="time" autocomplete="off" placeholder="hours" />
+		  <input type="number" id="analysisTimeM" class="time" autocomplete="off" placeholder="minutes" />
+		</div>
+		<div class="text-field">
+		  <label for="aetTotal">Total <span title="Acid exposure time">AET</span> (&lt;4-6%):</label>
+		  <input id="aetTotal" type="number" step="0.1" autocomplete="off" />
+		</div>
+		<div class="text-field">
+		  <label for="aetUpright"><span title="Acid exposure time">AET</span> upright (&lt;7.3%):</label>
+		  <input id="aetUpright" type="number" step="0.1" />
+		</div>
+		<div class="text-field">
+		  <label for="aetSupine"><span title="Acid exposure time">AET</span> supine (&lt;1.4%):</label>
+		  <input id="aetSupine" type="number" step="0.1" />
+		</div>
+		<div class="text-field">
+		  <label for="longestReflux">Longest reflux (minutes):</label>
+		  <input id="longestReflux" type="number" step="0.1" />
+		</div>
+		<div class="text-field">
+		  <label for="deMeester">DeMeester score (&lt;14.7):</label>
+		  <input id="deMeester" type="number" step="0.1" />
+		</div>
 
-	<h2>Report</h2>
-	<textarea id="report"></textarea>
+	  </div>
 
-	<hr>
-	<a href="ARM.html">Anorectal manometry</a> |
-	<a href="HREM.html">Esophageal manometry</a> |
-	Wireless pH monitoring |
-	<a href="pHZ.html">Catheter-based pH/impedance monitoring</a>
+	  <div class="panel">
+		<h2>Symptoms</h2>
+		<datalist id="symptomList">
+		  <option value="Heartburn"></option>
+		  <option value="Regurgitation"></option>
+		  <option value="Belching"></option>
+		  <option value="Chest pain"></option>
+		  <option value="Cough"></option>
+		  <option value="Globus"></option>
+		  <option value="Hiccup"></option>
+		  <option value="Mucus sensation"></option>
+		  <option value="Nausea"></option>
+		  <option value="Phlegm sensation"></option>
+		  <option value="Shortness of breath"></option>
+		  <option value="Sore throat"></option>
+		  <option value="Spasm sensation"></option>
+		  <option value="Throat clearing"></option>
+		  <option value="Vomiting"></option>
+		</datalist>
+		<table id="symptomTable">
+		  <tr><th>Symptom</th><th>n</th><th><span title="Symptom index">SI</span> (%)</th><th><span title="Symptom association probability">SAP</span> (%)</th></tr>
+		</table>
+		<button type="button" onclick="addSymptom()">Add Symptom</button>
+		<button type="button" onclick="createPhReport()">Create Report</button>
+
+	  </div>
+
+	  <div class="panel results">
+		<h2><span title="International Classification of Diseases, 10th Revision">ICD-10</span> Codes</h2>
+		<ul class="icd-10">
+		  <li>GERD (ICD-10: K21.9) <span class="copy-icon" onclick="copyToClipboard(this)">📋</span></li>
+		</ul>
+
+		<h2>Report</h2>
+		<textarea id="report"></textarea>
+		<button type="button" class="copy-report" onclick="copyReport()">Copy Report</button>
+	  </div>
+	</div>
+	<footer id="footer-nav"></footer>
+	<script src="motility.js"></script>
   </body>
-
-  <script>
-   for (var z = 0; z < 5; z++)
-	 addSymptom();
-
-   function validateInteger(input) {
-     input.value = input.value.replace(/[^0-9]/g, '');
-   }
-
-   function spellNumber(n) {
-     var tOne = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
-                 "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
-     var tTen = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
-     var tThousand = ["", " thousand", " million", " billion", " trillion", " quadrillion"];
-     var result = (n == 0 ? "zero" : "");
-     var i = 0;
-
-     while (n > 0) {
-       var tri = n % 1000;
-       n = Math.floor(n / 1000);
-
-       if (tri > 0) {
-         var hundred = Math.floor(tri / 100);
-         var ten = tri % 100;
-         var tTri = "";
-
-         if (hundred > 0)
-           tTri += tOne[hundred] + " hundred" + (ten > 0 ? " " : "");
-
-         if (ten > 0) {
-           if (ten < 20) {
-             tTri += tOne[ten];
-           } else {
-             var one = ten % 10;
-             ten = Math.floor(ten / 10);
-             if (ten > 0)
-               tTri += tTen[ten] + (one > 0 ? "-" : "");
-             if (one > 0)
-               tTri += tOne[one];
-           }
-         }
-         result = tTri + tThousand[i] + " " + result;
-       }
-       i++;
-     }
-     return result.trim();
-   }
-
-   function addSymptom() {
-	 var newRow = document.getElementById('symptomTable').insertRow();
-	 var inputSymptom = document.createElement('input');
-	 inputSymptom.setAttribute('name', 'symptoms');
-	 inputSymptom.setAttribute('list', 'symptomList');
-	 var inputN = document.createElement('input');
-	 inputN.type = 'number';
-	 inputN.setAttribute('name', 'symptomsN');
-	 inputN.setAttribute('oninput', 'validateInteger(this)');
-	 inputN.classList.add('half');
-	 var inputSI = document.createElement('input');
-	 inputSI.type = 'number';
-	 inputSI.classList.add('half');
-	 inputSI.setAttribute('name', 'symptomsSI');
-	 inputSI.setAttribute('step', '0.1');
-	 var inputSAP = document.createElement('input');
-	 inputSAP.type = 'number';
-	 inputSAP.classList.add('half');
-	 inputSAP.setAttribute('name', 'symptomsSAP');
-	 inputSAP.setAttribute('step', '0.1');
-	 newRow.insertCell(0).appendChild(inputSymptom);
-	 newRow.insertCell(1).appendChild(inputN);
-	 newRow.insertCell(2).appendChild(inputSI);
-	 newRow.insertCell(3).appendChild(inputSAP);
-   }
-
-   function clearAll() {
-     var inputs = document.querySelectorAll('input');
-     inputs.forEach(function(input) {
-       input.value = '';
-     });
-	 document.getElementsByName('ppi')[1].checked = true;
-	 document.getElementById('report').value = '';
-
-	 var symptomTable = document.getElementById('symptomTable');
-     for (var i = symptomTable.getElementsByTagName('tr').length - 1; i > 1; i--)
-	   symptomTable.deleteRow(i);
-	 for (var z = 0; z < 5; z++)
-	   addSymptom();
-   }
-
-   function concatenateStrings(s) {
-	 switch (s.length) {
-	   case 1: return s[0];
-	   case 2: return s[0] + " and " + s[1];
-	   default: return s.slice(0, -1).join(", ") + ", and " + s[s.length - 1];
-	 }
-   }
-
-   function createReport() {
-	 // Get input data
-	 var ppi = document.getElementsByName('ppi')[0].checked;
-	 var analysisTimeH = parseInt(document.getElementById('analysisTimeH').value) || 0;
-     var analysisTimeM = parseInt(document.getElementById('analysisTimeM').value) || 0;
-     var aetTotal = parseFloat(document.getElementById('aetTotal').value) || 0.0;
-     var aetUpright = parseFloat(document.getElementById('aetUpright').value) || 0.0;
-     var aetSupine = parseFloat(document.getElementById('aetSupine').value) || 0.0;
-     var longestReflux = parseFloat(document.getElementById('longestReflux').value) || 0.0;
-     var deMeester = parseFloat(document.getElementById('deMeester').value) || 0.0;
-	 var aetUprightHigh = (aetUpright >= 7.3);
-	 var aetSupineHigh = (aetSupine >= 1.4);
-	 var symptoms = [];
-	 var symptomsN = [];
-	 var symptomsSI = [];
-	 var symptomsSAP = [];
-	 for (var i = 0; i < document.getElementsByName('symptoms').length; i++) {
-	   if (document.getElementsByName('symptoms')[i].value != "") {
-		 symptoms.push(document.getElementsByName('symptoms')[i].value.toLowerCase());
-		 symptomsN.push(parseInt(document.getElementsByName('symptomsN')[i].value) || 0);
-		 symptomsSI.push(parseFloat(document.getElementsByName('symptomsSI')[i].value) || 0.0);
-		 symptomsSAP.push(parseFloat(document.getElementsByName('symptomsSAP')[i].value) || 0.0);
-	   }
-	 }
-
-	 // Build interpretation
-	 var report = "Interpretation:\n"
-				+ "1. 96-hour pH monitoring study was performed "
-				+ (ppi ? "on" : "off") + " PPIs. The total analysis time was "
-				+ analysisTimeH + " hour" + (analysisTimeH == 1 ? "" : "s") + " and "
-				+ analysisTimeM + " minute" + (analysisTimeM == 1 ? "" : "s") + ".\n"
-				+ "2. " + (aetTotal < 4 ? "Normal" : (aetTotal > 6 ? "Elevated" : "Borderline"))
-				+ " total acid exposure time (AET) of " + aetTotal.toFixed(1) + "%."
-				+ (aetUprightHigh || aetSupineHigh ? " Elevated AET"
-												   + (aetUprightHigh && aetSupineHigh ? " both" : "") + " while"
-												   + (aetUprightHigh ? " upright (" + aetUpright.toFixed(1) + "%)" : "")
-												   + (aetUprightHigh && aetSupineHigh ? " and" : "")
-												   + (aetSupineHigh ? " supine (" + aetSupine.toFixed(1) + "%)" : "") + "."
-				 : "") + "\n"
-			 	+ "3. The longest reflux episode lasted " + longestReflux.toFixed(1) + " minutes.\n"
-			 	+ "4. " + (deMeester < 14.7 ? "Normal" : "Elevated") + " DeMeester score of "
-				+ deMeester.toFixed(1) + " (normal <14.7).\n";
-	 var n = 4;
-	 var associated = [];
-	 var notAssociated = [];
-	 for (i = 0; i < symptoms.length; i++) {
-	   if (symptomsN[i] > 2) {
-		 var numText = spellNumber(symptomsN[i]);
-		 report += ++n + ". " + numText[0].toUpperCase() + numText.slice(1) + " " + symptoms[i] + " events recorded which were"
-				 + (symptomsSI[i] < 50 && symptomsSAP[i] < 95 ? " not" : "") + " associated with reflux episodes (SI "
-				 + symptomsSI[i].toFixed(1) + "%, SAP " + symptomsSAP[i].toFixed(1) + "%).\n";
-		 if (symptomsSI[i] < 50 && symptomsSAP[i] < 95)
-		   notAssociated.push(symptoms[i]);
-		 else
-		   associated.push(symptoms[i]);
-	   }
-	   else {
-		 report += ++n + ". Only " + symptomsN[i] + " " + symptoms[i] + " event" + (symptomsN[i] == 1 ? "" : "s") + " recorded which " + (symptomsSI[i] < 50 ? "did not coincide" : "coincided") + " with reflux episodes.\n";
-	   }
-	 }
-
-	 // Build impression
-	 report += "\nImpression:\n";
-	 if (aetTotal > 6)
-	   report += "1. pH monitoring study consistent with " + (ppi ? "breakthrough GERD despite PPIs.\n" : "GERD.\n");
-	 else if (aetTotal < 4)
-	   report += (ppi ? "1. Adequate acid suppression while on PPIs.\n" : "1. Unremarkable pH monitoring study without evidence of GERD.\n");
-	 else
-	   report += "1. pH monitoring study borderline for GERD" + (ppi ? " while on PPIs.\n" : ".\n");
-
-	 n = 2;
-	 if (associated.length) {
-	   report += "2. Symptom" + (associated.length == 1 ? "" : "s") + " of " + concatenateStrings(associated)
-			   + (associated.length == 1 ? " was" : " were") + " associated with reflux episodes.\n";
-	   n++;
-	 }
-	 if (notAssociated.length) {
-	   report += n + ". Symptom" + (notAssociated.length == 1 ? "" : "s") + " of " + concatenateStrings(notAssociated) + (notAssociated.length == 1 ? " was" : " were") + " not associated with reflux episodes.\n";
-	 }
-	 document.getElementById('report').value = report;
-	 navigator.clipboard.writeText(report);
-   }
-  </script>
 </html>

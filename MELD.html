@@ -19,181 +19,59 @@
 -->
 <html lang="en">
   <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>MELD Score Calculator</title>
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="style.css" />
   </head>
   <body>
-	<div class="app-container">
-	  <h1 class="page-title">MELD Score Calculator</h1>
-
-	  <div class="main-container">
-
-		<div class="form-section">
-		  <div class="input-group">
-			<label for="creatinine">Creatinine:</label>
-			<input type="number" id="creatinine" value="1.0" step="0.1" autocomplete="off">
-		  </div>
-		  <div class="input-group">
-			<label for="bilirubin">Bilirubin:</label>
-			<input type="number" id="bilirubin" value="1.0" step="0.1" autocomplete="off">
-		  </div>
-		  <div class="input-group">
-			<label for="inr">INR:</label>
-			<input type="number" id="inr" value="1.0" step="0.1" autocomplete="off">
-		  </div>
-		  <div class="input-group">
-			<label for="albumin">Albumin:</label>
-			<input type="number" id="albumin" value="4.0" step="0.1" autocomplete="off">
-		  </div>
-		  <div class="input-group">
-			<label for="sodium">Sodium:</label>
-			<input type="number" id="sodium" value="140" step="1" autocomplete="off">
-		  </div>
-
-		  <div class="radio-group">
-			<span class="radio-group-label">Sex:</span>
-			<div class="radio-options">
-			  <label class="radio-label">
-				<input type="radio" name="sex" value="male" checked>
-				<span class="radio-text">Male</span>
-			  </label>
-			  <label class="radio-label">
-				<input type="radio" name="sex" value="female">
-				<span class="radio-text">Female</span>
-			  </label>
-			</div>
-		  </div>
-
-		  <div class="radio-group">
-			<span class="radio-group-label">RRT:</span>
-			<div class="radio-options">
-			  <label class="radio-label">
-				<input type="radio" name="rrt" value="no" checked>
-				<span class="radio-text">No</span>
-			  </label>
-			  <label class="radio-label">
-				<input type="radio" name="rrt" value="yes">
-				<span class="radio-text">Yes</span>
-			  </label>
-			</div>
-		  </div>
-
-          <button onclick="calculateAll()" class="calculate-button">
-            Calculate
-          </button>
+	<h1><span title="Model for end-stage liver disease">MELD</span> Score Calculator</h1>
+	<div class="app-container two">
+	  <div class="panel">
+		<div class="text-field">
+          <label for="creatinine">Creatinine <em>(mg/dL)</em>:</label>
+          <input type="number" id="creatinine" autocomplete="off" />
 		</div>
-
-		<div id="result" class="result-section">
-		  <h2>Results</h2>
+		<div class="text-field">
+          <label for="bilirubin">Bilirubin <em>(mg/dL)</em>:</label>
+          <input type="number" id="bilirubin" autocomplete="off" />
 		</div>
-
+		<div class="text-field">
+          <label for="inr"><span title="International normalized ratio">INR</span>:</label>
+          <input type="number" id="inr" autocomplete="off" />
+		</div>
+		<div class="text-field">
+          <label for="sodium">Sodium <em>(mEq/L)</em>:</label>
+          <input type="number" id="sodium" autocomplete="off" />
+		</div>
+		<div class="text-field">
+          <label for="albumin">Albumin <em>(g/dL)</em>:</label>
+          <input type="number" id="albumin" autocomplete="off" />
+		</div>
+		<div class="radio-field">
+		  <label for="sex">Sex:</label>
+		  <div id="sex">
+			<label><input type="radio" name="sex" value="male" checked /> Male</label>
+			<label><input type="radio" name="sex" value="female" /> Female</label>
+		  </div>
+		</div>
+		<div class="radio-field">
+		  <label for="rrt"><span title="Renal replacement therapy">RRT:</span></label>
+		  <div id="rrt">
+			<label><input type="radio" name="rrt" value="no" checked /> No</label>
+			<label><input type="radio" name="rrt" value="yes" /> Yes</label>
+		  </div>
+		</div>
+		<button onclick="calculateMeld()" class="calculate-button">
+          Calculate
+        </button>
 	  </div>
-
+	  <div class="panel results">
+		<h2>Results</h2>
+		<div id="result"></div>
+	  </div>
 	</div>
-
-	<script>
-	 /*
-	  *  	 function validateInteger(input) {
-	  *        input.value = input.value.replace(/[^0-9]/g, '');
-	  *  	 }
-	  *
-	  *  	 function validateFloat(input) {
-	  *        input.value = input.value.replace(/[^.0-9]/g, '');
-	  *  	 }
-	  *  */
-	 function getMeld(creatinine, bilirubin, inr, isRrt) {
-	   if (isRrt) creatinine = 4.0
-	   let meld = 9.57 * Math.log(Math.max(creatinine, 1.0))
-				+ 3.78 * Math.log(Math.min(Math.max(bilirubin, 1.0), 4.0))
-				+ 11.2 * Math.log(inr)
-				+ 6.43
-	   return Math.round(meld)
-	 }
-
-	 function getMeldMortality(meld) {
-	   return meld < 10 ? 0.019
-				   : meld < 20 ? 0.060
-						  : meld < 30 ? 0.196
-								 : meld < 40 ? 0.526 : 0.713
-	 }
-
-	 function getMeldNa(creatinine, bilirubin, inr, sodium, isRrt) {
-	   let meldNa = getMeld(creatinine, bilirubin, inr, isRrt)
-	   if (meldNa > 11) {
-		 meldNa = meldNa + 1.32 * (137 - sodium) - (0.033 * meldNa * (137 - sodium))
-	   }
-	   return Math.round(meldNa)
-	 }
-
-	 function getMeld3(creatinine, bilirubin, inr, sodium, albumin, isRrt, isFemale) {
-	   if (isRrt) creatinine = 3.0
-	   let logBilirubin = Math.log(Math.max(bilirubin, 1.0))
-	   let logCreatinine = Math.log(Math.min(Math.max(creatinine, 1.0), 3.0))
-	   let logInr = Math.log(Math.max(inr, 1.0))
-	   let nSodium = 137 - Math.min(Math.max(sodium, 125), 137)
-	   let nAlbumin = 3.5 - Math.min(Math.max(albumin, 1.5), 3.5)
-	   let meld3 = (isFemale ? 1.33 : 0.0)
-				 + 4.56 * logBilirubin
-				 + 0.82 * nSodium
-				 - 0.24 * nSodium * logBilirubin
-				 + 9.09 * logInr
-				 + 11.14 * logCreatinine
-				 + 1.85 * nAlbumin
-				 - 1.83 * nAlbumin * logCreatinine
-				 + 6
-	   return Math.round(meld3)
-	 }
-
-	 function getMeld3Survival(meld3, days) {
-	   let s0 = 0
-	   switch (days) {
-		 case 15: s0 = 0.991; break;
-		 case 30: s0 = 0.981; break;
-		 case 45: s0 = 0.971; break;
-		 case 60: s0 = 0.963; break;
-		 case 75: s0 = 0.955; break;
-		 case 90: s0 = 0.946; break;
-	   }
-	   return s0 ** Math.exp(0.17698 * meld3 - 3.56)
-	 }
-
-	 function toPercent(p, decimals = 0) {
-	   return (p * 100).toFixed(decimals) + "%"
-	 }
-
-	 function calculateAll() {
-	   let creatinine = parseFloat(document.getElementById('creatinine').value) || 0;
-	   let bilirubin = parseFloat(document.getElementById('bilirubin').value) || 0;
-	   let inr = parseFloat(document.getElementById('inr').value) || 0;
-	   let albumin = parseFloat(document.getElementById('albumin').value) || 0;
-	   let sodium = parseFloat(document.getElementById('sodium').value) || 0;
-
-	   let isFemale = document.querySelector('input[name="sex"][value="female"]').checked;
-	   let isRrt = document.querySelector('input[name="rrt"][value="yes"]').checked;
-
-	   let meld = getMeld(creatinine, bilirubin, inr, isRrt)
-	   let meldMortality = getMeldMortality(meld)
-	   let meldNa = getMeldNa(creatinine, bilirubin, inr, sodium, isRrt)
-	   let meld3 = getMeld3(creatinine, bilirubin, inr, sodium, albumin, isRrt, isFemale)
-
-	   document.getElementById('result').innerHTML = `
-		 <table class="result-table">
-		   <tr><td width="50%">MELD:</td><td>${meld}</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;90-day mortality:</td><td>${toPercent(meldMortality, 1)}</td></tr>
-		   <tr><td colspan="2"><hr></td></tr>
-		   <tr><td>MELD-Na:</td><td>${meldNa}</td></tr>
-		   <tr><td colspan="2"><hr></td></tr>
-		   <tr><td>MELD 3.0:</td><td>${meld3}</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;15-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 15), 1)}</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;30-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 30), 1)}</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;45-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 45), 1)}</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;60-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 60), 1)}</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;75-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 75), 1)}</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;90-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 90), 1)}</td></tr>
-		 </table>`
-	 }
-	</script>
+	<footer id="footer-nav"></footer>
+	<script src="hepatology.js"></script>
   </body>
 </html>

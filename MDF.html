@@ -30,19 +30,16 @@
 	  <div class="panel">
 		<div class="text-field">
           <label for="pt"><span title="Prothrombin time">PT</span> <em>(seconds)</em>:</label>
-          <input type="number" id="pt" step="0.1" autocomplete="off" />
+          <input type="number" oninput="calculateMdf()" id="pt" step="0.1" autocomplete="off" />
 		</div>
 		<div class="text-field">
           <label for="pt-ref"><span title="Prothrombin time">PT</span> control <em>(seconds)</em>:</label>
-          <input type="number" id="pt-ref" step="0.1" autocomplete="off" />
+          <input type="number" oninput="calculateMdf()" id="pt-ref" step="0.1" autocomplete="off" />
 		</div>
 		<div class="text-field">
           <label for="bilirubin">Bilirubin <em>(mg/dL)</em>:</label>
-          <input type="number" id="bilirubin" step="0.1" autocomplete="off" />
+          <input type="number" oninput="calculateMdf()" id="bilirubin" step="0.1" autocomplete="off" />
 		</div>
-		<button onclick="calculateMdf()" class="calculate-button">
-          Calculate
-        </button>
 	  </div>
 	  <div class="panel results">
 		<h2>Results</h2>

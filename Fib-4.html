@@ -30,30 +30,27 @@
 	  <div class="panel">
 		<div class="text-field">
           <label for="age">Age:</label>
-          <input type="number" id="age" autocomplete="off" />
+          <input type="number" oninput="calculateFib4()" id="age" autocomplete="off" />
 		</div>
 		<div class="text-field">
           <label for="platelets">Platelets <em>(10<sup>9</sup>/L)</em>:</label>
-          <input type="number" id="platelets" autocomplete="off" />
+          <input type="number" oninput="calculateFib4()" id="platelets" autocomplete="off" />
 		</div>
 		<div class="text-field">
           <label for="ast"><span title="Aspartate transaminase">AST</span> <em>(U/L)</em>:</label>
-          <input type="number" id="ast" autocomplete="off" />
+          <input type="number" oninput="calculateFib4()" id="ast" autocomplete="off" />
 		</div>
 		<div class="text-field">
           <label for="alt"><span title="Alanine transaminase">ALT</span> <em>(U/L)</em>:</label>
-          <input type="number" id="alt" autocomplete="off" />
+          <input type="number" oninput="calculateFib4()" id="alt" autocomplete="off" />
 		</div>
 		<div class="radio-field">
 		  <label for="isMasld">Etiology:</label>
 		  <div id="isMasld">
-			<label><input type="radio" name="isMasld" value="masld" checked /> MASLD</label>
-			<label><input type="radio" name="isMasld" value="other" /> Other</label>
+			<label><input type="radio" onchange="calculateFib4()" name="isMasld" value="masld" checked /> MASLD</label>
+			<label><input type="radio" onchange="calculateFib4()" name="isMasld" value="other" /> Other</label>
 		  </div>
 		</div>
-        <button onclick="calculateFib4()" class="calculate-button">
-          Calculate
-        </button>
 	  </div>
 	  <div class="panel results">
 		<h2>Results</h2>

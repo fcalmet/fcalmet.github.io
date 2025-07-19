@@ -41,7 +41,7 @@ function error(message, id) {
 	document.getElementById(id).focus();
 }
 
-function setResult(html) {
+function setResult(html = '') {
 	document.getElementById('result').innerHTML = html;
 }
 
@@ -77,10 +77,7 @@ function calculateFib4() {
 	let alt = parseFloat(document.getElementById('alt').value) || -1;
 	let isMasld = document.querySelector('input[name="isMasld"][value="masld"]').checked;
 
-	if (age < 0) return error('Missing age', 'age');
-	if (platelets < 0) return error('Missing platelets', 'platelets');
-	if (ast < 0) return error('Missing AST', 'ast');
-	if (alt < 0) return error('Missing ALT', 'alt');
+	if (age < 0 || platelets < 0 || ast < 0 || alt < 0) return setResult();
 
 	let fib4 = getFib4(age, platelets, ast, alt)
 	let fib4interpretation = getFib4Interpretation(fib4, age, isMasld)
@@ -119,12 +116,7 @@ function calculateLille() {
 	let creatinine = parseFloat(document.getElementById('creatinine').value) || -1;
 	let pt = parseFloat(document.getElementById('pt').value) || -1;
 
-	if (age < 0) return error('Missing age', 'age');
-	if (albumin < 0) return error('Missing albumin', 'albumin');
-	if (bilirubin0 < 0) return error('Missing bilirubin (day 0)', 'bilirubin0');
-	if (bilirubin7 < 0) return error('Missing bilirubin (day 7)', 'bilirubin7');
-	if (creatinine < 0) return error('Missing creatinine', 'creatinine');
-	if (pt < 0) return error('Missing PT', 'pt');
+	if (age < 0 || albumin < 0 || bilirubin0 < 0 || bilirubin7 < 0 || creatinine < 0 || pt < 0) return setResult()
 
 	let lille = getLille(age, albumin, bilirubin0, bilirubin7, creatinine, pt)
 	let lilleMortality = getLilleMortality(lille)
@@ -157,9 +149,7 @@ function calculateMdf() {
 	let ptRef = parseFloat(document.getElementById('pt-ref').value) || -1;
 	let bilirubin = parseFloat(document.getElementById('bilirubin').value) || -1;
 
-	if (pt < 0) return error('Missing patient\'s PT', 'pt');
-	if (ptRef < 0) return error('Missing control PT', 'pt-ref');
-	if (bilirubin < 0) return error('Missing bilirubin', 'bilirubin');
+	if (pt < 0 || ptRef < 0 || bilirubin < 0) return setResult()
 
 	let mdf = getMdf(pt, ptRef, bilirubin)
 	let mdfInterpretation = getMdfInterpretation(mdf)
@@ -238,12 +228,10 @@ function calculateMeld() {
 	let sodium = parseFloat(document.getElementById('sodium').value) || -1;
 	let albumin = parseFloat(document.getElementById('albumin').value) || -1;
 
-	if (creatinine < 0) return error('Missing creatinine', 'creatinine');
-	if (bilirubin < 0) return error('Missing bilirubin', 'bilirubin');
-	if (inr < 0) return error('Missing INR', 'inr');
+	if (creatinine < 0 || bilirubin < 0 || inr < 0) return setResult()
 
-	let isFemale = document.querySelector('input[name="sex"][value="female"]').checked;
-	let isRrt = document.querySelector('input[name="rrt"][value="yes"]').checked;
+	let isFemale = document.querySelector('input[name="sex"][value="female"]').checked
+	let isRrt = document.querySelector('input[name="rrt"][value="yes"]').checked
 
 	let meld = getMeld(creatinine, bilirubin, inr, isRrt)
 	let meldMortality = getMeldMortality(meld)

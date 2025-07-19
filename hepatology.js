@@ -45,6 +45,50 @@ function setResult(html = '') {
 	document.getElementById('result').innerHTML = html;
 }
 
+/**********/
+/** APRI **/
+/**********/
+
+function getApri(ast, astUln, platelets) {
+	return ast / astUln / platelets
+}
+
+function getApriInterpretation(apri) {
+	let interpretation = ''
+	if (apri >= 2) {
+		interpretation = 'F4 (46% sensitive, 91% specific)<br />F3-F4 (36% sensitive, 93% specific)'
+	} else if (apri >= 1.5) {
+		interpretation = 'F4 (76% sensitive, 72% specific)<br />F3-F4 (50% sensitive, 87% specific)'
+	} else if (apri >= 1) {
+		interpretation = 'F4 (76% sensitive, 72% specific)<br />F3-F4 (61% sensitive, 64% specific)<br />F2-F4 (62% sensitive, 45% specific)'
+	} else if (apri >= 0.7) {
+		interpretation = 'F2-F4 (77% sensitive, 72% specific)'
+	} else {
+		interpretation = 'F0-F1'
+	}
+	return interpretation
+}
+
+function calculateApri() {
+	let ast = parseFloat(document.getElementById('ast').value) || -1;
+	let astUln = parseFloat(document.getElementById('ast-uln').value) || -1;
+	let platelets = parseFloat(document.getElementById('platelets').value) || -1;
+
+	if (ast < 0 || astUln < 0 || platelets < 0) return setResult();
+
+	let apri = getApri(ast, astUln, platelets)
+	let apriInterpretation = getApriInterpretation(apri)
+
+	setResult(
+		`<ul>
+           <li>APRI: ${apri.toFixed(3)}
+           <ul>
+             <li>${apriInterpretation}</li>
+           </ul>
+           </li>
+         </ul>`)
+}
+
 /***********/
 /** Fib-4 **/
 /***********/

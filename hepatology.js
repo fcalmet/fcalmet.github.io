@@ -65,7 +65,7 @@ function getFib4Interpretation(fib4, age, isMasld = true) {
 		interpretation = 'Indeterminate result'
 	}
 	if (isMasld && age < 35) {
-		interpretation += ' (low accuracy in individuals aged <35)'
+		interpretation += '<br />(low accuracy in individuals aged <35)'
 	}
 	return interpretation
 }
@@ -82,11 +82,14 @@ function calculateFib4() {
 	let fib4 = getFib4(age, platelets, ast, alt)
 	let fib4interpretation = getFib4Interpretation(fib4, age, isMasld)
 
-	setResult(`
-		 <table class="results">
-		   <tr><td>Fib-4: ${fib4.toFixed(3)}</td></tr>
-		   <tr><td>${fib4interpretation}</td></tr>
-		 </table>`)
+	setResult(
+		`<ul>
+           <li>Fib-4: ${fib4.toFixed(3)}
+           <ul>
+             <li>${fib4interpretation}</li>
+           </ul>
+           </li>
+         </ul>`)
 }
 
 /*****************/
@@ -122,14 +125,13 @@ function calculateLille() {
 	let lilleMortality = getLilleMortality(lille)
 
 	setResult(`
-		 <table class="results">
-		   <tr><td>Lille Score:</td><td>${lille.toFixed(3)}</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;6-month survival:</td><td>${toPercent(lilleMortality)}</td></tr>
-		   <tr><td colspan="2"><hr></td></tr>
-		   <tr><td colspan="2">6-month predicted survival</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;Score &lt;0.45</td><td>85%</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;Score &gt;0.45</td><td>25%</td></tr>
-		 </table>`)
+		 <ul>
+		   <li>Lille Score:</td><td>${lille.toFixed(3)}
+           <ul>
+             <li>6-month survival:</td><td>${toPercent(lilleMortality)}</li>
+           </ul>
+           </li>
+		 </ul>`)
 }
 
 /*******************/
@@ -155,10 +157,13 @@ function calculateMdf() {
 	let mdfInterpretation = getMdfInterpretation(mdf)
 
 	setResult(`
-		 <table class="results">
-		   <tr><td>Maddrey score: ${mdf.toFixed()}</td></tr>
-		   <tr><td>${mdfInterpretation}</td></tr>
-		 </table>`)
+		 <ul>
+		   <li>Maddrey score: ${mdf.toFixed()}
+           <ul>
+		     <li>${mdfInterpretation}</li>
+           </ul>
+           </li>
+		 </ul>`)
 }
 
 /****************/
@@ -239,25 +244,31 @@ function calculateMeld() {
 	let meld3 = getMeld3(creatinine, bilirubin, inr, sodium, albumin, isRrt, isFemale)
 
 	let html = `
-		 <table class="results">
-		   <tr><td>MELD:</td><td>${meld}</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;90-day mortality:</td><td>${toPercent(meldMortality, 1)}</td></tr>`;
+		 <ul>
+		   <li>MELD: ${meld}
+           <ul>
+		     <li>90-day mortality: ${toPercent(meldMortality, 1)}</li>
+           </ul>
+           </li>
+`;
 
 	if (sodium >= 0)
-		html += `<tr><td colspan="2"><hr></td></tr>
-		   <tr><td>MELD-Na:</td><td>${meldNa}</td></tr>`;
+		html += `<li>MELD-Na: ${meldNa}</li>`;
 
 	if (sodium >= 0 && albumin >= 0)
-		html += `<tr><td colspan="2"><hr></td></tr>
-		   <tr><td>MELD 3.0:</td><td>${meld3}</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;15-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 15), 1)}</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;30-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 30), 1)}</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;45-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 45), 1)}</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;60-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 60), 1)}</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;75-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 75), 1)}</td></tr>
-		   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;90-day survival:</td><td>${toPercent(getMeld3Survival(meld3, 90), 1)}</td></tr>`
+		html += `
+		   <li>MELD 3.0: ${meld3}
+           <ul>
+		     <li>15-day survival: ${toPercent(getMeld3Survival(meld3, 15), 1)}</li>
+		     <li>30-day survival: ${toPercent(getMeld3Survival(meld3, 30), 1)}</li>
+		     <li>45-day survival: ${toPercent(getMeld3Survival(meld3, 45), 1)}</li>
+		     <li>60-day survival: ${toPercent(getMeld3Survival(meld3, 60), 1)}</li>
+		     <li>75-day survival: ${toPercent(getMeld3Survival(meld3, 75), 1)}</li>
+		     <li>90-day survival: ${toPercent(getMeld3Survival(meld3, 90), 1)}</li>
+           </ul>
+           </li>`
 
-	html += `</table>`
+	html += `</ul>`
 
 	setResult(html);
 }

@@ -277,11 +277,10 @@ function calculateMeld() {
 	let inr = parseFloat(document.getElementById('inr').value) || -1;
 	let sodium = parseFloat(document.getElementById('sodium').value) || -1;
 	let albumin = parseFloat(document.getElementById('albumin').value) || -1;
-
-	if (creatinine < 0 || bilirubin < 0 || inr < 0) return setResult()
-
 	let isFemale = document.querySelector('input[name="sex"][value="female"]').checked
 	let isRrt = document.querySelector('input[name="rrt"][value="yes"]').checked
+
+	if ((creatinine < 0 && !isRrt) || bilirubin < 0 || inr < 0) return setResult()
 
 	let meld = getMeld(creatinine, bilirubin, inr, isRrt)
 	let meldMortality = getMeldMortality(meld)

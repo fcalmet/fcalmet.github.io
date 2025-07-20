@@ -125,13 +125,13 @@ function calculateFib4() {
 	if (age < 0 || platelets < 0 || ast < 0 || alt < 0) return setResult();
 
 	let fib4 = getFib4(age, platelets, ast, alt)
-	let fib4interpretation = getFib4Interpretation(fib4, age, isMasld)
+	let fib4Interpretation = getFib4Interpretation(fib4, age, isMasld)
 
 	setResult(
 		`<ul>
            <li>Fib-4: ${fib4.toFixed(3)}
            <ul>
-             <li>${fib4interpretation}</li>
+             <li>${fib4Interpretation}</li>
            </ul>
            </li>
          </ul>`)

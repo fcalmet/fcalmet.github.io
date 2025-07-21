@@ -1,11 +1,16 @@
-#+Gastroenterology & Hepatology
+#+TITLE: Gastroenterology & Hepatology
 * Web pages [0/3]
 - [ ] footer is crammed in narrow screens
 - [ ] wrapped lined in index.htnl are left aligned in narrow screens
 - [ ] automatically create calculator pages: PHP? JavaScript?
 
-* Calculators
-- [ ] NFS
+* Calculators [5/47]
+- [X] APRI
+- [X] Lille
+- [X] MELD
+- [X] Maddrey
+- [X] Fib-4
+- [ ] NAFLD fibrosis score
 - [ ] Vocal Penn score
 - [ ] Mayo perioperative score
 - [ ] Child-Pugh-Turcotte
@@ -13,4 +18,37 @@
 - [ ] ANI score
 - [ ] CLIF score
 - [ ] ACLF criteria
-- [ ] AIH criteria
+- [ ] AIH criteria - simplified
+- [ ] AIH criteria - revised original score
+- [ ] R factor for liver injury
+- [ ] UK-ELD
+- [ ] EVendo esophageal varices
+- [ ] SAAG
+- [ ] REACH-B score for HCC
+- [ ] ABIC for alcoholic hepatitis
+- [ ] King's college criteria for APAP toxicity
+- [ ] Revised natural history model for PSC
+- [ ] Fatty liver index
+- [ ] Liver decompensation risk after hepatectomy for HCC
+- [ ] ALBI (albumin-bilirubin) grade for HCC
+- [ ] ICI hepatitis grades severity
+- [ ] CAGE questions alcohol use
+- [ ] HOMA-IR
+- [ ] Fibrotic NASH index (FNI)
+- [ ] Glasgow Alcoholic Hepatitis Score
+- [ ] NAFLD activity score (NAS)
+- [ ] Hepatic encephalopathy grades/stages
+- [ ] BCLC staging
+- [ ] BARD score for NAFLD fibrosis
+- [ ] Milan criteria for LT
+- [ ] Metroticket calculator for HCC
+- [ ] GALAD model for HCC
+- [ ] ALFED (for ALF)
+- [ ] Hepatic steatosis index (HSI)
+- [ ] Bonacini cirrhosis discriminant score
+- [ ] PBC Globe
+- [ ] PBC Mayo Survival Score
+- [ ] UK PBC score
+- [ ] Free copper calculator
+- [ ] Nazer's Wilson prognostic index
+- [ ] Revised Wilson prognostic index

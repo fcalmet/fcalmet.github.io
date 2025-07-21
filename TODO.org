@@ -1,5 +1,16 @@
 #+Gastroenterology & Hepatology
-* TODO [0/2]
+* Web pages [0/3]
 - [ ] footer is crammed in narrow screens
 - [ ] wrapped lined in index.htnl are left aligned in narrow screens
+- [ ] automatically create calculator pages: PHP? JavaScript?
 
+* Calculators
+- [ ] NFS
+- [ ] Vocal Penn score
+- [ ] Mayo perioperative score
+- [ ] Child-Pugh-Turcotte
+- [ ] NAC dosing
+- [ ] ANI score
+- [ ] CLIF score
+- [ ] ACLF criteria
+- [ ] AIH criteria

@@ -1,0 +1,5 @@
+#+Gastroenterology & Hepatology
+* TODO [0/2]
+- [ ] footer is crammed in narrow screens
+- [ ] wrapped lined in index.htnl are left aligned in narrow screens
+

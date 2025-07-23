@@ -1,21 +1,21 @@
 /*
-   Copyright (C) 2025 by Fernando Calmet
+  Copyright (C) 2025 by Fernando Calmet
 
-   Author: Fernando Calmet
+  Author: Fernando Calmet
 
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
 
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
 
 /**********************************************/
 /** Create Footer Navigation Programatically **/
@@ -56,8 +56,8 @@ function createArmReport() {
   const betM = parseInt(document.getElementById('betM').value) || 0;
   const betS = parseInt(document.getElementById('betS').value) || 0;
   const betTime = (betM == 0 ? "" : betM + " minute" + (betM == 1 ? "" : "s"))
-				+ (betM > 0 && betS > 0 ? " and " : "")
-				+ (betM == 0 || betS == 0 ? "" : betS + " second" + (betS == 1 ? "" : "s"));
+		+ (betM > 0 && betS > 0 ? " and " : "")
+		+ (betM == 0 || betS == 0 ? "" : betS + " second" + (betS == 1 ? "" : "s"));
 
   const restingL = (female ? 71 : 89)
   const restingU = (female ? 81 : 96)
@@ -91,35 +91,35 @@ function createArmReport() {
 
   // Build interpretation
   let report = "Interpretation / Findings\n"
-			 + "1. " + (ias == -1 ? "Weak" : (ias == 1 ? "Elevated" : "Normal")) + " resting pressure with "
-			 + (eas == -1 ? "an inadequate" : (eas == 1 ? "an elevated" : "a normal")) + " squeeze pressure.\n"
-			 + "2. "
+	  + "1. " + (ias == -1 ? "Weak" : (ias == 1 ? "Elevated" : "Normal")) + " resting pressure with "
+	  + (eas == -1 ? "an inadequate" : (eas == 1 ? "an elevated" : "a normal")) + " squeeze pressure.\n"
+	  + "2. "
   switch (dd) {
-	case 1: report += "Paradoxical contraction of anal sphincter muscles"; break;
-	case 2: report += "Paradoxical contraction of anal sphincter muscles and inadequate intrarectal pressure"; break;
-	case 3: report += "Inadequate relaxation of anal sphincter muscles"; break;
-	case 4: report += "Inadequate relaxation of anal sphincter muscles and inadequate intrarectal pressure"; break;
-	case 5: report += "Normal relaxation of anal sphincter muscles and inadequate intrarectal pressure"; break;
-	case 0: report += "Normal relaxation of anal sphincter muscles"; break;
+  case 1: report += "Paradoxical contraction of anal sphincter muscles"; break;
+  case 2: report += "Paradoxical contraction of anal sphincter muscles and inadequate intrarectal pressure"; break;
+  case 3: report += "Inadequate relaxation of anal sphincter muscles"; break;
+  case 4: report += "Inadequate relaxation of anal sphincter muscles and inadequate intrarectal pressure"; break;
+  case 5: report += "Normal relaxation of anal sphincter muscles and inadequate intrarectal pressure"; break;
+  case 0: report += "Normal relaxation of anal sphincter muscles"; break;
   }
   report += " during defecation maneuver.\n"
-		  + "3. RAIR " + (rair ? "present.\n" : "absent.\n")
-		  + "4. Cough reflex " + (cough ? "present.\n" : "absent.\n")
-		  + "5. " + (defects ? "Sphincter defect noted" : "No sphincter defects") + " on 3D reconstruction images.\n"
-		  + "6. ";
+	+ "3. RAIR " + (rair ? "present.\n" : "absent.\n")
+	+ "4. Cough reflex " + (cough ? "present.\n" : "absent.\n")
+	+ "5. " + (defects ? "Sphincter defect noted" : "No sphincter defects") + " on 3D reconstruction images.\n"
+	+ "6. ";
 
   if (sens1 == sens2 && sens2 == sens3)
 	report += (sens1 == -1 ? "Low" : (sens1 == 1 ? "Elevated" : "Normal")) + " first sensation, urge, and discomfort volumes.\n";
   else if (sens1 == sens2)
 	report += (sens1 == -1 ? "Low" : (sens1 == 1 ? "Elevated" : "Normal")) + " first sensation and urge volumes; "
-			+ (sens3 == -1 ? "low" : (sens3 == 1 ? "elevated" : "normal")) + " discomfort volume.\n";
+	+ (sens3 == -1 ? "low" : (sens3 == 1 ? "elevated" : "normal")) + " discomfort volume.\n";
   else if (sens2 == sens3)
 	report += (sens1 == -1 ? "Low" : (sens1 == 1 ? "Elevated" : "Normal")) + " first sensation volume; "
-			+ (sens3 == -1 ? "low" : (sens3 == 1 ? "elevated" : "normal")) + " urge and discomfort volumes.\n";
+	+ (sens3 == -1 ? "low" : (sens3 == 1 ? "elevated" : "normal")) + " urge and discomfort volumes.\n";
   else
 	report += (sens1 == -1 ? "Low" : (sens1 == 1 ? "Elevated" : "Normal")) + " first sensation volume, "
-			+ (sens2 == -1 ? "low" : (sens2 == 1 ? "elevated" : "normal")) + " urge volume, and ";
-		+ (sens3 == -1 ? "low" : (sens3 == 1 ? "elevated" : "normal")) + " discomfort volume.\n";
+	+ (sens2 == -1 ? "low" : (sens2 == 1 ? "elevated" : "normal")) + " urge volume, and ";
+	+ (sens3 == -1 ? "low" : (sens3 == 1 ? "elevated" : "normal")) + " discomfort volume.\n";
 
   if (betDone)
 	report += "7. Balloon " + (betPassed ? "expelled at " : "not expelled by ") + betTime + ".\n";
@@ -138,15 +138,15 @@ function createArmReport() {
 	report += ++i + ". Anal normotension with hypocontractility (weak external anal sphincter).\n";
   if (!betDone) {
 	report += (dd == 5 ? ++i + ". Poor propulsion.\n"
-			 : (dd >= 1 ? ++i + ". Abnormal manometric pattern of rectoanal coordination (dyssynergic defecation type " + dd + ").\n" : ""));
+			   : (dd >= 1 ? ++i + ". Abnormal manometric pattern of rectoanal coordination (dyssynergic defecation type " + dd + ").\n" : ""));
   } else if (betPassed) {
 	report += (dd >= 1 ? ++i + ". Normal expulsion with abnormal manometric pattern of rectoanal coordination.\n" : "");
   } else {
 	switch (dd) {
-	  case 2: case 4: report += ++i + ". Abnormal expulsion with poor propulsion and dyssynergia (dyssynergic defecation type " + dd + ")\n"; break;
-	  case 1: case 3: report += ++i + ". Abnormal expulsion with dyssynergia (dyssynergic defecation type " + dd + ")\n"; break;
-	  case 5: report += ++i + ". Abnormal expulsion with poor propulsion.\n"; break;
-	  default: report += ++i + ". Abnormal expulsion with normal manometric pattern of rectoanal coordination.\n"; break;
+	case 2: case 4: report += ++i + ". Abnormal expulsion with poor propulsion and dyssynergia (dyssynergic defecation type " + dd + ")\n"; break;
+	case 1: case 3: report += ++i + ". Abnormal expulsion with dyssynergia (dyssynergic defecation type " + dd + ")\n"; break;
+	case 5: report += ++i + ". Abnormal expulsion with poor propulsion.\n"; break;
+	default: report += ++i + ". Abnormal expulsion with normal manometric pattern of rectoanal coordination.\n"; break;
 	}
   }
   if (sens1 == -1 || sens2 == -1 || sens3 == -1)
@@ -234,9 +234,9 @@ function createHremReport() {
 
   var i = 0;
   var report = "Interpretation / Findings\n"
-			 + ++i + ". " + (uesPressure < uesPressureL ? "Hypo" : (uesPressure > uesPressureU ? "Hyper" : "Normo"))
-			 + "tensive UES with " + (uesIRP < uesIRPU ? "" : "in") + "adequate relaxation.\n"
-			 + ++i + ". " + (lesPressure < lesPressureL ? "Hypo" : (lesPressure > lesPressureU ? "Hyper" : "Normo")) + "tensive LES with ";
+	  + ++i + ". " + (uesPressure < uesPressureL ? "Hypo" : (uesPressure > uesPressureU ? "Hyper" : "Normo"))
+	  + "tensive UES with " + (uesIRP < uesIRPU ? "" : "in") + "adequate relaxation.\n"
+	  + ++i + ". " + (lesPressure < lesPressureL ? "Hypo" : (lesPressure > lesPressureU ? "Hyper" : "Normo")) + "tensive LES with ";
 
   if (lesIRPsupine < lesIRPsupineU) {
 	report += "adequate relaxation while supine " + (lesIRPupright < lesIRPuprightU ? "and upright.\n" : "although elevated IRP while upright.\n");
@@ -245,58 +245,58 @@ function createHremReport() {
 	  report += "elevated IRP while supine which normalizes while upright.\n"
 	else
 	  report += "inadequate relaxation while supine and upright"
-			  + (ibp < ibpU ? ", likely artifactual in absence of intrabolus pressurization.\n"
-					 : " with intrabolus pressurization in " + ibp.toFixed(1) + "% of swallows.\n");
+	  + (ibp < ibpU ? ", likely artifactual in absence of intrabolus pressurization.\n"
+		 : " with intrabolus pressurization in " + ibp.toFixed(1) + "% of swallows.\n");
   }
   switch (diagnosis) {
-	case 0:
-	case 4: report += ++i + ". Normal peristalsis with " + (intact < 100 ? "most" : "all") + " swallows with a mean DCI of " + dci.toFixed(1) + " mmHg·cm·s.\n"; break;
-	case 1:
-	case 5: report += ++i + ". 100% failed peristalsis.\n"; break;
-	case 2: report += ++i + ". 100% failed peristalsis with panesophageal pressurization in " + panesophageal.toFixed(1) + "% of swallows.\n"; break;
-	case 3: report += ++i + ". 100% failed peristalsis with premature/spastic contractions in " + premature.toFixed(1) + "% of swallows.\n"; break;
-	case 6: report += ++i + ". Frequent premature contractions in " + premature.toFixed(1) + "% of swallows with a mean DCI of " + dci.toFixed(1) + " mmHg·cm·s.\n"; break;
-	case 7: report += ++i + ". Frequent hypercontractile peristalsis in " + hypercontractile.toFixed(1) + "% of supine swallows with a mean DCI of " + dci.toFixed(1) + " mmHg·cm·s.\n"; break;
-	case 8:
-	  report += ++i + ". Frequent " + (failed >= 50 ? "failed" : "ineffective") + " peristalsis in " + (failed >= 50 ? failed : ineffective).toFixed(1) + "% of swallows.\n";
-	  break;
+  case 0:
+  case 4: report += ++i + ". Normal peristalsis with " + (intact < 100 ? "most" : "all") + " swallows with a mean DCI of " + dci.toFixed(1) + " mmHg·cm·s.\n"; break;
+  case 1:
+  case 5: report += ++i + ". 100% failed peristalsis.\n"; break;
+  case 2: report += ++i + ". 100% failed peristalsis with panesophageal pressurization in " + panesophageal.toFixed(1) + "% of swallows.\n"; break;
+  case 3: report += ++i + ". 100% failed peristalsis with premature/spastic contractions in " + premature.toFixed(1) + "% of swallows.\n"; break;
+  case 6: report += ++i + ". Frequent premature contractions in " + premature.toFixed(1) + "% of swallows with a mean DCI of " + dci.toFixed(1) + " mmHg·cm·s.\n"; break;
+  case 7: report += ++i + ". Frequent hypercontractile peristalsis in " + hypercontractile.toFixed(1) + "% of supine swallows with a mean DCI of " + dci.toFixed(1) + " mmHg·cm·s.\n"; break;
+  case 8:
+	report += ++i + ". Frequent " + (failed >= 50 ? "failed" : "ineffective") + " peristalsis in " + (failed >= 50 ? failed : ineffective).toFixed(1) + "% of swallows.\n";
+	break;
   }
   report += ++i + ". " + (ibc > 0 ? "Inc" : "C") + "omplete bolus clearance achieved with " + (ibc < 100 ? ibc.toFixed(1) + "%" : "all") + " swallows.\n"
-		  + ++i + ". " + (mrsBody && mrsLes && !mrsPep && mrsAug ? "N" : "Abn") + "ormal multiple rapid swallows (MRS) maneuver with"
-		  + (mrsBody ? "" : "out") + " deglutitive inhibition of esophageal body, with"
-		  + (mrsLes ? "" : "out") + " deglutitive inhibition of LES, with"
-		  + (mrsPep ? "" : "out") + " panesophageal pressurization, and with"
-		  + (mrsAug ? "" : "out") + " post-MRS contraction augmentation.\n"
-		  + ++i + ". " + (rdcBody && rdcLes && !rdcPep && !rdcShort ? "N" : "Abn") + "ormal rapid drink challenge (RDC) with"
-		  + (rdcBody ? "" : "out") + " deglutitive inhibition of esophageal body, with"
-		  + (rdcLes ? "" : "out") + " deglutitive inhibition of LES, with"
-		  + (rdcPep ? "" : "out") + " panesophageal pressurization, and with"
-		  + (rdcShort ? "" : "out") + " esophageal shortening.\n"
-		  + ++i + ". " + (hh > 0 ? "Hiatal hernia measuring " + hh.toFixed(1) + " cm.\n" : "No hiatal hernia.\n");
+	+ ++i + ". " + (mrsBody && mrsLes && !mrsPep && mrsAug ? "N" : "Abn") + "ormal multiple rapid swallows (MRS) maneuver with"
+	+ (mrsBody ? "" : "out") + " deglutitive inhibition of esophageal body, with"
+	+ (mrsLes ? "" : "out") + " deglutitive inhibition of LES, with"
+	+ (mrsPep ? "" : "out") + " panesophageal pressurization, and with"
+	+ (mrsAug ? "" : "out") + " post-MRS contraction augmentation.\n"
+	+ ++i + ". " + (rdcBody && rdcLes && !rdcPep && !rdcShort ? "N" : "Abn") + "ormal rapid drink challenge (RDC) with"
+	+ (rdcBody ? "" : "out") + " deglutitive inhibition of esophageal body, with"
+	+ (rdcLes ? "" : "out") + " deglutitive inhibition of LES, with"
+	+ (rdcPep ? "" : "out") + " panesophageal pressurization, and with"
+	+ (rdcShort ? "" : "out") + " esophageal shortening.\n"
+	+ ++i + ". " + (hh > 0 ? "Hiatal hernia measuring " + hh.toFixed(1) + " cm.\n" : "No hiatal hernia.\n");
 
   report += "\nImpressions\n";
   if (diagnosis == 0) {
 	report += "1. " + (hh > 0 ? "Hiatal hernia (" + hh.toFixed(1) + " cm).\n2. Otherwise u" : "U" ) + "nremarkable high-resolution esophageal manometry.\n"
   } else {
 	switch (diagnosis) {
-	  case 1: report += "1. Achalasia type I.\n"; break;
-	  case 2: report += "1. Achalasia type II.\n"; break;
-	  case 3: report += "1. Achalasia type III.\n"; break;
-	  case 4:
-		report += "1. Manometric EGJ outflow obstruction (EGJOO)"
-		if (subtypes) {
-		  switch (egjooSubtype) {
-			case 0: report += " with no evidence of disordered peristalsis"; break;
-			case 1: report += " with spastic features"; break;
-			case 2: report += " with hypercontractile features"; break;
-			case 3: report += " with ineffective motility"; break;
-		  }
+	case 1: report += "1. Achalasia type I.\n"; break;
+	case 2: report += "1. Achalasia type II.\n"; break;
+	case 3: report += "1. Achalasia type III.\n"; break;
+	case 4:
+	  report += "1. Manometric EGJ outflow obstruction (EGJOO)"
+	  if (subtypes) {
+		switch (egjooSubtype) {
+		case 0: report += " with no evidence of disordered peristalsis"; break;
+		case 1: report += " with spastic features"; break;
+		case 2: report += " with hypercontractile features"; break;
+		case 3: report += " with ineffective motility"; break;
 		}
-		report += ". Of note, a clinically relevant diagnosis of EGJOO requires the presence of relevant symptoms (dysphagia and/or non-cardiac chest pain) and supportive testing (timed barium esophagram and/or functional lumen imaging probe).\n"; break;
-	  case 5: report += "1. Absent contractility.\n"; break;
-	  case 6: report += "1. Manometric distal esophageal spasm (DES). Of note, a clinically relevant diagnosis of DES requires the presence of relevant symptoms (dysphagia and/or non-cardiac chest pain).\n"; break;
-	  case 7: report += "1. Manometric hypercontractile esophagus (HE). Of note, a clinically relevant diagnosis of HE requires the presence of relevant symptoms (dysphagia and/or non-cardiac chest pain).\n"; break;
-	  case 8: report += "1. Ineffective esophageal motility.\n"; break;
+	  }
+	  report += ". Of note, a clinically relevant diagnosis of EGJOO requires the presence of relevant symptoms (dysphagia and/or non-cardiac chest pain) and supportive testing (timed barium esophagram and/or functional lumen imaging probe).\n"; break;
+	case 5: report += "1. Absent contractility.\n"; break;
+	case 6: report += "1. Manometric distal esophageal spasm (DES). Of note, a clinically relevant diagnosis of DES requires the presence of relevant symptoms (dysphagia and/or non-cardiac chest pain).\n"; break;
+	case 7: report += "1. Manometric hypercontractile esophagus (HE). Of note, a clinically relevant diagnosis of HE requires the presence of relevant symptoms (dysphagia and/or non-cardiac chest pain).\n"; break;
+	case 8: report += "1. Ineffective esophageal motility.\n"; break;
 	}
 	if (hh > 0)
 	  report += "2. Hiatal hernia (" + hh.toFixed(1) + " cm).\n";
@@ -332,21 +332,21 @@ function createPhReport() {
 
   // Build interpretation
   var report = "Interpretation:\n"
-			 + "1. 96-hour pH monitoring study was performed "
-			 + (ppi ? "on" : "off") + " PPIs. The total analysis time was "
-			 + analysisTimeH + " hour" + (analysisTimeH == 1 ? "" : "s") + " and "
-			 + analysisTimeM + " minute" + (analysisTimeM == 1 ? "" : "s") + ".\n"
-			 + "2. " + (aetTotal < 4 ? "Normal" : (aetTotal > 6 ? "Elevated" : "Borderline"))
-			 + " total acid exposure time (AET) of " + aetTotal.toFixed(1) + "%."
-			 + (aetUprightHigh || aetSupineHigh ? " Elevated AET"
-												+ (aetUprightHigh && aetSupineHigh ? " both" : "") + " while"
-												+ (aetUprightHigh ? " upright (" + aetUpright.toFixed(1) + "%)" : "")
-												+ (aetUprightHigh && aetSupineHigh ? " and" : "")
-												+ (aetSupineHigh ? " supine (" + aetSupine.toFixed(1) + "%)" : "") + "."
-			  : "") + "\n"
-			 + "3. The longest reflux episode lasted " + longestReflux.toFixed(1) + " minutes.\n"
-			 + "4. " + (deMeester < 14.7 ? "Normal" : "Elevated") + " DeMeester score of "
-			 + deMeester.toFixed(1) + " (normal <14.7).\n";
+	  + "1. 96-hour pH monitoring study was performed "
+	  + (ppi ? "on" : "off") + " PPIs. The total analysis time was "
+	  + analysisTimeH + " hour" + (analysisTimeH == 1 ? "" : "s") + " and "
+	  + analysisTimeM + " minute" + (analysisTimeM == 1 ? "" : "s") + ".\n"
+	  + "2. " + (aetTotal < 4 ? "Normal" : (aetTotal > 6 ? "Elevated" : "Borderline"))
+	  + " total acid exposure time (AET) of " + aetTotal.toFixed(1) + "%."
+	  + (aetUprightHigh || aetSupineHigh ? " Elevated AET"
+		 + (aetUprightHigh && aetSupineHigh ? " both" : "") + " while"
+		 + (aetUprightHigh ? " upright (" + aetUpright.toFixed(1) + "%)" : "")
+		 + (aetUprightHigh && aetSupineHigh ? " and" : "")
+		 + (aetSupineHigh ? " supine (" + aetSupine.toFixed(1) + "%)" : "") + "."
+		 : "") + "\n"
+	  + "3. The longest reflux episode lasted " + longestReflux.toFixed(1) + " minutes.\n"
+	  + "4. " + (deMeester < 14.7 ? "Normal" : "Elevated") + " DeMeester score of "
+	  + deMeester.toFixed(1) + " (normal <14.7).\n";
   var n = 4;
   var associated = [];
   var notAssociated = [];
@@ -354,8 +354,8 @@ function createPhReport() {
 	if (symptomsN[i] > 2) {
 	  var numText = spellNumber(symptomsN[i]);
 	  report += ++n + ". " + numText[0].toUpperCase() + numText.slice(1) + " " + symptoms[i] + " events recorded which were"
-			  + (symptomsSI[i] < 50 && symptomsSAP[i] < 95 ? " not" : "") + " associated with reflux episodes (SI "
-			  + symptomsSI[i].toFixed(1) + "%, SAP " + symptomsSAP[i].toFixed(1) + "%).\n";
+		+ (symptomsSI[i] < 50 && symptomsSAP[i] < 95 ? " not" : "") + " associated with reflux episodes (SI "
+		+ symptomsSI[i].toFixed(1) + "%, SAP " + symptomsSAP[i].toFixed(1) + "%).\n";
 	  if (symptomsSI[i] < 50 && symptomsSAP[i] < 95)
 		notAssociated.push(symptoms[i]);
 	  else
@@ -378,7 +378,7 @@ function createPhReport() {
   n = 2;
   if (associated.length) {
 	report += "2. Symptom" + (associated.length == 1 ? "" : "s") + " of " + concatenateStrings(associated)
-			+ (associated.length == 1 ? " was" : " were") + " associated with reflux episodes.\n";
+	  + (associated.length == 1 ? " was" : " were") + " associated with reflux episodes.\n";
 	n++;
   }
   if (notAssociated.length) {
@@ -421,32 +421,32 @@ function createPhzReport() {
 
   // Build interpretation
   var report = "Interpretation:\n"
-			 + "1. 24-hour pH/impedance monitoring study was performed "
-			 + (ppi ? "on" : "off") + " PPIs. The total analysis time was "
-			 + analysisTimeH + " hour" + (analysisTimeH == 1 ? "" : "s") + " and "
-			 + analysisTimeM + " minute" + (analysisTimeM == 1 ? "" : "s") + ".\n"
-			 + "2. " + (aetTotal < 4 ? "Normal" : (aetTotal > 6 ? "Elevated" : "Borderline"))
-			 + " total acid exposure time (AET) of " + aetTotal.toFixed(1) + "%."
-			 + (aetUprightHigh || aetSupineHigh ? " Elevated AET"
-												+ (aetUprightHigh && aetSupineHigh ? " both" : "") + " while"
-												+ (aetUprightHigh ? " upright (" + aetUpright.toFixed(1) + "%)" : "")
-												+ (aetUprightHigh && aetSupineHigh ? " and" : "")
-												+ (aetSupineHigh ? " supine (" + aetSupine.toFixed(1) + "%)" : "") + "."
-			  : "") + "\n"
-			 + "3. The longest reflux episode lasted " + longestReflux.toFixed(1) + " minutes.\n"
-			 + "4. " + (deMeester < 14.7 ? "Normal" : "Elevated") + " DeMeester score of "
-			 + deMeester.toFixed(1) + " (normal <14.7).\n"
-			 + "5. On impedance monitoring, " + impedanceTotal + " episode" + (impedanceTotal == 1 ? "" : "s")
-			 + " of reflux noted (normal <40, indeterminate 40-80, abnormal >80).\n";
+	  + "1. 24-hour pH/impedance monitoring study was performed "
+	  + (ppi ? "on" : "off") + " PPIs. The total analysis time was "
+	  + analysisTimeH + " hour" + (analysisTimeH == 1 ? "" : "s") + " and "
+	  + analysisTimeM + " minute" + (analysisTimeM == 1 ? "" : "s") + ".\n"
+	  + "2. " + (aetTotal < 4 ? "Normal" : (aetTotal > 6 ? "Elevated" : "Borderline"))
+	  + " total acid exposure time (AET) of " + aetTotal.toFixed(1) + "%."
+	  + (aetUprightHigh || aetSupineHigh ? " Elevated AET"
+		 + (aetUprightHigh && aetSupineHigh ? " both" : "") + " while"
+		 + (aetUprightHigh ? " upright (" + aetUpright.toFixed(1) + "%)" : "")
+		 + (aetUprightHigh && aetSupineHigh ? " and" : "")
+		 + (aetSupineHigh ? " supine (" + aetSupine.toFixed(1) + "%)" : "") + "."
+		 : "") + "\n"
+	  + "3. The longest reflux episode lasted " + longestReflux.toFixed(1) + " minutes.\n"
+	  + "4. " + (deMeester < 14.7 ? "Normal" : "Elevated") + " DeMeester score of "
+	  + deMeester.toFixed(1) + " (normal <14.7).\n"
+	  + "5. On impedance monitoring, " + impedanceTotal + " episode" + (impedanceTotal == 1 ? "" : "s")
+	  + " of reflux noted (normal <40, indeterminate 40-80, abnormal >80).\n";
   if (proximalTotal >= 31) {
 	report += "6. Elevated total number of proximal reflux episodes "
-			+ (proximalUprightHigh && proximalSupineHigh ? "both " : "predominantly ") + "while"
-			+ (proximalUprightHigh ? " upright" : "")
-			+ (proximalUprightHigh && proximalSupineHigh ? " and" : "")
-			+ (proximalSupineHigh ? " supine" : "") + ".\n";
+	  + (proximalUprightHigh && proximalSupineHigh ? "both " : "predominantly ") + "while"
+	  + (proximalUprightHigh ? " upright" : "")
+	  + (proximalUprightHigh && proximalSupineHigh ? " and" : "")
+	  + (proximalSupineHigh ? " supine" : "") + ".\n";
   } else {
 	report += "6. " + (proximalUprightHigh || proximalSupineHigh ? "Elevated" : "Normal") + " number of proximal reflux episodes"
-			+ (proximalUprightHigh || proximalSupineHigh ? " while " + (proximalUprightHigh ? "upright" : "supine") : "") + ".\n";
+	  + (proximalUprightHigh || proximalSupineHigh ? " while " + (proximalUprightHigh ? "upright" : "supine") : "") + ".\n";
   }
   var n = 6;
   var associated = [];
@@ -455,8 +455,8 @@ function createPhzReport() {
 	if (symptomsN[i] > 2) {
 	  var numText = spellNumber(symptomsN[i]);
 	  report += ++n + ". " + numText[0].toUpperCase() + numText.slice(1) + " " + symptoms[i] + " events recorded which were"
-			  + (symptomsSI[i] < 50 && symptomsSAP[i] < 95 ? " not" : "") + " associated with reflux episodes (SI "
-			  + symptomsSI[i].toFixed(1) + "%, SAP " + symptomsSAP[i].toFixed(1) + "%).\n";
+		+ (symptomsSI[i] < 50 && symptomsSAP[i] < 95 ? " not" : "") + " associated with reflux episodes (SI "
+		+ symptomsSI[i].toFixed(1) + "%, SAP " + symptomsSAP[i].toFixed(1) + "%).\n";
 	  if (symptomsSI[i] < 50 && symptomsSAP[i] < 95)
 		notAssociated.push(symptoms[i]);
 	  else
@@ -479,7 +479,7 @@ function createPhzReport() {
   n = 2;
   if (associated.length) {
 	report += "2. Symptom" + (associated.length == 1 ? "" : "s") + " of " + concatenateStrings(associated)
-			+ (associated.length == 1 ? " was" : " were") + " associated with reflux episodes.\n";
+	  + (associated.length == 1 ? " was" : " were") + " associated with reflux episodes.\n";
 	n++;
   }
   if (notAssociated.length) {
@@ -576,28 +576,28 @@ function createEmptySymptomTable() {
 
 function concatenateStrings(s) {
   switch (s.length) {
-	case 1: return s[0];
-	case 2: return s[0] + " and " + s[1];
-	default: return s.slice(0, -1).join(", ") + ", and " + s[s.length - 1];
+  case 1: return s[0];
+  case 2: return s[0] + " and " + s[1];
+  default: return s.slice(0, -1).join(", ") + ", and " + s[s.length - 1];
   }
 }
 
 /*
-   function clearAll() {
-   var inputs = document.querySelectorAll('input');
-   inputs.forEach(function(input) {
-   input.value = '';
-   });
-   document.getElementsByName('ppi')[1].checked = true;
-   document.getElementById('report').value = '';
+  function clearAll() {
+  var inputs = document.querySelectorAll('input');
+  inputs.forEach(function(input) {
+  input.value = '';
+  });
+  document.getElementsByName('ppi')[1].checked = true;
+  document.getElementById('report').value = '';
 
-   var symptomTable = document.getElementById('symptomTable');
-   for (var i = symptomTable.getElementsByTagName('tr').length - 1; i > 1; i--)
-   symptomTable.deleteRow(i);
-   for (var z = 0; z < 5; z++)
-   addSymptom();
-   }
- */
+  var symptomTable = document.getElementById('symptomTable');
+  for (var i = symptomTable.getElementsByTagName('tr').length - 1; i > 1; i--)
+  symptomTable.deleteRow(i);
+  for (var z = 0; z < 5; z++)
+  addSymptom();
+  }
+*/
 
 /**********************/
 /** Global Functions **/

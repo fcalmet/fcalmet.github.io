@@ -1,21 +1,21 @@
 /*
-   Copyright (C) 2025 by Fernando Calmet
+  Copyright (C) 2025 by Fernando Calmet
 
-   Author: Fernando Calmet
+  Author: Fernando Calmet
 
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
 
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
 
 /**********************************************/
 /** Create Footer Navigation Programatically **/
@@ -140,11 +140,11 @@ function calculateFib4() {
 
 function getLille(age, albumin, bilirubin0, bilirubin7, creatinine, pt) {
   let r = 3.19 - 0.101 * age
-        + 0.147 * albumin
-        + 0.0165 * (bilirubin0 - bilirubin7)
-        - 0.206 * (creatinine > 1.3 ? 1 : 0)
-        - 0.0065 * bilirubin0
-        - 0.0096 * pt
+      + 0.147 * albumin
+      + 0.0165 * (bilirubin0 - bilirubin7)
+      - 0.206 * (creatinine > 1.3 ? 1 : 0)
+      - 0.0065 * bilirubin0
+      - 0.0096 * pt
   let lille = Math.exp(-r) / (1 + Math.exp(-r))
   return lille
 }
@@ -211,17 +211,17 @@ function calculateMdf() {
 function getMeld(creatinine, bilirubin, inr, isRrt) {
   if (isRrt) creatinine = 4.0
   let meld = 9.57 * Math.log(Math.max(creatinine, 1.0))
-		   + 3.78 * Math.log(Math.min(Math.max(bilirubin, 1.0), 4.0))
-		   + 11.2 * Math.log(inr)
-		   + 6.43
+	  + 3.78 * Math.log(Math.min(Math.max(bilirubin, 1.0), 4.0))
+	  + 11.2 * Math.log(inr)
+	  + 6.43
   return Math.round(meld)
 }
 
 function getMeldMortality(meld) {
   return meld < 10 ? 0.019
-			  : meld < 20 ? 0.060
-					 : meld < 30 ? 0.196
-							: meld < 40 ? 0.526 : 0.713
+	: meld < 20 ? 0.060
+	: meld < 30 ? 0.196
+	: meld < 40 ? 0.526 : 0.713
 }
 
 function getMeldNa(creatinine, bilirubin, inr, sodium, isRrt) {
@@ -240,26 +240,26 @@ function getMeld3(creatinine, bilirubin, inr, sodium, albumin, isRrt, isFemale) 
   let nSodium = 137 - Math.min(Math.max(sodium, 125), 137)
   let nAlbumin = 3.5 - Math.min(Math.max(albumin, 1.5), 3.5)
   let meld3 = (isFemale ? 1.33 : 0.0)
-			+ 4.56 * logBilirubin
-			+ 0.82 * nSodium
-			- 0.24 * nSodium * logBilirubin
-			+ 9.09 * logInr
-			+ 11.14 * logCreatinine
-			+ 1.85 * nAlbumin
-			- 1.83 * nAlbumin * logCreatinine
-			+ 6
+	  + 4.56 * logBilirubin
+	  + 0.82 * nSodium
+	  - 0.24 * nSodium * logBilirubin
+	  + 9.09 * logInr
+	  + 11.14 * logCreatinine
+	  + 1.85 * nAlbumin
+	  - 1.83 * nAlbumin * logCreatinine
+	  + 6
   return Math.round(meld3)
 }
 
 function getMeld3Survival(meld3, days) {
   let s0 = 0
   switch (days) {
-	case 15: s0 = 0.991; break;
-	case 30: s0 = 0.981; break;
-	case 45: s0 = 0.971; break;
-	case 60: s0 = 0.963; break;
-	case 75: s0 = 0.955; break;
-	case 90: s0 = 0.946; break;
+  case 15: s0 = 0.991; break;
+  case 30: s0 = 0.981; break;
+  case 45: s0 = 0.971; break;
+  case 60: s0 = 0.963; break;
+  case 75: s0 = 0.955; break;
+  case 90: s0 = 0.946; break;
   }
   return s0 ** Math.exp(0.17698 * meld3 - 3.56)
 }

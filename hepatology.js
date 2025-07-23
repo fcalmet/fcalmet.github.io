@@ -28,6 +28,7 @@ document.getElementById('footer-nav').innerHTML = `<ul>
   <li><a href="Lille.html">Lille model</a></li>
   <li><a href="MDF.html">Maddrey score</a></li>
   <li><a href="MELD.html">MELD score</a></li>
+  <li><a href="VocalPenn.html">VOCAL-Penn calculator</a></li>
 </ul>`
 
 /**********************/
@@ -304,4 +305,67 @@ function calculateMeld() {
   html += `</ul>`
 
   setResult(html);
+}
+
+/**********************/
+/** VOCAL-Penn score **/
+/**********************/
+
+function getVocalPenn(age, albumin, bilirubin, platelets, isObese, isMasld, isEmergency, asa, surgeryType) {
+  let surgeryTypeMap = { "abdominalLap": 0, "abdominalOpen": 1, "abdominalWall": 2,
+						 "vascular": 3, "majorOrthopedic": 4, "chestCardiac": 5 }
+  let surgeryTypeId = surgeryTypeMap[surgeryType]
+  let albuminSp = ((albumin > 2.7 ? (albumin - 2.7) ** 3 : 0) -
+				   ((albumin > 3.7 ? 1.7 * (albumin - 3.7) ** 3 : 0) -
+					(albumin > 4.4 ? (albumin - 4.4) ** 3 : 0)) / 0.7
+				  ) / 2.89
+  let plateletSp = ((platelets > 74 ? (platelets - 74) ** 3 : 0) -
+					((platelets > 153 ? 195 * (platelets - 153) ** 3 : 0) -
+					 (platelets > 269 ? 79 * (platelets - 269) ** 3 : 0)) / 116
+				   ) / 38025
+  let bilirubinSp = ((bilirubin > 0.39 ? (bilirubin - 0.39) ** 3 : 0) -
+					 ((bilirubin > 0.75 ? 1.41 * (bilirubin - 0.75) ** 3 : 0) -
+					  (bilirubin > 1.8 ? 0.36 * (bilirubin - 1.8) ** 3 : 0)) / 1.05
+					) / 1.9881
+  let logodds30 = 1.061725 * asa - 5.472096 + (isEmergency ? 0.927904 : 0) + [0, 1.56071, 0.7418021, 0.9165415, 1.464183, 1.893621][surgeryTypeId] - 0.0075185 * platelets + 0.0036657 * plateletSp - 0.5181509 * albumin - 1.000672 * albuminSp + 0.1448936 * bilirubin - (isObese ? 0.7541669 : 0) + (isMasld ? 0.8268748 : 0)
+  let logodds90 = 0.6891587 * asa - 7.381628 + (isEmergency ? 0.6246303 : 0) + 0.0365738 * age + [0, 1.349889, 0.2480613, 1.054497, 1.067452, 1.26527][surgeryTypeId] - 0.4851036 * albumin - 0.9821122 * albuminSp + (isMasld ? 0.82691 : 0)
+  let logodds180 = 0.850114 * asa - 6.169259 + 0.0293034 * age + [0, 0.8838124, 0.197697, 0.4630691, 0.1229086, 0.4320639][surgeryTypeId] - 0.003719 * platelets - 0.0004196 * plateletSp - 0.4560354 * albumin - 0.4166421 * albuminSp - (isObese ? 0.5176601 : 0)
+  let p30 = Math.exp(logodds30) / (1 + Math.exp(logodds30))
+  let p90u = Math.exp(logodds90) / (1 + Math.exp(logodds90))
+  let p90 = 1 - (1 - p30) * (1 - p90u)
+  let p180 = 1 - (1 - p30) * (1 - p90u) * (1 - Math.exp(logodds180) / (1 + Math.exp(logodds180)))
+  let logOddsDecomp = 0.2988972 * asa - 2.287235 + (isEmergency ? 0.5076108 : 0) + [0, 0.6117639, -0.1508734, -0.4641384, -0.3442967, -0.1648213][surgeryTypeId] - 0.0054196 * platelets + 0.0021578 * plateletSp - 0.4460345 * albumin - 0.4612017 * albuminSp + 1.361681 * bilirubin - 1.746094 * bilirubinSp - (isObese ? 0.1820302 : 0) + (isMasld ? 0.2481661 : 0) + 0.0069088 * age
+  let pDecomp = Math.exp(logOddsDecomp) / (1 + Math.exp(logOddsDecomp))
+  p30 = (p30 * 100).toFixed(1)
+  p90 = (p90 * 100).toFixed(1)
+  p180 = (p180 * 100).toFixed(1)
+  pDecomp = (pDecomp * 100).toFixed(1)
+  return [p30, p90, p180, pDecomp]
+}
+
+function calculateVocalPenn() {
+  let age = parseFloat(document.getElementById('age').value) || -1;
+  let albumin = parseFloat(document.getElementById('albumin').value) || -1;
+  let bilirubin = parseFloat(document.getElementById('bilirubin').value) || -1;
+  let platelets = parseFloat(document.getElementById('platelets').value) || -1;
+  let isObese = document.querySelector('input[name="isObese"][value="yes"]').checked;
+  let isMasld = document.querySelector('input[name="isMasld"][value="yes"]').checked;
+  let isEmergency = document.querySelector('input[name="isEmergency"][value="yes"]').checked;
+  let asa = document.querySelector('input[name="asa"]:checked').value;
+  // let surgeryType = document.querySelector('input[name="surgeryType"]:checked').value;
+  let surgeryType = document.getElementById('surgeryType').value;
+
+  if (age < 0 || albumin < 0 || bilirubin < 0 || platelets < 0) return setResult()
+
+  let vp = getVocalPenn(age, albumin, bilirubin, platelets, isObese, isMasld, isEmergency, asa, surgeryType)
+
+  setResult(`
+  <ul>
+    <li>VOCAL-Penn score}
+   <ul><li>30-day mortality risk: ${vp[0]}</li></ul>
+   <ul><li>90-day mortality risk: ${vp[1]}</li></ul>
+   <ul><li>180-day mortality risk: ${vp[2]}</li></ul>
+   <ul><li>90-day decompensation risk: ${vp[3]}</li></ul>
+    </li>
+  </ul>`)
 }

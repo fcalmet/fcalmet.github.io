@@ -89,7 +89,8 @@ h2 {
   display: flex;
 }
 .text-field label,
-.text-field input {
+.text-field input,
+.text-field select {
   width: calc(50% - 4px);
   margin: 2px;
 }
@@ -98,7 +99,7 @@ h2 {
   margin: 2px;
 }
 
-label, input {
+label, input, select {
   padding: 1px;
   margin: 2px;
 }
@@ -167,6 +168,7 @@ textarea {
 
 input[type="number"],
 input[type="text"],
+select,
 textarea {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   border: 1px solid lightgray;
@@ -178,6 +180,7 @@ textarea {
 
 input[type="number"]:focus,
 input[type="text"]:focus,
+select:focus,
 textarea:focus {
   box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
 }

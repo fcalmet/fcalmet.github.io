@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--
+	 Copyright (C) 2025 by Fernando Calmet
+
+	 Author: Fernando Calmet
+
+	 This program is free software; you can redistribute it and/or modify
+	 it under the terms of the GNU General Public License as published by
+	 the Free Software Foundation, either version 3 of the License, or
+	 (at your option) any later version.
+
+	 This program is distributed in the hope that it will be useful,
+	 but WITHOUT ANY WARRANTY; without even the implied warranty of
+	 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	 GNU General Public License for more details.
+
+	 You should have received a copy of the GNU General Public License
+	 along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<html lang="en">
+  <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>VOCAL-Penn Cirrhosis Surgical Risk Calculator</title>
+	<link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+	<h1>VOCAL-Penn Cirrhosis Surgical Risk Calculator</h1>
+	<div class="app-container two">
+	  <div class="panel">
+		<div class="text-field">
+          <label for="age">Age:</label>
+          <input type="number" oninput="calculateVocalPenn()" id="age" autocomplete="off" />
+		</div>
+		<div class="text-field">
+          <label for="albumin">Albumin <em>(g/dL)</em>:</label>
+          <input type="number" oninput="calculateVocalPenn()" id="albumin" autocomplete="off" />
+		</div>
+		<div class="text-field">
+          <label for="bilirubin">Bilirubin <em>(mg/dL)</em>:</label>
+          <input type="number" oninput="calculateVocalPenn()" id="bilirubin" autocomplete="off" />
+		</div>
+		<div class="text-field">
+          <label for="platelets">Platelet count <em>(10<sup>9</sup>/L)</em>:</label>
+          <input type="number" oninput="calculateVocalPenn()" id="platelets" autocomplete="off" />
+		</div>
+		<div class="radio-field">
+		  <label for="isObese">Obesity <em>(<span title="Body mass index">BMI</span> &gt;30 kg/m<sup>2</sup>)</em>:</label>
+		  <div id="isObese">
+			<label><input type="radio" onchange="calculateVocalPenn()" name="isObese" value="no" checked /> No</label>
+			<label><input type="radio" onchange="calculateVocalPenn()" name="isObese" value="yes" /> Yes</label>
+		  </div>
+		</div>
+	  	<div class="radio-field">
+		  <label for="isMasld"><span title="Metabolic dysfunction-associated steatotic liver disease">MASLD</span>:</label>
+		  <div id="isMasld">
+			<label><input type="radio" onchange="calculateVocalPenn()" name="isMasld" value="no" checked /> No</label>
+			<label><input type="radio" onchange="calculateVocalPenn()" name="isMasld" value="yes" /> Yes</label>
+		  </div>
+		</div>
+	  	<div class="radio-field">
+		  <label for="asa"><span title="American Society of Anesthesiologists">ASA</span> score:</label>
+		  <div id="asa">
+			<label><input type="radio" onchange="calculateVocalPenn()" name="asa" value="2" checked /> 2</label>
+			<label><input type="radio" onchange="calculateVocalPenn()" name="asa" value="3" /> 3</label>
+			<label><input type="radio" onchange="calculateVocalPenn()" name="asa" value="4" /> 4</label>
+		  </div>
+		</div>
+	  	<div class="radio-field">
+		  <label for="isEmergency">Emergency surgery:</label>
+		  <div id="isEmergency">
+			<label><input type="radio" onchange="calculateVocalPenn()" name="isEmergency" value="no" checked /> No</label>
+			<label><input type="radio" onchange="calculateVocalPenn()" name="isEmergency" value="yes" /> Yes</label>
+		  </div>
+		</div>
+		<div class="text-field">
+		  <label for="surgeryType">Surgery type:</label>
+		  <select id="surgeryType" name="surgeryType" onchange="calculateVocalPenn()">
+			<option value="abdominalLap">Abdominal (laparosopic)</option>
+			<option value="abdominalOpen">Abdominal (open)</option>
+			<option value="abdominalWall">Abdominal wall</option>
+			<option value="vascular">Vascular</option>
+			<option value="majorOrthopedic">Major orthopedic</option>
+			<option value="chestCardiac">Chest/cardiac</option>
+		  </select>
+		</div>
+	  </div>
+	  <div class="panel results">
+		<h2>Results</h2>
+		<div id="result"></div>
+	  </div>
+	</div>
+	<footer id="footer-nav"></footer>
+	<script src="hepatology.js"></script>
+  </body>
+</html>

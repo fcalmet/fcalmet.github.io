@@ -4,16 +4,16 @@
 - [X] footer is crammed in narrow screens
 - [X] wrapped lined in index.htnl are left aligned in narrow screens
 
-* Calculators [5/47]
+* Calculators [7/47]
 - [X] APRI
 - [X] Lille
 - [X] MELD
 - [X] Maddrey
 - [X] Fib-4
+- [X] Vocal Penn score
+- [X] Child-Pugh-Turcotte
 - [ ] NAFLD fibrosis score
-- [ ] Vocal Penn score
 - [ ] Mayo perioperative score
-- [ ] Child-Pugh-Turcotte
 - [ ] NAC dosing
 - [ ] ANI score
 - [ ] CLIF score

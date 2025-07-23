@@ -24,6 +24,7 @@
 document.getElementById('footer-nav').innerHTML = `<ul>
   <li><a href="index.html">Home</a></li>
   <li><a href="APRI.html">APRI</a></li>
+  <li><a href="CPT.html">Child-Pugh-Turcotte</a></li>
   <li><a href="Fib-4.html">Fib-4</a></li>
   <li><a href="Lille.html">Lille model</a></li>
   <li><a href="MDF.html">Maddrey score</a></li>
@@ -86,6 +87,35 @@ function calculateApri() {
 	  <li>APRI: ${apri.toFixed(3)}
 		<ul><li>${apriInterpretation}</li></ul>
 	  </li>
+	</ul>`)
+}
+
+/*************************/
+/** Child-Pugh-Turcotte **/
+/*************************/
+
+function getCptClass(cpt) {
+  return (cpt <= 6 ? "A" : (cpt <= 9 ? "B" : "C"))
+}
+
+function getCptInterpretation(cpt) {
+  return (cpt > 32 ? 'Poor' : 'Good') + ' prognosis'
+}
+
+function calculateCpt() {
+  let bilirubin = parseInt(document.querySelector('input[name="bilirubin"]:checked').value);
+  let albumin = parseInt(document.querySelector('input[name="albumin"]:checked').value);
+  let inr = parseInt(document.querySelector('input[name="inr"]:checked').value);
+  let ascites = parseInt(document.querySelector('input[name="ascites"]:checked').value);
+  let encephalopathy = parseInt(document.querySelector('input[name="encephalopathy"]:checked').value);
+
+  let cpt = bilirubin + albumin + inr + ascites + encephalopathy
+  let cptClass = getCptClass(cpt)
+  let cptInterpretation = getCptInterpretation(cpt)
+
+  setResult(`
+	<ul>
+	  <li>Child-Pugh-Turcotte score: ${cpt} (class ${cptClass})</li>
 	</ul>`)
 }
 

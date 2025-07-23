@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!--
+	 Copyright (C) 2025 by Fernando Calmet
+
+	 Author: Fernando Calmet
+
+	 This program is free software; you can redistribute it and/or modify
+	 it under the terms of the GNU General Public License as published by
+	 the Free Software Foundation, either version 3 of the License, or
+	 (at your option) any later version.
+
+	 This program is distributed in the hope that it will be useful,
+	 but WITHOUT ANY WARRANTY; without even the implied warranty of
+	 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	 GNU General Public License for more details.
+
+	 You should have received a copy of the GNU General Public License
+	 along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<html lang="en">
+  <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Child-Pugh-Turcotte Calculator</title>
+	<link rel="stylesheet" href="style.css" />
+  </head>
+  <body onload="calculateCpt()">
+	<h1>Child-Pugh-Turcotte Calculator</h1>
+	<div class="app-container two">
+	  <div class="panel">
+		<div class="radio-field">
+		  <label for="bilirubin">Bilirubin <em>(mg/dL)</em>:</label>
+		  <div id="bilirubin">
+			<label><input type="radio" onchange="calculateCpt()" name="bilirubin" value="1" checked /> &lt;2.0</label>
+			<label><input type="radio" onchange="calculateCpt()" name="bilirubin" value="2" /> 2.0-3.0</label>
+			<label><input type="radio" onchange="calculateCpt()" name="bilirubin" value="3" /> &gt;3.0</label>
+		  </div>
+		</div>
+
+		<div class="radio-field">
+		  <label for="albumin">Albumin <em>(g/dL)</em>:</label>
+		  <div id="albumin">
+			<label><input type="radio" onchange="calculateCpt()" name="albumin" value="1" checked /> &gt;3.5</label>
+			<label><input type="radio" onchange="calculateCpt()" name="albumin" value="2" /> 2.8-3.5</label>
+			<label><input type="radio" onchange="calculateCpt()" name="albumin" value="3" /> &lt;2.8</label>
+		  </div>
+		</div>
+
+		<div class="radio-field">
+		  <label for="inr">INR:</label>
+		  <div id="inr">
+			<label><input type="radio" onchange="calculateCpt()" name="inr" value="1" checked /> &lt;1.7</label>
+			<label><input type="radio" onchange="calculateCpt()" name="inr" value="2" /> 1.7-2.3</label>
+			<label><input type="radio" onchange="calculateCpt()" name="inr" value="3" /> &gt;2.3</label>
+		  </div>
+		</div>
+
+		<div class="radio-field">
+		  <label for="ascites">Ascites:</label>
+		  <div id="ascites">
+			<label><input type="radio" onchange="calculateCpt()" name="ascites" value="1" checked /> None</label>
+			<label><input type="radio" onchange="calculateCpt()" name="ascites" value="2" /> Mild or controlled</label>
+			<label><input type="radio" onchange="calculateCpt()" name="ascites" value="3" /> Refractory or severe</label>
+		  </div>
+		</div>
+
+		<div class="radio-field">
+		  <label for="encephalopathy">Hepatic encephalopathy:</label>
+		  <div id="encephalopathy">
+			<label><input type="radio" onchange="calculateCpt()" name="encephalopathy" value="1" checked /> None</label>
+			<label><input type="radio" onchange="calculateCpt()" name="encephalopathy" value="2" /> Grade I-II</label>
+			<label><input type="radio" onchange="calculateCpt()" name="encephalopathy" value="3" /> Grade III-IV</label>
+		  </div>
+		</div>
+
+	  </div>
+	  <div class="panel results">
+		<h2>Results</h2>
+		<div id="result"></div>
+	  </div>
+	</div>
+	<footer id="footer-nav"></footer>
+	<script src="hepatology.js"></script>
+  </body>
+</html>

@@ -1,8 +1,8 @@
 #+TITLE: Gastroenterology & Hepatology
-* Web pages [0/3]
-- [ ] footer is crammed in narrow screens
-- [ ] wrapped lined in index.htnl are left aligned in narrow screens
+* Web pages [2/3]
 - [ ] automatically create calculator pages: PHP? JavaScript?
+- [X] footer is crammed in narrow screens
+- [X] wrapped lined in index.htnl are left aligned in narrow screens
 
 * Calculators [5/47]
 - [X] APRI

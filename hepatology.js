@@ -98,10 +98,6 @@ function getCptClass(cpt) {
   return (cpt <= 6 ? "A" : (cpt <= 9 ? "B" : "C"))
 }
 
-function getCptInterpretation(cpt) {
-  return (cpt > 32 ? 'Poor' : 'Good') + ' prognosis'
-}
-
 function calculateCpt() {
   let bilirubin = parseInt(document.querySelector('input[name="bilirubin"]:checked').value);
   let albumin = parseInt(document.querySelector('input[name="albumin"]:checked').value);

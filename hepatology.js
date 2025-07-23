@@ -107,7 +107,6 @@ function calculateCpt() {
 
   let cpt = bilirubin + albumin + inr + ascites + encephalopathy
   let cptClass = getCptClass(cpt)
-  let cptInterpretation = getCptInterpretation(cpt)
 
   setResult(`
 	<ul>

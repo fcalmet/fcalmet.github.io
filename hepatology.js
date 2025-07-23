@@ -361,7 +361,7 @@ function calculateVocalPenn() {
 
   setResult(`
   <ul>
-    <li>VOCAL-Penn score}
+    <li>VOCAL-Penn score:
    <ul><li>30-day mortality risk: ${vp[0]}</li></ul>
    <ul><li>90-day mortality risk: ${vp[1]}</li></ul>
    <ul><li>180-day mortality risk: ${vp[2]}</li></ul>

@@ -206,7 +206,7 @@ function calculateLille() {
 /*******************/
 
 function getMdf(pt, ptRef, bilirubin) {
-  return mdf = 4.6 * (pt - ptRef) + bilirubin
+  return 4.6 * (pt - ptRef) + bilirubin
 }
 
 function getMdfInterpretation(mdf) {

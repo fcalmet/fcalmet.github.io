@@ -27,6 +27,7 @@ document.getElementById('footer-nav').innerHTML = `<ul>
   <li><a href="CPT.html">Child-Pugh-Turcotte</a></li>
   <li><a href="Fib-4.html">Fib-4</a></li>
   <li><a href="Lille.html">Lille model</a></li>
+  <li><a href="MayoPostop.html">Mayo post-operative risk calculator</a></li>
   <li><a href="MDF.html">Maddrey score</a></li>
   <li><a href="MELD.html">MELD score</a></li>
   <li><a href="NFS.html">NAFLD fibrosis score</a></li>
@@ -226,6 +227,42 @@ function calculateMdf() {
 	<ul>
 	  <li>Maddrey score: ${mdf.toFixed()}
 		<ul><li>${mdfInterpretation}</li></ul>
+	  </li>
+	</ul>`)
+}
+
+/********************************************/
+/** Mayo post-op mortality risk calculator **/
+/********************************************/
+
+function getMayoPostop(age, creatinine, bilirubin, inr, asa, isAlcoholCholestasis) {
+  let meld = Math.max(Math.round(9.57 * Math.log(Math.max(creatinine, 1)) + 3.78 * Math.log(Math.max(bilirubin, 1)) + 11.2 * Math.log(Math.max(inr, 1)) + (isAlcoholCholestasis ? 0 : 6.43)), 8)
+  let yd = Math.exp(0.02382 * (age - 60) + (asa > 3 ? 0.88884 : 0) + 0.11798 * (meld - 8))
+  let yy = Math.exp(0.0266 * (age - 60) + (asa > 3 ? 0.58926 : 0) + 0.07430 * (meld - 8))
+  const a = [0.98370, 0.93479, 0.89681].map(x => 100 * (1 - Math.pow(x, yd)));
+  const b = [0.76171, 0.47062].map(x => 100 * (1 - Math.pow(x, yy)));
+  return a.concat(b);
+}
+
+function calculateMayoPostop() {
+  let age = parseFloat(document.getElementById('age').value) || -1;
+  let creatinine = parseFloat(document.getElementById('creatinine').value) || -1;
+  let bilirubin = parseFloat(document.getElementById('bilirubin').value) || -1;
+  let inr = parseFloat(document.getElementById('inr').value) || -1;
+  let asa = parseInt(document.querySelector('input[name="asa"]:checked').value);
+  let isAlcoholCholestasis = document.querySelector('input[name="etiology"][value="alcoholCholestatis"]').checked
+  if (age < 0 || creatinine < 0 || bilirubin < 0 || inr < 0) return setResult()
+
+  let mayo = getMayoPostop(age, creatinine, bilirubin, inr, asa, isAlcoholCholestasis)
+
+  setResult(`
+	<ul>
+	  <li>Mayo post-operative mortality risk:
+		<ul><li>7-day mortality risk: ${mayo[0].toFixed(2)}%</li></ul>
+		<ul><li>30-day mortality risk: ${mayo[1].toFixed(2)}%</li></ul>
+		<ul><li>90-day mortality risk: ${mayo[2].toFixed(2)}%</li></ul>
+		<ul><li>1-year mortality risk: ${mayo[3].toFixed(2)}%</li></ul>
+		<ul><li>5-year mortality risk: ${mayo[4].toFixed(2)}%</li></ul>
 	  </li>
 	</ul>`)
 }

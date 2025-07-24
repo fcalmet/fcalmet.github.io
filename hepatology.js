@@ -29,6 +29,7 @@ document.getElementById('footer-nav').innerHTML = `<ul>
   <li><a href="Lille.html">Lille model</a></li>
   <li><a href="MDF.html">Maddrey score</a></li>
   <li><a href="MELD.html">MELD score</a></li>
+  <li><a href="NFS.html">NAFLD fibrosis score</a></li>
   <li><a href="VocalPenn.html">VOCAL-Penn calculator</a></li>
 </ul>`
 
@@ -330,6 +331,45 @@ function calculateMeld() {
   html += `</ul>`
 
   setResult(html);
+}
+
+/**************************/
+/** NAFLD fibrosis score **/
+/**************************/
+
+function getNfs(age, bmi, ast, alt, platelets, albumin, isIfg) {
+  return -1.675 + 0.037 * age + 0.094 * bmi + isIfg ? 1.13 : 0 + 0.99 * ast / alt - 0.013 * platelets - 0.66 * albumin
+}
+
+function getNfsInterpretation(nfs) {
+  if (nfs < -1.455) return "F0-F2"
+  if (nfs > 0.675) return "F3-F4"
+  return "indeterminate"
+}
+
+function calculateNfs() {
+  let age = parseFloat(document.getElementById('age').value) || -1;
+  let bmi = parseFloat(document.getElementById('bmi').value) || -1;
+  let ast = parseFloat(document.getElementById('ast').value) || -1;
+  let alt = parseFloat(document.getElementById('alt').value) || -1;
+  let platelets = parseFloat(document.getElementById('platelets').value) || -1;
+  let albumin = parseFloat(document.getElementById('albumin').value) || -1;
+  let isIfg = document.querySelector('input[name="ifg"][value="yes"]').checked
+
+  if (age < 0 || bmi < 0 || ast < 0 || alt < 0 || platelets < 0 || albumin < 0) return setResult()
+
+  let nfs = getNfs(age, bmi, ast, alt, platelets, albumin, isIfg)
+  let nfsInterpretation = getNfsInterpretation(nfs)
+  alert(nfs)
+  alert(nfsInterpretation)
+
+  setResult(`
+	<ul>
+	  <li>NAFLD fibrosis score: ${nsf.toFixed(3)}
+		<ul><li>${nfsInterpretation}</li></ul>
+	  </li>
+	</ul>`)
+  alert("!")
 }
 
 /**********************/

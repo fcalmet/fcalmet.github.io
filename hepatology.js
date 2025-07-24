@@ -338,7 +338,7 @@ function calculateMeld() {
 /**************************/
 
 function getNfs(age, bmi, ast, alt, platelets, albumin, isIfg) {
-  return -1.675 + 0.037 * age + 0.094 * bmi + isIfg ? 1.13 : 0 + 0.99 * ast / alt - 0.013 * platelets - 0.66 * albumin
+  return -1.675 + 0.037 * age + 0.094 * bmi + (isIfg ? 1.13 : 0) + 0.99 * ast / alt - 0.013 * platelets - 0.66 * albumin
 }
 
 function getNfsInterpretation(nfs) {
@@ -360,16 +360,13 @@ function calculateNfs() {
 
   let nfs = getNfs(age, bmi, ast, alt, platelets, albumin, isIfg)
   let nfsInterpretation = getNfsInterpretation(nfs)
-  alert(nfs)
-  alert(nfsInterpretation)
 
   setResult(`
 	<ul>
-	  <li>NAFLD fibrosis score: ${nsf.toFixed(3)}
+	  <li>NAFLD fibrosis score: ${nfs.toFixed(3)}
 		<ul><li>${nfsInterpretation}</li></ul>
 	  </li>
 	</ul>`)
-  alert("!")
 }
 
 /**********************/

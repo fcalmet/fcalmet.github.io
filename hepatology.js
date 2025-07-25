@@ -428,13 +428,14 @@ function getVocalPenn(age, albumin, bilirubin, platelets, isObese, isMasld, isEm
 }
 
 function getVocalPennInterpretation(vp) {
+  const [p30, p90, p180, pDecomp] = vp
   return `
   <ul>
     <li>VOCAL-Penn postoperative mortality risk:
-      <ul><li>30-day mortality risk: ${toPercent(vp[0], 1)}</li></ul>
-      <ul><li>90-day mortality risk: ${toPercent(vp[1], 1)}</li></ul>
-      <ul><li>180-day mortality risk: ${toPercent(vp[2], 1)}</li></ul>
-      <ul><li>90-day decompensation risk: ${toPercent(vp[3], 1)}</li></ul>
+      <ul><li>30-day mortality risk: ${toPercent(p30, 1)}</li></ul>
+      <ul><li>90-day mortality risk: ${toPercent(p90, 1)}</li></ul>
+      <ul><li>180-day mortality risk: ${toPercent(p180, 1)}</li></ul>
+      <ul><li>90-day decompensation risk: ${toPercent(pDecomp, 1)}</li></ul>
     </li>
   </ul>`
 }

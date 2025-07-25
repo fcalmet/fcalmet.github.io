@@ -34,6 +34,10 @@ document.getElementById('footer-nav').innerHTML = `<ul>
   <li><a href="VocalPenn.html">VOCAL-Penn calculator</a></li>
 </ul>`
 
+document.querySelectorAll('input').forEach(input => {
+  input.setAttribute('autocomplete', 'off');
+});
+
 /**********************/
 /** Global Functions **/
 /**********************/

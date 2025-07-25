@@ -4,7 +4,7 @@
 - [X] footer is crammed in narrow screens
 - [X] wrapped lined in index.htnl are left aligned in narrow screens
 
-* Calculators [9/47]
+* Calculators [9/24]
 - [X] APRI
 - [X] Lille
 - [X] MELD
@@ -14,41 +14,42 @@
 - [X] Child-Pugh-Turcotte
 - [X] NAFLD fibrosis score
 - [X] Mayo perioperative score
-- [ ] NAC dosing
-- [ ] ANI score
 - [ ] CLIF score
 - [ ] ACLF criteria
+- [ ] NAC dosing
+- [ ] ANI score
 - [ ] AIH criteria - simplified
 - [ ] AIH criteria - revised original score
 - [ ] R factor for liver injury
-- [ ] UK-ELD
-- [ ] EVendo esophageal varices
 - [ ] SAAG
-- [ ] REACH-B score for HCC
-- [ ] ABIC for alcoholic hepatitis
 - [ ] King's college criteria for APAP toxicity
-- [ ] Revised natural history model for PSC
-- [ ] Fatty liver index
-- [ ] Liver decompensation risk after hepatectomy for HCC
-- [ ] ALBI (albumin-bilirubin) grade for HCC
-- [ ] ICI hepatitis grades severity
-- [ ] CAGE questions alcohol use
-- [ ] HOMA-IR
-- [ ] Fibrotic NASH index (FNI)
-- [ ] Glasgow Alcoholic Hepatitis Score
-- [ ] NAFLD activity score (NAS)
-- [ ] Hepatic encephalopathy grades/stages
 - [ ] BCLC staging
-- [ ] BARD score for NAFLD fibrosis
 - [ ] Milan criteria for LT
-- [ ] Metroticket calculator for HCC
-- [ ] GALAD model for HCC
 - [ ] ALFED (for ALF)
-- [ ] Hepatic steatosis index (HSI)
-- [ ] Bonacini cirrhosis discriminant score
 - [ ] PBC Globe
 - [ ] PBC Mayo Survival Score
-- [ ] UK PBC score
-- [ ] Free copper calculator
-- [ ] Nazer's Wilson prognostic index
-- [ ] Revised Wilson prognostic index
+- [ ] Rare [0/24]
+  - [ ] UK-ELD
+  - [ ] EVendo esophageal varices
+  - [ ] REACH-B score for HCC
+  - [ ] ABIC for alcoholic hepatitis
+  - [ ] Revised natural history model for PSC
+  - [ ] Fatty liver index
+  - [ ] Liver decompensation risk after hepatectomy for HCC
+  - [ ] ALBI (albumin-bilirubin) grade for HCC
+  - [ ] ICI hepatitis grades severity
+  - [ ] CAGE questions alcohol use
+  - [ ] HOMA-IR
+  - [ ] Fibrotic NASH index (FNI)
+  - [ ] Glasgow Alcoholic Hepatitis Score
+  - [ ] NAFLD activity score (NAS)
+  - [ ] Hepatic encephalopathy grades/stages
+  - [ ] BARD score for NAFLD fibrosis
+  - [ ] Metroticket calculator for HCC
+  - [ ] GALAD model for HCC
+  - [ ] Hepatic steatosis index (HSI)
+  - [ ] Bonacini cirrhosis discriminant score
+  - [ ] UK PBC score
+  - [ ] Free copper calculator
+  - [ ] Nazer's Wilson prognostic index
+  - [ ] Revised Wilson prognostic index

@@ -41,11 +41,6 @@ function toPercent(p, decimals = 0) {
   return (p * 100).toFixed(decimals) + "%"
 }
 
-function error(message, id) {
-  alert(message);
-  document.getElementById(id).focus();
-}
-
 function setResult(html = '') {
   document.getElementById('result').innerHTML = html;
 }
@@ -55,7 +50,7 @@ function setResult(html = '') {
 /**********/
 
 function getApri(ast, astUln, platelets) {
-  return ast / astUln / platelets
+  return ast / astUln / platelets * 100
 }
 
 function getApriInterpretation(apri) {
@@ -71,49 +66,48 @@ function getApriInterpretation(apri) {
   } else {
 	interpretation = 'F0-F1'
   }
-  return interpretation
+  return `<ul>
+	  <li>APRI: ${apri.toFixed(3)}
+		<ul><li>${interpretation}</li></ul>
+	  </li>
+	</ul>`
 }
 
 function calculateApri() {
-  let ast = parseFloat(document.getElementById('ast').value) || -1;
-  let astUln = parseFloat(document.getElementById('ast-uln').value) || -1;
-  let platelets = parseFloat(document.getElementById('platelets').value) || -1;
-
+  const ast = parseFloat(document.getElementById('ast').value) || -1;
+  const astUln = parseFloat(document.getElementById('ast-uln').value) || -1;
+  const platelets = parseFloat(document.getElementById('platelets').value) || -1;
   if (ast < 0 || astUln < 0 || platelets < 0) return setResult();
-
-  let apri = getApri(ast, astUln, platelets)
-  let apriInterpretation = getApriInterpretation(apri)
-
-  setResult(`
-	<ul>
-	  <li>APRI: ${apri.toFixed(3)}
-		<ul><li>${apriInterpretation}</li></ul>
-	  </li>
-	</ul>`)
+  const apri = getApri(ast, astUln, platelets)
+  const interpretation = getApriInterpretation(apri)
+  setResult(interpretation)
 }
 
 /*************************/
 /** Child-Pugh-Turcotte **/
 /*************************/
 
-function getCptClass(cpt) {
-  return (cpt <= 6 ? "A" : (cpt <= 9 ? "B" : "C"))
+function getCpt(bilirubin, albumin, inr, ascites, encephalopathy) {
+  return bilirubin + albumin + inr + ascites + encephalopathy
+}
+
+function getCptInterpretation(cpt) {
+  const cptClass = (cpt <= 6 ? "A" : (cpt <= 9 ? "B" : "C"))
+  return `
+	<ul>
+	  <li>Child-Pugh-Turcotte score: ${cpt} (class ${cptClass})</li>
+	</ul>`
 }
 
 function calculateCpt() {
-  let bilirubin = parseInt(document.querySelector('input[name="bilirubin"]:checked').value);
-  let albumin = parseInt(document.querySelector('input[name="albumin"]:checked').value);
-  let inr = parseInt(document.querySelector('input[name="inr"]:checked').value);
-  let ascites = parseInt(document.querySelector('input[name="ascites"]:checked').value);
-  let encephalopathy = parseInt(document.querySelector('input[name="encephalopathy"]:checked').value);
-
-  let cpt = bilirubin + albumin + inr + ascites + encephalopathy
-  let cptClass = getCptClass(cpt)
-
-  setResult(`
-	<ul>
-	  <li>Child-Pugh-Turcotte score: ${cpt} (class ${cptClass})</li>
-	</ul>`)
+  const bilirubin = parseInt(document.querySelector('input[name="bilirubin"]:checked').value);
+  const albumin = parseInt(document.querySelector('input[name="albumin"]:checked').value);
+  const inr = parseInt(document.querySelector('input[name="inr"]:checked').value);
+  const ascites = parseInt(document.querySelector('input[name="ascites"]:checked').value);
+  const encephalopathy = parseInt(document.querySelector('input[name="encephalopathy"]:checked').value);
+  const cpt = getCpt(bilirubin, albumin, inr, ascites, encephalopathy)
+  const interpretation = getCptInterpretation(bilirubin + albumin + inr + ascites + encephalopathy)
+  setResult(interpretation)
 }
 
 /***********/
@@ -125,8 +119,8 @@ function getFib4(age, platelets, ast, alt) {
 }
 
 function getFib4Interpretation(fib4, age, isMasld = true) {
-  let uln = isMasld ? 2.67 : 3.25
-  let lln = isMasld ? (age < 65 ? 1.3 : 2.0) : 1.45
+  const uln = isMasld ? 2.67 : 3.25
+  const lln = isMasld ? (age < 65 ? 1.3 : 2.0) : 1.45
   let interpretation = ''
   if (fib4 < lln) {
 	interpretation = 'No advanced fibrosis'
@@ -138,27 +132,24 @@ function getFib4Interpretation(fib4, age, isMasld = true) {
   if (isMasld && age < 35) {
 	interpretation += '<br />(low accuracy in individuals aged <35)'
   }
-  return interpretation
+  return `
+	<ul>
+	  <li>Fib-4: ${fib4.toFixed(3)}
+		<ul><li>${interpretation}</li></ul>
+	  </li>
+	</ul>`
 }
 
 function calculateFib4() {
-  let age = parseFloat(document.getElementById('age').value) || -1;
-  let platelets = parseFloat(document.getElementById('platelets').value) || -1;
-  let ast = parseFloat(document.getElementById('ast').value) || -1;
-  let alt = parseFloat(document.getElementById('alt').value) || -1;
-  let isMasld = document.querySelector('input[name="isMasld"][value="masld"]').checked;
-
+  const age = parseFloat(document.getElementById('age').value) || -1;
+  const platelets = parseFloat(document.getElementById('platelets').value) || -1;
+  const ast = parseFloat(document.getElementById('ast').value) || -1;
+  const alt = parseFloat(document.getElementById('alt').value) || -1;
+  const isMasld = document.querySelector('input[name="isMasld"][value="masld"]').checked;
   if (age < 0 || platelets < 0 || ast < 0 || alt < 0) return setResult();
-
-  let fib4 = getFib4(age, platelets, ast, alt)
-  let fib4Interpretation = getFib4Interpretation(fib4, age, isMasld)
-
-  setResult(`
-	<ul>
-	  <li>Fib-4: ${fib4.toFixed(3)}
-		<ul><li>${fib4Interpretation}</li></ul>
-	  </li>
-	</ul>`)
+  const fib4 = getFib4(age, platelets, ast, alt)
+  const interpretation = getFib4Interpretation(fib4, age, isMasld)
+  setResult(interpretation)
 }
 
 /*****************/
@@ -166,39 +157,35 @@ function calculateFib4() {
 /*****************/
 
 function getLille(age, albumin, bilirubin0, bilirubin7, creatinine, pt) {
-  let r = 3.19 - 0.101 * age
-      + 0.147 * albumin
-      + 0.0165 * (bilirubin0 - bilirubin7)
-      - 0.206 * (creatinine > 1.3 ? 1 : 0)
-      - 0.0065 * bilirubin0
-      - 0.0096 * pt
-  let lille = Math.exp(-r) / (1 + Math.exp(-r))
-  return lille
+  const r = 3.19 - 0.101 * age
+		+ 0.147 * albumin
+		+ 0.0165 * (bilirubin0 - bilirubin7)
+		- 0.206 * (creatinine > 1.3 ? 1 : 0)
+		- 0.0065 * bilirubin0
+		- 0.0096 * pt
+  return Math.exp(-r) / (1 + Math.exp(-r))
 }
 
-function getLilleMortality(lille) {
-  return lille > 0.45 ? 0.25 : 0.85
-}
-
-function calculateLille() {
-  let age = parseFloat(document.getElementById('age').value) || -1;
-  let albumin = parseFloat(document.getElementById('albumin').value) || -1;
-  let bilirubin0 = parseFloat(document.getElementById('bilirubin0').value) || -1;
-  let bilirubin7 = parseFloat(document.getElementById('bilirubin7').value) || -1;
-  let creatinine = parseFloat(document.getElementById('creatinine').value) || -1;
-  let pt = parseFloat(document.getElementById('pt').value) || -1;
-
-  if (age < 0 || albumin < 0 || bilirubin0 < 0 || bilirubin7 < 0 || creatinine < 0 || pt < 0) return setResult()
-
-  let lille = getLille(age, albumin, bilirubin0, bilirubin7, creatinine, pt)
-  let lilleMortality = getLilleMortality(lille)
-
-  setResult(`
-	<ul>
+function getLilleInterpretation(lille) {
+  const lilleMortality = lille > 0.45 ? 0.25 : 0.85
+  return `<ul>
 	  <li>Lille Score:</td><td>${lille.toFixed(3)}
 		<ul><li>6-month survival:</td><td>${toPercent(lilleMortality)}</li></ul>
 	  </li>
-	</ul>`)
+	</ul>`
+}
+
+function calculateLille() {
+  const age = parseFloat(document.getElementById('age').value) || -1;
+  const albumin = parseFloat(document.getElementById('albumin').value) || -1;
+  const bilirubin0 = parseFloat(document.getElementById('bilirubin0').value) || -1;
+  const bilirubin7 = parseFloat(document.getElementById('bilirubin7').value) || -1;
+  const creatinine = parseFloat(document.getElementById('creatinine').value) || -1;
+  const pt = parseFloat(document.getElementById('pt').value) || -1;
+  if (age < 0 || albumin < 0 || bilirubin0 < 0 || bilirubin7 < 0 || creatinine < 0 || pt < 0) return setResult()
+  const lille = getLille(age, albumin, bilirubin0, bilirubin7, creatinine, pt)
+  const interpretation = getLilleInterpretation(lille)
+  setResult(interpretation)
 }
 
 /*******************/
@@ -210,25 +197,23 @@ function getMdf(pt, ptRef, bilirubin) {
 }
 
 function getMdfInterpretation(mdf) {
-  return (mdf > 32 ? 'Poor' : 'Good') + ' prognosis'
+  const interpretation = (mdf > 32 ? 'Poor' : 'Good') + ' prognosis'
+  return `
+	<ul>
+	  <li>Maddrey score: ${mdf.toFixed()}
+		<ul><li>${interpretation}</li></ul>
+	  </li>
+	</ul>`
 }
 
 function calculateMdf() {
-  let pt = parseFloat(document.getElementById('pt').value) || -1;
-  let ptRef = parseFloat(document.getElementById('pt-ref').value) || -1;
-  let bilirubin = parseFloat(document.getElementById('bilirubin').value) || -1;
-
+  const pt = parseFloat(document.getElementById('pt').value) || -1;
+  const ptRef = parseFloat(document.getElementById('pt-ref').value) || -1;
+  const bilirubin = parseFloat(document.getElementById('bilirubin').value) || -1;
   if (pt < 0 || ptRef < 0 || bilirubin < 0) return setResult()
-
-  let mdf = getMdf(pt, ptRef, bilirubin)
-  let mdfInterpretation = getMdfInterpretation(mdf)
-
-  setResult(`
-	<ul>
-	  <li>Maddrey score: ${mdf.toFixed()}
-		<ul><li>${mdfInterpretation}</li></ul>
-	  </li>
-	</ul>`)
+  const mdf = getMdf(pt, ptRef, bilirubin)
+  const interpretation = getMdfInterpretation(mdf)
+  setResult(interpretation)
 }
 
 /********************************************/
@@ -236,35 +221,38 @@ function calculateMdf() {
 /********************************************/
 
 function getMayoPostop(age, creatinine, bilirubin, inr, asa, isAlcoholCholestasis) {
-  let meld = Math.max(Math.round(9.57 * Math.log(Math.max(creatinine, 1)) + 3.78 * Math.log(Math.max(bilirubin, 1)) + 11.2 * Math.log(Math.max(inr, 1)) + (isAlcoholCholestasis ? 0 : 6.43)), 8)
-  let yd = Math.exp(0.02382 * (age - 60) + (asa > 3 ? 0.88884 : 0) + 0.11798 * (meld - 8))
-  let yy = Math.exp(0.0266 * (age - 60) + (asa > 3 ? 0.58926 : 0) + 0.07430 * (meld - 8))
-  const a = [0.98370, 0.93479, 0.89681].map(x => 100 * (1 - Math.pow(x, yd)));
-  const b = [0.76171, 0.47062].map(x => 100 * (1 - Math.pow(x, yy)));
+  const meld = Math.max(Math.round(9.57 * Math.log(Math.max(creatinine, 1)) + 3.78 * Math.log(Math.max(bilirubin, 1)) + 11.2 * Math.log(Math.max(inr, 1)) + (isAlcoholCholestasis ? 0 : 6.43)), 8)
+  const yd = Math.exp(0.02382 * (age - 60) + (asa > 3 ? 0.88884 : 0) + 0.11798 * (meld - 8))
+  const yy = Math.exp(0.0266 * (age - 60) + (asa > 3 ? 0.58926 : 0) + 0.07430 * (meld - 8))
+  const a = [0.98370, 0.93479, 0.89681].map(x => (1 - Math.pow(x, yd)));
+  const b = [0.76171, 0.47062].map(x => (1 - Math.pow(x, yy)));
   return a.concat(b);
 }
 
-function calculateMayoPostop() {
-  let age = parseFloat(document.getElementById('age').value) || -1;
-  let creatinine = parseFloat(document.getElementById('creatinine').value) || -1;
-  let bilirubin = parseFloat(document.getElementById('bilirubin').value) || -1;
-  let inr = parseFloat(document.getElementById('inr').value) || -1;
-  let asa = parseInt(document.querySelector('input[name="asa"]:checked').value);
-  let isAlcoholCholestasis = document.querySelector('input[name="etiology"][value="alcoholCholestatis"]').checked
-  if (age < 0 || creatinine < 0 || bilirubin < 0 || inr < 0) return setResult()
-
-  let mayo = getMayoPostop(age, creatinine, bilirubin, inr, asa, isAlcoholCholestasis)
-
-  setResult(`
+function getMayoPostopInterpretation(mayo) {
+  return `
 	<ul>
 	  <li>Mayo post-operative mortality risk:
-		<ul><li>7-day mortality risk: ${mayo[0].toFixed(2)}%</li></ul>
-		<ul><li>30-day mortality risk: ${mayo[1].toFixed(2)}%</li></ul>
-		<ul><li>90-day mortality risk: ${mayo[2].toFixed(2)}%</li></ul>
-		<ul><li>1-year mortality risk: ${mayo[3].toFixed(2)}%</li></ul>
-		<ul><li>5-year mortality risk: ${mayo[4].toFixed(2)}%</li></ul>
+		<ul><li>7-day mortality risk: ${toPercent(mayo[0], 2)}</li></ul>
+		<ul><li>30-day mortality risk: ${toPercent(mayo[1], 2)}</li></ul>
+		<ul><li>90-day mortality risk: ${toPercent(mayo[2], 2)}</li></ul>
+		<ul><li>1-year mortality risk: ${toPercent(mayo[3], 2)}</li></ul>
+		<ul><li>5-year mortality risk: ${toPercent(mayo[4], 2)}</li></ul>
 	  </li>
-	</ul>`)
+	</ul>`
+}
+
+function calculateMayoPostop() {
+  const age = parseFloat(document.getElementById('age').value) || -1;
+  const creatinine = parseFloat(document.getElementById('creatinine').value) || -1;
+  const bilirubin = parseFloat(document.getElementById('bilirubin').value) || -1;
+  const inr = parseFloat(document.getElementById('inr').value) || -1;
+  const asa = parseInt(document.querySelector('input[name="asa"]:checked').value);
+  const isAlcoholCholestasis = document.querySelector('input[name="etiology"][value="alcoholCholestatis"]').checked
+  if (age < 0 || creatinine < 0 || bilirubin < 0 || inr < 0) return setResult()
+  const mayo = getMayoPostop(age, creatinine, bilirubin, inr, asa, isAlcoholCholestasis)
+  const interpretation = getMayoPostopInterpretation(mayo)
+  setResult(interpretation)
 }
 
 /****************/
@@ -273,7 +261,7 @@ function calculateMayoPostop() {
 
 function getMeld(creatinine, bilirubin, inr, isRrt) {
   if (isRrt) creatinine = 4.0
-  let meld = 9.57 * Math.log(Math.max(creatinine, 1.0))
+  const meld = 9.57 * Math.log(Math.max(creatinine, 1.0))
 	  + 3.78 * Math.log(Math.min(Math.max(bilirubin, 1.0), 4.0))
 	  + 11.2 * Math.log(inr)
 	  + 6.43
@@ -297,12 +285,12 @@ function getMeldNa(creatinine, bilirubin, inr, sodium, isRrt) {
 
 function getMeld3(creatinine, bilirubin, inr, sodium, albumin, isRrt, isFemale) {
   if (isRrt) creatinine = 3.0
-  let logBilirubin = Math.log(Math.max(bilirubin, 1.0))
-  let logCreatinine = Math.log(Math.min(Math.max(creatinine, 1.0), 3.0))
-  let logInr = Math.log(Math.max(inr, 1.0))
-  let nSodium = 137 - Math.min(Math.max(sodium, 125), 137)
-  let nAlbumin = 3.5 - Math.min(Math.max(albumin, 1.5), 3.5)
-  let meld3 = (isFemale ? 1.33 : 0.0)
+  const logBilirubin = Math.log(Math.max(bilirubin, 1.0))
+  const logCreatinine = Math.log(Math.min(Math.max(creatinine, 1.0), 3.0))
+  const logInr = Math.log(Math.max(inr, 1.0))
+  const nSodium = 137 - Math.min(Math.max(sodium, 125), 137)
+  const nAlbumin = 3.5 - Math.min(Math.max(albumin, 1.5), 3.5)
+  const meld3 = (isFemale ? 1.33 : 0.0)
 	  + 4.56 * logBilirubin
 	  + 0.82 * nSodium
 	  - 0.24 * nSodium * logBilirubin
@@ -328,20 +316,20 @@ function getMeld3Survival(meld3, days) {
 }
 
 function calculateMeld() {
-  let creatinine = parseFloat(document.getElementById('creatinine').value) || -1;
-  let bilirubin = parseFloat(document.getElementById('bilirubin').value) || -1;
-  let inr = parseFloat(document.getElementById('inr').value) || -1;
-  let sodium = parseFloat(document.getElementById('sodium').value) || -1;
-  let albumin = parseFloat(document.getElementById('albumin').value) || -1;
-  let isFemale = document.querySelector('input[name="sex"][value="female"]').checked
-  let isRrt = document.querySelector('input[name="rrt"][value="yes"]').checked
+  const creatinine = parseFloat(document.getElementById('creatinine').value) || -1;
+  const bilirubin = parseFloat(document.getElementById('bilirubin').value) || -1;
+  const inr = parseFloat(document.getElementById('inr').value) || -1;
+  const sodium = parseFloat(document.getElementById('sodium').value) || -1;
+  const albumin = parseFloat(document.getElementById('albumin').value) || -1;
+  const isFemale = document.querySelector('input[name="sex"][value="female"]').checked
+  const isRrt = document.querySelector('input[name="rrt"][value="yes"]').checked
 
   if ((creatinine < 0 && !isRrt) || bilirubin < 0 || inr < 0) return setResult()
 
-  let meld = getMeld(creatinine, bilirubin, inr, isRrt)
-  let meldMortality = getMeldMortality(meld)
-  let meldNa = getMeldNa(creatinine, bilirubin, inr, sodium, isRrt)
-  let meld3 = getMeld3(creatinine, bilirubin, inr, sodium, albumin, isRrt, isFemale)
+  const meld = getMeld(creatinine, bilirubin, inr, isRrt)
+  const meldMortality = getMeldMortality(meld)
+  const meldNa = getMeldNa(creatinine, bilirubin, inr, sodium, isRrt)
+  const meld3 = getMeld3(creatinine, bilirubin, inr, sodium, albumin, isRrt, isFemale)
 
   let html = `
 	<ul>
@@ -379,31 +367,27 @@ function getNfs(age, bmi, ast, alt, platelets, albumin, isIfg) {
 }
 
 function getNfsInterpretation(nfs) {
-  if (nfs < -1.455) return "F0-F2"
-  if (nfs > 0.675) return "F3-F4"
-  return "indeterminate"
+  const interpretation = (nfs < -1.455 ? "F0-F2" : (nfs > 0.675 ? "F3-F4" : "indeterminate"))
+  return `
+	<ul>
+	  <li>NAFLD fibrosis score: ${nfs.toFixed(3)}
+		<ul><li>${interpretation}</li></ul>
+	  </li>
+	</ul>`
 }
 
 function calculateNfs() {
-  let age = parseFloat(document.getElementById('age').value) || -1;
-  let bmi = parseFloat(document.getElementById('bmi').value) || -1;
-  let ast = parseFloat(document.getElementById('ast').value) || -1;
-  let alt = parseFloat(document.getElementById('alt').value) || -1;
-  let platelets = parseFloat(document.getElementById('platelets').value) || -1;
-  let albumin = parseFloat(document.getElementById('albumin').value) || -1;
-  let isIfg = document.querySelector('input[name="ifg"][value="yes"]').checked
-
+  const age = parseFloat(document.getElementById('age').value) || -1;
+  const bmi = parseFloat(document.getElementById('bmi').value) || -1;
+  const ast = parseFloat(document.getElementById('ast').value) || -1;
+  const alt = parseFloat(document.getElementById('alt').value) || -1;
+  const platelets = parseFloat(document.getElementById('platelets').value) || -1;
+  const albumin = parseFloat(document.getElementById('albumin').value) || -1;
+  const isIfg = document.querySelector('input[name="ifg"][value="yes"]').checked
   if (age < 0 || bmi < 0 || ast < 0 || alt < 0 || platelets < 0 || albumin < 0) return setResult()
-
-  let nfs = getNfs(age, bmi, ast, alt, platelets, albumin, isIfg)
-  let nfsInterpretation = getNfsInterpretation(nfs)
-
-  setResult(`
-	<ul>
-	  <li>NAFLD fibrosis score: ${nfs.toFixed(3)}
-		<ul><li>${nfsInterpretation}</li></ul>
-	  </li>
-	</ul>`)
+  const nfs = getNfs(age, bmi, ast, alt, platelets, albumin, isIfg)
+  const interpretation = getNfsInterpretation(nfs)
+  setResult(interpretation)
 }
 
 /**********************/
@@ -411,60 +395,57 @@ function calculateNfs() {
 /**********************/
 
 function getVocalPenn(age, albumin, bilirubin, platelets, isObese, isMasld, isEmergency, asa, surgeryType) {
-  let surgeryTypeMap = { "abdominalLap": 0, "abdominalOpen": 1, "abdominalWall": 2,
-						 "vascular": 3, "majorOrthopedic": 4, "chestCardiac": 5 }
-  let surgeryTypeId = surgeryTypeMap[surgeryType]
-  let albuminSp = ((albumin > 2.7 ? (albumin - 2.7) ** 3 : 0) -
-				   ((albumin > 3.7 ? 1.7 * (albumin - 3.7) ** 3 : 0) -
-					(albumin > 4.4 ? (albumin - 4.4) ** 3 : 0)) / 0.7
-				  ) / 2.89
-  let plateletSp = ((platelets > 74 ? (platelets - 74) ** 3 : 0) -
-					((platelets > 153 ? 195 * (platelets - 153) ** 3 : 0) -
-					 (platelets > 269 ? 79 * (platelets - 269) ** 3 : 0)) / 116
-				   ) / 38025
-  let bilirubinSp = ((bilirubin > 0.39 ? (bilirubin - 0.39) ** 3 : 0) -
-					 ((bilirubin > 0.75 ? 1.41 * (bilirubin - 0.75) ** 3 : 0) -
-					  (bilirubin > 1.8 ? 0.36 * (bilirubin - 1.8) ** 3 : 0)) / 1.05
-					) / 1.9881
-  let logodds30 = 1.061725 * asa - 5.472096 + (isEmergency ? 0.927904 : 0) + [0, 1.56071, 0.7418021, 0.9165415, 1.464183, 1.893621][surgeryTypeId] - 0.0075185 * platelets + 0.0036657 * plateletSp - 0.5181509 * albumin - 1.000672 * albuminSp + 0.1448936 * bilirubin - (isObese ? 0.7541669 : 0) + (isMasld ? 0.8268748 : 0)
-  let logodds90 = 0.6891587 * asa - 7.381628 + (isEmergency ? 0.6246303 : 0) + 0.0365738 * age + [0, 1.349889, 0.2480613, 1.054497, 1.067452, 1.26527][surgeryTypeId] - 0.4851036 * albumin - 0.9821122 * albuminSp + (isMasld ? 0.82691 : 0)
-  let logodds180 = 0.850114 * asa - 6.169259 + 0.0293034 * age + [0, 0.8838124, 0.197697, 0.4630691, 0.1229086, 0.4320639][surgeryTypeId] - 0.003719 * platelets - 0.0004196 * plateletSp - 0.4560354 * albumin - 0.4166421 * albuminSp - (isObese ? 0.5176601 : 0)
-  let p30 = Math.exp(logodds30) / (1 + Math.exp(logodds30))
-  let p90u = Math.exp(logodds90) / (1 + Math.exp(logodds90))
-  let p90 = 1 - (1 - p30) * (1 - p90u)
-  let p180 = 1 - (1 - p30) * (1 - p90u) * (1 - Math.exp(logodds180) / (1 + Math.exp(logodds180)))
-  let logOddsDecomp = 0.2988972 * asa - 2.287235 + (isEmergency ? 0.5076108 : 0) + [0, 0.6117639, -0.1508734, -0.4641384, -0.3442967, -0.1648213][surgeryTypeId] - 0.0054196 * platelets + 0.0021578 * plateletSp - 0.4460345 * albumin - 0.4612017 * albuminSp + 1.361681 * bilirubin - 1.746094 * bilirubinSp - (isObese ? 0.1820302 : 0) + (isMasld ? 0.2481661 : 0) + 0.0069088 * age
-  let pDecomp = Math.exp(logOddsDecomp) / (1 + Math.exp(logOddsDecomp))
-  p30 = (p30 * 100).toFixed(1)
-  p90 = (p90 * 100).toFixed(1)
-  p180 = (p180 * 100).toFixed(1)
-  pDecomp = (pDecomp * 100).toFixed(1)
+  const surgeryTypeMap = { "abdominalLap": 0, "abdominalOpen": 1, "abdominalWall": 2,
+						   "vascular": 3, "majorOrthopedic": 4, "chestCardiac": 5 }
+  const surgeryTypeId = surgeryTypeMap[surgeryType]
+  const albuminSp = ((albumin > 2.7 ? (albumin - 2.7) ** 3 : 0) -
+					 ((albumin > 3.7 ? 1.7 * (albumin - 3.7) ** 3 : 0) -
+					  (albumin > 4.4 ? (albumin - 4.4) ** 3 : 0)) / 0.7
+					) / 2.89
+  const plateletSp = ((platelets > 74 ? (platelets - 74) ** 3 : 0) -
+					  ((platelets > 153 ? 195 * (platelets - 153) ** 3 : 0) -
+					   (platelets > 269 ? 79 * (platelets - 269) ** 3 : 0)) / 116
+					 ) / 38025
+  const bilirubinSp = ((bilirubin > 0.39 ? (bilirubin - 0.39) ** 3 : 0) -
+					   ((bilirubin > 0.75 ? 1.41 * (bilirubin - 0.75) ** 3 : 0) -
+						(bilirubin > 1.8 ? 0.36 * (bilirubin - 1.8) ** 3 : 0)) / 1.05
+					  ) / 1.9881
+  const logodds30 = 1.061725 * asa - 5.472096 + (isEmergency ? 0.927904 : 0) + [0, 1.56071, 0.7418021, 0.9165415, 1.464183, 1.893621][surgeryTypeId] - 0.0075185 * platelets + 0.0036657 * plateletSp - 0.5181509 * albumin - 1.000672 * albuminSp + 0.1448936 * bilirubin - (isObese ? 0.7541669 : 0) + (isMasld ? 0.8268748 : 0)
+  const logodds90 = 0.6891587 * asa - 7.381628 + (isEmergency ? 0.6246303 : 0) + 0.0365738 * age + [0, 1.349889, 0.2480613, 1.054497, 1.067452, 1.26527][surgeryTypeId] - 0.4851036 * albumin - 0.9821122 * albuminSp + (isMasld ? 0.82691 : 0)
+  const logodds180 = 0.850114 * asa - 6.169259 + 0.0293034 * age + [0, 0.8838124, 0.197697, 0.4630691, 0.1229086, 0.4320639][surgeryTypeId] - 0.003719 * platelets - 0.0004196 * plateletSp - 0.4560354 * albumin - 0.4166421 * albuminSp - (isObese ? 0.5176601 : 0)
+  const p30 = Math.exp(logodds30) / (1 + Math.exp(logodds30))
+  const p90u = Math.exp(logodds90) / (1 + Math.exp(logodds90))
+  const p90 = 1 - (1 - p30) * (1 - p90u)
+  const p180 = 1 - (1 - p30) * (1 - p90u) * (1 - Math.exp(logodds180) / (1 + Math.exp(logodds180)))
+  const logOddsDecomp = 0.2988972 * asa - 2.287235 + (isEmergency ? 0.5076108 : 0) + [0, 0.6117639, -0.1508734, -0.4641384, -0.3442967, -0.1648213][surgeryTypeId] - 0.0054196 * platelets + 0.0021578 * plateletSp - 0.4460345 * albumin - 0.4612017 * albuminSp + 1.361681 * bilirubin - 1.746094 * bilirubinSp - (isObese ? 0.1820302 : 0) + (isMasld ? 0.2481661 : 0) + 0.0069088 * age
+  const pDecomp = Math.exp(logOddsDecomp) / (1 + Math.exp(logOddsDecomp))
   return [p30, p90, p180, pDecomp]
 }
 
-function calculateVocalPenn() {
-  let age = parseFloat(document.getElementById('age').value) || -1;
-  let albumin = parseFloat(document.getElementById('albumin').value) || -1;
-  let bilirubin = parseFloat(document.getElementById('bilirubin').value) || -1;
-  let platelets = parseFloat(document.getElementById('platelets').value) || -1;
-  let isObese = document.querySelector('input[name="isObese"][value="yes"]').checked;
-  let isMasld = document.querySelector('input[name="isMasld"][value="yes"]').checked;
-  let isEmergency = document.querySelector('input[name="isEmergency"][value="yes"]').checked;
-  let asa = document.querySelector('input[name="asa"]:checked').value;
-  // let surgeryType = document.querySelector('input[name="surgeryType"]:checked').value;
-  let surgeryType = document.getElementById('surgeryType').value;
-
-  if (age < 0 || albumin < 0 || bilirubin < 0 || platelets < 0) return setResult()
-
-  let vp = getVocalPenn(age, albumin, bilirubin, platelets, isObese, isMasld, isEmergency, asa, surgeryType)
-
-  setResult(`
+function getVocalPennInterpretation(vp) {
+  return `
   <ul>
     <li>VOCAL-Penn postoperative mortality risk:
-   <ul><li>30-day mortality risk: ${vp[0]}</li></ul>
-   <ul><li>90-day mortality risk: ${vp[1]}</li></ul>
-   <ul><li>180-day mortality risk: ${vp[2]}</li></ul>
-   <ul><li>90-day decompensation risk: ${vp[3]}</li></ul>
+      <ul><li>30-day mortality risk: ${toPercent(vp[0], 1)}</li></ul>
+      <ul><li>90-day mortality risk: ${toPercent(vp[1], 1)}</li></ul>
+      <ul><li>180-day mortality risk: ${toPercent(vp[2], 1)}</li></ul>
+      <ul><li>90-day decompensation risk: ${toPercent(vp[3], 1)}</li></ul>
     </li>
-  </ul>`)
+  </ul>`
+}
+
+function calculateVocalPenn() {
+  const age = parseFloat(document.getElementById('age').value) || -1;
+  const albumin = parseFloat(document.getElementById('albumin').value) || -1;
+  const bilirubin = parseFloat(document.getElementById('bilirubin').value) || -1;
+  const platelets = parseFloat(document.getElementById('platelets').value) || -1;
+  const isObese = document.querySelector('input[name="isObese"][value="yes"]').checked;
+  const isMasld = document.querySelector('input[name="isMasld"][value="yes"]').checked;
+  const isEmergency = document.querySelector('input[name="isEmergency"][value="yes"]').checked;
+  const asa = document.querySelector('input[name="asa"]:checked').value;
+  const surgeryType = document.getElementById('surgeryType').value;
+  if (age < 0 || albumin < 0 || bilirubin < 0 || platelets < 0) return setResult()
+  const vp = getVocalPenn(age, albumin, bilirubin, platelets, isObese, isMasld, isEmergency, asa, surgeryType)
+  const interpretation = getVocalPennInterpretation(vp)
+  setResult(interpretation)
 }

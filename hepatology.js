@@ -25,6 +25,7 @@ document.getElementById('footer-nav').innerHTML = `<ul>
   <li><a href="index.html">Home</a></li>
   <li><a href="APRI.html">APRI</a></li>
   <li><a href="CPT.html">Child-Pugh-Turcotte</a></li>
+  <li><a href="CLIF.html">CLIF-C OF/AD/ACLF</a></li>
   <li><a href="Fib-4.html">Fib-4</a></li>
   <li><a href="Lille.html">Lille model</a></li>
   <li><a href="MDF.html">Maddrey score</a></li>
@@ -451,5 +452,109 @@ function calculateVocalPenn() {
   if (age < 0 || albumin < 0 || bilirubin < 0 || platelets < 0) return setResult()
   const vp = getVocalPenn(age, albumin, bilirubin, platelets, isObese, isMasld, isEmergency, asa, surgeryType)
   const interpretation = getVocalPennInterpretation(vp)
+  setResult(interpretation)
+}
+
+/******************/
+/** CLIF-OF/AD/C **/
+/******************/
+
+function getClif(bilirubin, creatinine, isRrt, brain, inr, circulatory, respiratory, age, wbc, sodium) {
+  const liver = bilirubin >= 12 ? 3 : (bilirubin >= 6 ? 2 : 1)
+  const kidney = (isRrt || creatinine >= 3.5) ? 3 : (creatinine >= 2 ? 2 : 1)
+  const coagulation = inr >= 2.5 ? 3 : (inr >= 2.0 ? 2 : 1)
+  const clifOfScore = liver + kidney + brain + coagulation + circulatory + respiratory
+  const liverFailure = liver >= 3
+  const kidneyFailure = kidney >= 2
+  const brainFailure = brain >= 3
+  const coagulationFailure = coagulation >= 3
+  const circulatoryFailure = circulatory >= 3
+  const respiratoryFailure = respiratory >= 3
+  const clifOfCount = (liverFailure ? 1 : 0) +
+		(kidneyFailure ? 1 : 0) +
+		(brainFailure ? 1 : 0) +
+		(coagulationFailure ? 1 : 0) +
+		(circulatoryFailure ? 1 : 0) +
+		(respiratoryFailure ? 1 : 0)
+  let aclfGrade = ''
+  if (clifOfCount > 3)
+	aclfGrade = '3b'
+  else if (clifOfCount == 3)
+	aclfGrade = '3a'
+  else if (clifOfCount == 2)
+	aclfGrade = '2'
+  else if (clifOfCount == 1 && kidneyFailure)
+	aclfGrade = '1a'
+  else if (clifOfCount == 1 && (creatinine >= 1.5 || brain == 2))
+	aclfGrade = '1b'
+
+  let clifAdAclfScore = -1;
+  let p1 = -1, p3 = -1, p6 = -1, p12;
+  if (aclfGrade != '') {
+	if (age > 0 && wbc > 0) { // Calculate CLIF-C ACLF score
+	  clifAdAclfScore = 10 * (0.33 * clifOfScore + 0.04 * age + 0.63 * Math.log(wbc) - 2)
+	  p1 = 1 - Math.exp(-0.0022 * Math.exp(0.0995 * clifAdAclfScore))
+	  p3 = 1 - Math.exp(-0.0079 * Math.exp(0.0869 * clifAdAclfScore))
+	  p6 = 1 - Math.exp(-0.0115 * Math.exp(0.0824 * clifAdAclfScore))
+	  p12 = 1 - Math.exp(-0.0231 * Math.exp(0.0731 * clifAdAclfScore))
+	}
+  } else {
+	if (age > 0 && wbc > 0 & sodium > 0) { // Calculate CLIF-C AD score
+	  clifAdAclfScore = 10 * (0.03 * age + 0.66 * Math.log(creatinine) + 1.71 * Math.log(inr) + 0.88 * Math.log(wbc) - 0.05 * sodium + 8)
+	  p1 = 1 - Math.exp(-0.00012 * Math.exp(0.1083 * clifAdAclfScore))
+	  p3 = 1 - Math.exp(-0.00056 * Math.exp(0.1007 * clifAdAclfScore))
+	  p6 = 1 - Math.exp(-0.00173 * Math.exp(0.0889 * clifAdAclfScore))
+	  p12 = 1 - Math.exp(-0.00879 * Math.exp(0.0698 * clifAdAclfScore))
+	}
+  }
+  return [clifOfScore, clifOfCount, liver, liverFailure, kidney, kidneyFailure, brain, brainFailure, coagulation, coagulationFailure, circulatory, circulatoryFailure, respiratory, respiratoryFailure, aclfGrade, clifAdAclfScore, p1, p3, p6, p12]
+}
+
+function getClifInterpretation(clif) {
+  const [clifOfScore, clifOfCount, liver, liverFailure, kidney, kidneyFailure, brain, brainFailure, coagulation, coagulationFailure, circulatory, circulatoryFailure, respiratory, respiratoryFailure, aclfGrade, clifAdAclfScore, p1, p3, p6, p12] = clif
+  let html = `
+	<ul>
+	  <li>CLIF-C OF score: ${clifOfScore} (${clifOfCount} organ failure${clifOfCount == 1 ? "" : "s"})
+        <ul><li>
+        <table>
+          <tr><td>Liver score: ${liver}</td><td>Liver failure: ${liverFailure ? "Yes" : "No"}</td></tr>
+          <tr><td>Kidney score: ${kidney}</td><td>Kidney failure: ${kidneyFailure ? "Yes" : "No"}</td></tr>
+          <tr><td>Brain score: ${brain}</td><td>Brain failure: ${brainFailure ? "Yes" : "No"}</td></tr>
+          <tr><td>Coagulation score: ${coagulation}</td><td>Coagulation failure: ${coagulationFailure ? "Yes" : "No"}</td></tr>
+          <tr><td>Circulatory score: ${circulatory}</td><td>Circulatory failure: ${circulatoryFailure ? "Yes" : "No"}</td></tr>
+          <tr><td>Respiratory score: ${respiratory}</td><td>Respiratory failure: ${respiratoryFailure ? "Yes" : "No"}</td></tr>
+        </table>
+        </li></ul>
+      </li>`
+  html += `<li>${aclfGrade == '' ? 'No ACLF' : ('ACLF grade ' + aclfGrade)}</li>`
+  if (clifAdAclfScore >= 0) {
+	html += `
+      <li>CLIF-C ${aclfGrade == '' ? 'AD' : 'ACLF'} Score: ${clifAdAclfScore.toFixed()}
+        <ul>
+          <li>1-month mortality: ${toPercent(p1, 1)}</li>
+          <li>3-month mortality: ${toPercent(p3, 1)}</li>
+          <li>6-month mortality: ${toPercent(p6, 1)}</li>
+          <li>12-month mortality: ${toPercent(p12, 1)}</li>
+        </ul>
+      </li>`
+  }
+  html += `</ul>`
+  return html
+}
+
+function calculateClif() {
+  const bilirubin = parseFloat(document.getElementById('bilirubin').value) || -1;
+  const creatinine = parseFloat(document.getElementById('creatinine').value) || -1;
+  const isRrt = document.querySelector('input[name="rrt"][value="yes"]').checked
+  const brain = parseInt(document.querySelector('input[name="brain"]:checked').value);
+  const inr = parseFloat(document.getElementById('inr').value) || -1;
+  const circulatory = parseInt(document.querySelector('input[name="circulatory"]:checked').value);
+  const respiratory = parseInt(document.querySelector('input[name="respiratory"]:checked').value);
+  const age = parseFloat(document.getElementById('age').value) || -1;
+  const wbc = parseFloat(document.getElementById('wbc').value) || -1;
+  const sodium = parseFloat(document.getElementById('sodium').value) || -1;
+  if ((creatinine < 0 && !isRrt) || bilirubin < 0 || inr < 0) return setResult()
+  const clif = getClif(bilirubin, creatinine, isRrt, brain, inr, circulatory, respiratory, age, wbc, sodium)
+  const interpretation = getClifInterpretation(clif)
   setResult(interpretation)
 }

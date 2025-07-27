@@ -229,20 +229,24 @@ function getMayoPostop(age, creatinine, bilirubin, inr, asa, isAlcoholCholestasi
   const meld = Math.max(Math.round(9.57 * Math.log(Math.max(creatinine, 1)) + 3.78 * Math.log(Math.max(bilirubin, 1)) + 11.2 * Math.log(Math.max(inr, 1)) + (isAlcoholCholestasis ? 0 : 6.43)), 8)
   const yd = Math.exp(0.02382 * (age - 60) + (asa > 3 ? 0.88884 : 0) + 0.11798 * (meld - 8))
   const yy = Math.exp(0.0266 * (age - 60) + (asa > 3 ? 0.58926 : 0) + 0.07430 * (meld - 8))
-  const a = [0.98370, 0.93479, 0.89681].map(x => (1 - Math.pow(x, yd)));
-  const b = [0.76171, 0.47062].map(x => (1 - Math.pow(x, yy)));
-  return a.concat(b);
+  return {
+	p7d: 1 - Math.pow(0.98370, yd),
+	p30d: 1 - Math.pow(0.93479, yd),
+	p90d: 1 - Math.pow(0.89681, yd),
+	p1y: 1 - Math.pow(0.76171, yy),
+	p5y: 1 - Math.pow(0.47062, yy)
+  }
 }
 
 function getMayoPostopInterpretation(mayo) {
   return `
 	<ul>
 	  <li>Mayo post-operative mortality risk:
-		<ul><li>7-day mortality risk: ${toPercent(mayo[0], 2)}</li></ul>
-		<ul><li>30-day mortality risk: ${toPercent(mayo[1], 2)}</li></ul>
-		<ul><li>90-day mortality risk: ${toPercent(mayo[2], 2)}</li></ul>
-		<ul><li>1-year mortality risk: ${toPercent(mayo[3], 2)}</li></ul>
-		<ul><li>5-year mortality risk: ${toPercent(mayo[4], 2)}</li></ul>
+		<ul><li>7-day mortality risk: ${toPercent(mayo.p7d, 2)}</li></ul>
+		<ul><li>30-day mortality risk: ${toPercent(mayo.p30d, 2)}</li></ul>
+		<ul><li>90-day mortality risk: ${toPercent(mayo.p90d, 2)}</li></ul>
+		<ul><li>1-year mortality risk: ${toPercent(mayo.p1y, 2)}</li></ul>
+		<ul><li>5-year mortality risk: ${toPercent(mayo.p5y, 2)}</li></ul>
 	  </li>
 	</ul>`
 }
@@ -424,18 +428,22 @@ function getVocalPenn(age, albumin, bilirubin, platelets, isObese, isMasld, isEm
   const p180 = 1 - (1 - p30) * (1 - p90u) * (1 - Math.exp(logodds180) / (1 + Math.exp(logodds180)))
   const logOddsDecomp = 0.2988972 * asa - 2.287235 + (isEmergency ? 0.5076108 : 0) + [0, 0.6117639, -0.1508734, -0.4641384, -0.3442967, -0.1648213][surgeryTypeId] - 0.0054196 * platelets + 0.0021578 * plateletSp - 0.4460345 * albumin - 0.4612017 * albuminSp + 1.361681 * bilirubin - 1.746094 * bilirubinSp - (isObese ? 0.1820302 : 0) + (isMasld ? 0.2481661 : 0) + 0.0069088 * age
   const pDecomp = Math.exp(logOddsDecomp) / (1 + Math.exp(logOddsDecomp))
-  return [p30, p90, p180, pDecomp]
+  return {
+	p30: p30,
+	p90: p90,
+	p180: p180,
+	pDecomp: pDecomp
+  }
 }
 
 function getVocalPennInterpretation(vp) {
-  const [p30, p90, p180, pDecomp] = vp
   return `
   <ul>
     <li>VOCAL-Penn postoperative mortality risk:
-      <ul><li>30-day mortality risk: ${toPercent(p30, 1)}</li></ul>
-      <ul><li>90-day mortality risk: ${toPercent(p90, 1)}</li></ul>
-      <ul><li>180-day mortality risk: ${toPercent(p180, 1)}</li></ul>
-      <ul><li>90-day decompensation risk: ${toPercent(pDecomp, 1)}</li></ul>
+      <ul><li>30-day mortality risk: ${toPercent(vp.p30, 1)}</li></ul>
+      <ul><li>90-day mortality risk: ${toPercent(vp.p90, 1)}</li></ul>
+      <ul><li>180-day mortality risk: ${toPercent(vp.p180, 1)}</li></ul>
+      <ul><li>90-day decompensation risk: ${toPercent(vp.pDecomp, 1)}</li></ul>
     </li>
   </ul>`
 }
@@ -461,81 +469,85 @@ function calculateVocalPenn() {
 /******************/
 
 function getClif(bilirubin, creatinine, isRrt, brain, inr, circulatory, respiratory, age, wbc, sodium) {
-  const liver = bilirubin >= 12 ? 3 : (bilirubin >= 6 ? 2 : 1)
-  const kidney = (isRrt || creatinine >= 3.5) ? 3 : (creatinine >= 2 ? 2 : 1)
-  const coagulation = inr >= 2.5 ? 3 : (inr >= 2.0 ? 2 : 1)
-  const clifOfScore = liver + kidney + brain + coagulation + circulatory + respiratory
-  const liverFailure = liver >= 3
-  const kidneyFailure = kidney >= 2
-  const brainFailure = brain >= 3
-  const coagulationFailure = coagulation >= 3
-  const circulatoryFailure = circulatory >= 3
-  const respiratoryFailure = respiratory >= 3
-  const clifOfCount = (liverFailure ? 1 : 0) +
-		(kidneyFailure ? 1 : 0) +
-		(brainFailure ? 1 : 0) +
-		(coagulationFailure ? 1 : 0) +
-		(circulatoryFailure ? 1 : 0) +
-		(respiratoryFailure ? 1 : 0)
-  let aclfGrade = ''
-  if (clifOfCount > 3)
-	aclfGrade = '3b'
-  else if (clifOfCount == 3)
-	aclfGrade = '3a'
-  else if (clifOfCount == 2)
-	aclfGrade = '2'
-  else if (clifOfCount == 1 && kidneyFailure)
-	aclfGrade = '1a'
-  else if (clifOfCount == 1 && (creatinine >= 1.5 || brain == 2))
-	aclfGrade = '1b'
-
-  let clifAdAclfScore = -1;
-  let p1 = -1, p3 = -1, p6 = -1, p12;
-  if (aclfGrade != '') {
+  var clif = {
+	liver: bilirubin >= 12 ? 3 : (bilirubin >= 6 ? 2 : 1),
+	kidney: (isRrt || creatinine >= 3.5) ? 3 : (creatinine >= 2 ? 2 : 1),
+	brain: brain,
+	coagulation: inr >= 2.5 ? 3 : (inr >= 2.0 ? 2 : 1),
+	circulatory: circulatory,
+	respiratory: respiratory,
+	aclfGrade: '',
+	adAclfScore: -1,
+	p1: -1, p3: -1, p6: -1, p12: -1
+  }
+  clif.ofScore = clif.liver + clif.kidney + clif.brain + clif.coagulation + clif.circulatory + clif.respiratory
+  clif.liverFailure = clif.liver >= 3
+  clif.kidneyFailure = clif.kidney >= 2
+  clif.brainFailure = clif.brain >= 3
+  clif.coagulationFailure = clif.coagulation >= 3
+  clif.circulatoryFailure = clif.circulatory >= 3
+  clif.respiratoryFailure = clif.respiratory >= 3
+  clif.ofCount = (clif.liverFailure ? 1 : 0) +
+	(clif.kidneyFailure ? 1 : 0) +
+	(clif.brainFailure ? 1 : 0) +
+	(clif.coagulationFailure ? 1 : 0) +
+	(clif.circulatoryFailure ? 1 : 0) +
+	(clif.respiratoryFailure ? 1 : 0)
+  if (clif.ofCount > 3)
+	clif.aclfGrade = '3b'
+  else if (clif.ofCount == 3)
+	clif.aclfGrade = '3a'
+  else if (clif.ofCount == 2)
+	clif.aclfGrade = '2'
+  else if (clif.ofCount == 1 && clif.kidneyFailure)
+	clif.aclfGrade = '1a'
+  else if (clif.ofCount == 1 && (creatinine >= 1.5 || clif.brain == 2))
+	clif.aclfGrade = '1b'
+  if (clif.aclfGrade != '') {
 	if (age > 0 && wbc > 0) { // Calculate CLIF-C ACLF score
-	  clifAdAclfScore = 10 * (0.33 * clifOfScore + 0.04 * age + 0.63 * Math.log(wbc) - 2)
-	  p1 = 1 - Math.exp(-0.0022 * Math.exp(0.0995 * clifAdAclfScore))
-	  p3 = 1 - Math.exp(-0.0079 * Math.exp(0.0869 * clifAdAclfScore))
-	  p6 = 1 - Math.exp(-0.0115 * Math.exp(0.0824 * clifAdAclfScore))
-	  p12 = 1 - Math.exp(-0.0231 * Math.exp(0.0731 * clifAdAclfScore))
+	  clif.adAclfScore = 10 * (0.33 * clif.ofScore + 0.04 * age + 0.63 * Math.log(wbc) - 2)
+	  clif.p1 = 1 - Math.exp(-0.0022 * Math.exp(0.0995 * clif.adAclfScore))
+	  clif.p3 = 1 - Math.exp(-0.0079 * Math.exp(0.0869 * clif.adAclfScore))
+	  clif.p6 = 1 - Math.exp(-0.0115 * Math.exp(0.0824 * clif.adAclfScore))
+	  clif.p12 = 1 - Math.exp(-0.0231 * Math.exp(0.0731 * clif.adAclfScore))
+
 	}
   } else {
 	if (age > 0 && wbc > 0 & sodium > 0) { // Calculate CLIF-C AD score
-	  clifAdAclfScore = 10 * (0.03 * age + 0.66 * Math.log(creatinine) + 1.71 * Math.log(inr) + 0.88 * Math.log(wbc) - 0.05 * sodium + 8)
-	  p1 = 1 - Math.exp(-0.00012 * Math.exp(0.1083 * clifAdAclfScore))
-	  p3 = 1 - Math.exp(-0.00056 * Math.exp(0.1007 * clifAdAclfScore))
-	  p6 = 1 - Math.exp(-0.00173 * Math.exp(0.0889 * clifAdAclfScore))
-	  p12 = 1 - Math.exp(-0.00879 * Math.exp(0.0698 * clifAdAclfScore))
+	  clif.adAclfScore = 10 * (0.03 * age + 0.66 * Math.log(creatinine) + 1.71 * Math.log(inr) + 0.88 * Math.log(wbc) - 0.05 * sodium + 8)
+	  clif.p1 = 1 - Math.exp(-0.00012 * Math.exp(0.1083 * clif.adAclfScore))
+	  clif.p3 = 1 - Math.exp(-0.00056 * Math.exp(0.1007 * clif.adAclfScore))
+	  clif.p6 = 1 - Math.exp(-0.00173 * Math.exp(0.0889 * clif.adAclfScore))
+	  clif.p12 = 1 - Math.exp(-0.00879 * Math.exp(0.0698 * clif.adAclfScore))
 	}
   }
-  return [clifOfScore, clifOfCount, liver, liverFailure, kidney, kidneyFailure, brain, brainFailure, coagulation, coagulationFailure, circulatory, circulatoryFailure, respiratory, respiratoryFailure, aclfGrade, clifAdAclfScore, p1, p3, p6, p12]
+  return clif
 }
 
 function getClifInterpretation(clif) {
-  const [clifOfScore, clifOfCount, liver, liverFailure, kidney, kidneyFailure, brain, brainFailure, coagulation, coagulationFailure, circulatory, circulatoryFailure, respiratory, respiratoryFailure, aclfGrade, clifAdAclfScore, p1, p3, p6, p12] = clif
   let html = `
 	<ul>
-	  <li>CLIF-C OF score: ${clifOfScore} (${clifOfCount} organ failure${clifOfCount == 1 ? "" : "s"})
+	  <li>CLIF-C OF score: ${clif.ofScore} (${clif.ofCount} organ failure${clif.ofCount == 1 ? "" : "s"})
         <ul><li>
         <table>
-          <tr><td>Liver score: ${liver}</td><td>Liver failure: ${liverFailure ? "Yes" : "No"}</td></tr>
-          <tr><td>Kidney score: ${kidney}</td><td>Kidney failure: ${kidneyFailure ? "Yes" : "No"}</td></tr>
-          <tr><td>Brain score: ${brain}</td><td>Brain failure: ${brainFailure ? "Yes" : "No"}</td></tr>
-          <tr><td>Coagulation score: ${coagulation}</td><td>Coagulation failure: ${coagulationFailure ? "Yes" : "No"}</td></tr>
-          <tr><td>Circulatory score: ${circulatory}</td><td>Circulatory failure: ${circulatoryFailure ? "Yes" : "No"}</td></tr>
-          <tr><td>Respiratory score: ${respiratory}</td><td>Respiratory failure: ${respiratoryFailure ? "Yes" : "No"}</td></tr>
+          <tr><td>Liver score: ${clif.liver}</td><td>Liver failure: ${clif.liverFailure ? "Yes" : "No"}</td></tr>
+          <tr><td>Kidney score: ${clif.kidney}</td><td>Kidney failure: ${clif.kidneyFailure ? "Yes" : "No"}</td></tr>
+          <tr><td>Brain score: ${clif.brain}</td><td>Brain failure: ${clif.brainFailure ? "Yes" : "No"}</td></tr>
+          <tr><td>Coagulation score: ${clif.coagulation}</td><td>Coagulation failure: ${clif.coagulationFailure ? "Yes" : "No"}</td></tr>
+          <tr><td>Circulatory score: ${clif.circulatory}</td><td>Circulatory failure: ${clif.circulatoryFailure ? "Yes" : "No"}</td></tr>
+          <tr><td>Respiratory score: ${clif.respiratory}</td><td>Respiratory failure: ${clif.respiratoryFailure ? "Yes" : "No"}</td></tr>
         </table>
         </li></ul>
       </li>`
-  html += `<li>${aclfGrade == '' ? 'No ACLF' : ('ACLF grade ' + aclfGrade)}</li>`
-  if (clifAdAclfScore >= 0) {
+  html += `<li>${clif.aclfGrade == '' ? 'No ACLF' : ('ACLF grade ' + clif.aclfGrade)}</li>`
+  if (clif.adAclfScore >= 0) {
 	html += `
-      <li>CLIF-C ${aclfGrade == '' ? 'AD' : 'ACLF'} Score: ${clifAdAclfScore.toFixed()}
+      <li>CLIF-C ${clif.aclfGrade == '' ? 'AD' : 'ACLF'} Score: ${clif.adAclfScore.toFixed()}
         <ul>
-          <li>1-month mortality: ${toPercent(p1, 1)}</li>
-          <li>3-month mortality: ${toPercent(p3, 1)}</li>
-          <li>6-month mortality: ${toPercent(p6, 1)}</li>
-          <li>12-month mortality: ${toPercent(p12, 1)}</li>
+          <li>1-month mortality: ${toPercent(clif.p1, 1)}</li>
+          <li>3-month mortality: ${toPercent(clif.p3, 1)}</li>
+          <li>6-month mortality: ${toPercent(clif.p6, 1)}</li>
+          <li>12-month mortality: ${toPercent(clif.p12, 1)}</li>
         </ul>
       </li>`
   }
@@ -558,4 +570,93 @@ function calculateClif() {
   const clif = getClif(bilirubin, creatinine, isRrt, brain, inr, circulatory, respiratory, age, wbc, sodium)
   const interpretation = getClifInterpretation(clif)
   setResult(interpretation)
+}
+
+/*******************/
+/** HCV Treatment **/
+/*******************/
+
+function getHcv(genotype, cirrhosis, priorTreatment) {
+  let recs = [], alt = [];
+  switch(genotype) {
+  case '1a':
+	if (cirrhosis == 'noCirrhosis') {
+	  recs = [[ 'glecaprevir/pibrentasvir', 8, 'I A' ],
+			  [ 'ledipasvir/sofosbuvir', 12, 'I A' ],
+			  [ 'ledipasvir/sofosbuvir', 8, 'I B', 'HIV-uninfected and HCV RNA <6 million IU/mL' ],
+			  [ 'sofosbuvir/velpatasvir', 12, 'I A' ]];
+	  alt = [[ 'elbasvir/grazoprevir', 12, 'I A' ]]
+	} else if (cirrhosis == 'compensated') {
+	  recs = [[ 'sofosbuvir/velpatasvir', 12, 'IA' ],
+			  [ 'glecaprevir/pibrentasvir', 8, 'IB', 'HIV/HCV coinfection -> 12 w' ],
+			  [ 'ledipasvir/sofosbuvir', 12, 'IA' ]]
+	  alt = [[ 'elbasvir/grazoprevir', 12, 'IA' ]]
+	}
+	break;
+  case '1b':
+	if (cirrhosis == 'noCirrhosis') {
+	  recs = [[ 'glecaprevir/pibrentasvir', 8, 'IA' ],
+			  [ 'sofosbuvir/velpatasvir', 12, 'IA' ],
+			  [ 'elbasvir/grazoprevir', 12, 'IA', 'mild fibrosis (TE-LS <9.5 or Fibrotest® < 0.59) -> consider 8 w' ],
+			  [ 'ledipasvir/sofosbuvir', 12, 'IA' ],
+			  [ 'ledipasvir/sofosbuvir', 8, 'IB', 'HIV/HCV coinfection -> 12 w' ]]
+	} else if (cirrhosis == 'compensated') {
+	  recs = [[ 'sofosbuvir/velpatasvir', 12, 'IA' ],
+			  [ 'glecaprevir/pibrentasvir', 8, 'IB', 'HIV/HCV coinfection -> 12 w' ],
+			  [ 'elbasvir/grazoprevir', 12, 'IA' ],
+			  [ 'ledipasvir/sofosbuvir', 12, 'IA' ]]
+	}
+	break;
+  case '2':
+	if (cirrhosis == 'noCirrhosis') {
+	  recs = [[ 'glecaprevir/pibrentasvir', 8, 'IA' ],
+			  [ 'sofosbuvir/velpatasvir', 12, 'IA' ]]
+	} else if (cirrhosis == 'compensated') {
+	  recs = [[ 'sofosbuvir/velpatasvir', 12, 'IA' ],
+			  [ 'glecaprevir/pibrentasvir', 8, 'IB', 'HIV/HCV coinfection -> 12 w' ]]
+	}
+	break;
+  case '3':
+	if (cirrhosis == 'noCirrhosis') {
+	  recs = [[ 'glecaprevir/pibrentasvir', 8, 'IA' ],
+			  [ 'sofosbuvir/velpatasvir', 12, 'IA' ]]
+	} else if (cirrhosis == 'compensated') {
+	  recs = [[ 'sofosbuvir/velpatasvir', 12, 'IA', 'w/o baseline NS5A RAS Y93H for velpatasvir' ],
+			  [ 'glecaprevir/pibrentasvir', 8, 'IB', 'HIV/HCV coinfection -> 12 w' ]]
+	  alt = [[ 'sofosbuvir/velpatasvir + RBV', 12, 'IIaA', 'with baseline NS5A RAS Y93H for velpatasvir' ],
+			 [ 'sofosbuvir/velpatasvir/voxilaprevir', 12, 'IIaB', 'with baseline NS5A RAS Y93H for velpatasvir' ]]
+	}
+	break;
+  case '4':
+	if (cirrhosis == 'noCirrhosis') {
+	  recs = [[ 'glecaprevir/pibrentasvir', 8, 'IA' ],
+			  [ 'sofosbuvir/velpatasvir', 12, 'IA' ],
+			  [ 'elbasvir/grazoprevir', 12, 'IA' ],
+			  [ 'ledipasvir/sofosbuvir', 12, 'IA', 'no cirrhosis, HCV RNA <6 million IU/mL, absence of genotype 4r -> consider 8 w' ]]
+	} else if (cirrhosis == 'compensated') {
+	  recs = [[ 'sofosbuvir/velpatasvir', 12, 'IA' ],
+			  [ 'glecaprevir/pibrentasvir', 8, 'IB', 'HIV/HCV coinfection -> 12 w' ],
+			  [ 'elbasvir/grazoprevir', 12, 'IIaB' ],
+			  [ 'ledipasvir/sofosbuvir', 12, 'IIaB' ]]
+	}
+	break;
+  case '5', '6':
+	if (cirrhosis == 'noCirrhosis') {
+	  recs = [[ 'glecaprevir/pibrentasvir', 8, 'IA', 'HIV/HCV coinfection -> 12 w' ],
+			  [ 'sofosbuvir/velpatasvir', 12, 'IB' ],
+			  [ 'ledipasvir/sofosbuvir', 12, 'IIaB', 'not recommended for genotype 6e' ]]
+	} else if (cirrhosis == 'compensated') {
+	  recs = [[ 'glecaprevir/pibrentasvir', 8, 'IB', 'HIV/HCV coinfection -> 12 w' ],
+			  [ 'sofosbuvir/velpatasvir', 12, 'IB' ],
+			  [ 'ledipasvir/sofosbuvir', 12, 'IIaB', 'not recommended for genotype 6e' ]]
+	}
+	break;
+  }
+}
+
+function calculateHcv() {
+  const genotype = parseInt(document.querySelector('input[name="genotype"]:checked').value);
+  const cirrhosis = parseInt(document.querySelector('input[name="cirrhosis"]:checked').value);
+  const priorTreatment = parseInt(document.querySelector('input[name="priorTreatment"]:checked').value);
+  setResult(getHcv(genotype, cirrhosis, priorTreatment))
 }

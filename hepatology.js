@@ -576,87 +576,131 @@ function calculateClif() {
 /** HCV Treatment **/
 /*******************/
 
+function HCVTreatment(drug, weeks, rating, notes = '') {
+  this.drug = drug;
+  this.weeks = weeks;
+  this.rating = rating;
+  this.notes = notes;
+}
+
 function getHcv(genotype, cirrhosis, priorTreatment) {
   let recs = [], alt = [];
   switch(genotype) {
   case '1a':
 	if (cirrhosis == 'noCirrhosis') {
-	  recs = [[ 'glecaprevir/pibrentasvir', 8, 'I A' ],
-			  [ 'ledipasvir/sofosbuvir', 12, 'I A' ],
-			  [ 'ledipasvir/sofosbuvir', 8, 'I B', 'HIV-uninfected and HCV RNA <6 million IU/mL' ],
-			  [ 'sofosbuvir/velpatasvir', 12, 'I A' ]];
-	  alt = [[ 'elbasvir/grazoprevir', 12, 'I A' ]]
+	  recs = [ new HCVTreatment('glecaprevir/pibrentasvir', 8, 'I A'),
+			   new HCVTreatment('ledipasvir/sofosbuvir', 12, 'I A'),
+			   new HCVTreatment('ledipasvir/sofosbuvir', 8, 'I B', 'if HIV-uninfected and HCV RNA &lt;6 million IU/mL'),
+			   new HCVTreatment('sofosbuvir/velpatasvir', 12, 'I A') ];
+	  alt = [ new HCVTreatment('elbasvir/grazoprevir', 12, 'I A') ]
 	} else if (cirrhosis == 'compensated') {
-	  recs = [[ 'sofosbuvir/velpatasvir', 12, 'IA' ],
-			  [ 'glecaprevir/pibrentasvir', 8, 'IB', 'HIV/HCV coinfection -> 12 w' ],
-			  [ 'ledipasvir/sofosbuvir', 12, 'IA' ]]
-	  alt = [[ 'elbasvir/grazoprevir', 12, 'IA' ]]
+	  recs = [ new HCVTreatment('sofosbuvir/velpatasvir', 12, 'I A'),
+			   new HCVTreatment('glecaprevir/pibrentasvir', 8, 'I B', 'HIV/HCV coinfection → Treat for 12 weeks'),
+			   new HCVTreatment('ledipasvir/sofosbuvir', 12, 'I A') ]
+	  alt = [ new HCVTreatment('elbasvir/grazoprevir', 12, 'I A') ]
 	}
 	break;
   case '1b':
 	if (cirrhosis == 'noCirrhosis') {
-	  recs = [[ 'glecaprevir/pibrentasvir', 8, 'IA' ],
-			  [ 'sofosbuvir/velpatasvir', 12, 'IA' ],
-			  [ 'elbasvir/grazoprevir', 12, 'IA', 'mild fibrosis (TE-LS <9.5 or Fibrotest® < 0.59) -> consider 8 w' ],
-			  [ 'ledipasvir/sofosbuvir', 12, 'IA' ],
-			  [ 'ledipasvir/sofosbuvir', 8, 'IB', 'HIV/HCV coinfection -> 12 w' ]]
+	  recs = [ new HCVTreatment('glecaprevir/pibrentasvir', 8, 'I A'),
+			   new HCVTreatment('sofosbuvir/velpatasvir', 12, 'I A'),
+			   new HCVTreatment('elbasvir/grazoprevir', 12, 'I A', 'Mild fibrosis (TE-LS &lt;9.5 or Fibrotest® &lt;0.59) → consider treating for 8 weeks'),
+			   new HCVTreatment('ledipasvir/sofosbuvir', 12, 'I A'),
+			   new HCVTreatment('ledipasvir/sofosbuvir', 8, 'I B', 'HIV/HCV coinfection → Treat for 12 weeks') ]
 	} else if (cirrhosis == 'compensated') {
-	  recs = [[ 'sofosbuvir/velpatasvir', 12, 'IA' ],
-			  [ 'glecaprevir/pibrentasvir', 8, 'IB', 'HIV/HCV coinfection -> 12 w' ],
-			  [ 'elbasvir/grazoprevir', 12, 'IA' ],
-			  [ 'ledipasvir/sofosbuvir', 12, 'IA' ]]
+	  recs = [ new HCVTreatment('sofosbuvir/velpatasvir', 12, 'I A'),
+			   new HCVTreatment('glecaprevir/pibrentasvir', 8, 'I B', 'HIV/HCV coinfection → Treat for 12 weeks'),
+			   new HCVTreatment('elbasvir/grazoprevir', 12, 'I A'),
+			   new HCVTreatment('ledipasvir/sofosbuvir', 12, 'I A') ]
 	}
 	break;
   case '2':
 	if (cirrhosis == 'noCirrhosis') {
-	  recs = [[ 'glecaprevir/pibrentasvir', 8, 'IA' ],
-			  [ 'sofosbuvir/velpatasvir', 12, 'IA' ]]
+	  recs = [ new HCVTreatment('glecaprevir/pibrentasvir', 8, 'I A'),
+			   new HCVTreatment('sofosbuvir/velpatasvir', 12, 'I A') ]
 	} else if (cirrhosis == 'compensated') {
-	  recs = [[ 'sofosbuvir/velpatasvir', 12, 'IA' ],
-			  [ 'glecaprevir/pibrentasvir', 8, 'IB', 'HIV/HCV coinfection -> 12 w' ]]
+	  recs = [ new HCVTreatment('sofosbuvir/velpatasvir', 12, 'I A'),
+			   new HCVTreatment('glecaprevir/pibrentasvir', 8, 'I B', 'HIV/HCV coinfection → Treat for 12 weeks') ]
 	}
 	break;
   case '3':
 	if (cirrhosis == 'noCirrhosis') {
-	  recs = [[ 'glecaprevir/pibrentasvir', 8, 'IA' ],
-			  [ 'sofosbuvir/velpatasvir', 12, 'IA' ]]
+	  recs = [ new HCVTreatment('glecaprevir/pibrentasvir', 8, 'I A'),
+			   new HCVTreatment('sofosbuvir/velpatasvir', 12, 'I A') ]
 	} else if (cirrhosis == 'compensated') {
-	  recs = [[ 'sofosbuvir/velpatasvir', 12, 'IA', 'w/o baseline NS5A RAS Y93H for velpatasvir' ],
-			  [ 'glecaprevir/pibrentasvir', 8, 'IB', 'HIV/HCV coinfection -> 12 w' ]]
-	  alt = [[ 'sofosbuvir/velpatasvir + RBV', 12, 'IIaA', 'with baseline NS5A RAS Y93H for velpatasvir' ],
-			 [ 'sofosbuvir/velpatasvir/voxilaprevir', 12, 'IIaB', 'with baseline NS5A RAS Y93H for velpatasvir' ]]
+	  recs = [ new HCVTreatment('sofosbuvir/velpatasvir', 12, 'I A', 'w/o baseline NS5A RAS Y93H for velpatasvir'),
+			   new HCVTreatment('glecaprevir/pibrentasvir', 8, 'I B', 'HIV/HCV coinfection → Treat for 12 weeks') ]
+	  alt = [ new HCVTreatment('sofosbuvir/velpatasvir + RBV', 12, 'IIa A', 'with baseline NS5A RAS Y93H for velpatasvir'),
+			  new HCVTreatment('sofosbuvir/velpatasvir/voxilaprevir', 12, 'IIa B', 'with baseline NS5A RAS Y93H for velpatasvir') ]
 	}
 	break;
   case '4':
 	if (cirrhosis == 'noCirrhosis') {
-	  recs = [[ 'glecaprevir/pibrentasvir', 8, 'IA' ],
-			  [ 'sofosbuvir/velpatasvir', 12, 'IA' ],
-			  [ 'elbasvir/grazoprevir', 12, 'IA' ],
-			  [ 'ledipasvir/sofosbuvir', 12, 'IA', 'no cirrhosis, HCV RNA <6 million IU/mL, absence of genotype 4r -> consider 8 w' ]]
+	  recs = [ new HCVTreatment('glecaprevir/pibrentasvir', 8, 'I A'),
+			   new HCVTreatment('sofosbuvir/velpatasvir', 12, 'I A'),
+			   new HCVTreatment('elbasvir/grazoprevir', 12, 'I A'),
+			   new HCVTreatment('ledipasvir/sofosbuvir', 12, 'I A', 'no cirrhosis, HCV RNA <6 million IU/mL, absence of genotype 4r → consider 8 w') ]
 	} else if (cirrhosis == 'compensated') {
-	  recs = [[ 'sofosbuvir/velpatasvir', 12, 'IA' ],
-			  [ 'glecaprevir/pibrentasvir', 8, 'IB', 'HIV/HCV coinfection -> 12 w' ],
-			  [ 'elbasvir/grazoprevir', 12, 'IIaB' ],
-			  [ 'ledipasvir/sofosbuvir', 12, 'IIaB' ]]
+	  recs = [ new HCVTreatment('sofosbuvir/velpatasvir', 12, 'I A'),
+			   new HCVTreatment('glecaprevir/pibrentasvir', 8, 'I B', 'HIV/HCV coinfection → Treat for 12 weeks'),
+			   new HCVTreatment('elbasvir/grazoprevir', 12, 'IIa B'),
+			   new HCVTreatment('ledipasvir/sofosbuvir', 12, 'IIa B') ]
 	}
 	break;
   case '5', '6':
 	if (cirrhosis == 'noCirrhosis') {
-	  recs = [[ 'glecaprevir/pibrentasvir', 8, 'IA', 'HIV/HCV coinfection -> 12 w' ],
-			  [ 'sofosbuvir/velpatasvir', 12, 'IB' ],
-			  [ 'ledipasvir/sofosbuvir', 12, 'IIaB', 'not recommended for genotype 6e' ]]
+	  recs = [ new HCVTreatment('glecaprevir/pibrentasvir', 8, 'I A', 'HIV/HCV coinfection → Treat for 12 weeks'),
+			   new HCVTreatment('sofosbuvir/velpatasvir', 12, 'I B'),
+			   new HCVTreatment('ledipasvir/sofosbuvir', 12, 'IIa B', 'not recommended for genotype 6e') ]
 	} else if (cirrhosis == 'compensated') {
-	  recs = [[ 'glecaprevir/pibrentasvir', 8, 'IB', 'HIV/HCV coinfection -> 12 w' ],
-			  [ 'sofosbuvir/velpatasvir', 12, 'IB' ],
-			  [ 'ledipasvir/sofosbuvir', 12, 'IIaB', 'not recommended for genotype 6e' ]]
+	  recs = [ new HCVTreatment('glecaprevir/pibrentasvir', 8, 'I B', 'HIV/HCV coinfection → Treat for 12 weeks'),
+			   new HCVTreatment('sofosbuvir/velpatasvir', 12, 'I B'),
+			   new HCVTreatment('ledipasvir/sofosbuvir', 12, 'IIa B', 'not recommended for genotype 6e') ]
 	}
 	break;
   }
+  return { alt: alt, recs: recs }
+}
+
+function getHcvInterpretation(hcv) {
+  var html = `
+    <ul>
+      <li>Recommended Regimens:
+        <ul>`
+  for (var i = 0; i < hcv.recs.length; i++) {
+	html += `<li>${hcv.recs[i].drug} ×${hcv.recs[i].weeks} weeks (Rating: ${hcv.recs[i].rating})`;
+	if (hcv.recs[i].notes != '')
+	  html += `<ul><li>${hcv.recs[i].notes}</li></ul>`;
+	html += `</li>`;
+  }
+  html += `
+        </ul>
+      </li>`
+
+  if (hcv.alt.length > 0) {
+	html += `
+      <li>Alternative Regimens:
+        <ul>`
+	for (var i = 0; i < hcv.alt.length; i++) {
+	  html += `<li>${hcv.alt[i].drug} ×${hcv.alt[i].weeks} weeks (Rating: ${hcv.alt[i].rating})`;
+	  if (hcv.alt[i].notes != '')
+		html += `<ul><li>${hcv.alt[i].notes}</li></ul>`;
+	  html += `</li>`;
+	}
+
+	html += `
+        </ul>
+      </li>`
+  }
+  html += `</ul>`
+  return html
 }
 
 function calculateHcv() {
-  const genotype = parseInt(document.querySelector('input[name="genotype"]:checked').value);
-  const cirrhosis = parseInt(document.querySelector('input[name="cirrhosis"]:checked').value);
-  const priorTreatment = parseInt(document.querySelector('input[name="priorTreatment"]:checked').value);
-  setResult(getHcv(genotype, cirrhosis, priorTreatment))
+  const genotype = document.querySelector('input[name="genotype"]:checked').value;
+  const cirrhosis = document.querySelector('input[name="cirrhosis"]:checked').value;
+  const priorTreatment = document.querySelector('input[name="priorTreatment"]:checked').value;
+  hcv = getHcv(genotype, cirrhosis, priorTreatment)
+  hcvInterpretation = getHcvInterpretation(hcv)
+  setResult(hcvInterpretation)
 }

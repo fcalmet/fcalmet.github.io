@@ -296,18 +296,20 @@ div.toc li a:hover {
 }
 
 /* Results list formatting */
-.panel.results ul {
+div#result ul {
   list-style: none;
   font-size: 1.2rem;
   font-weight: bold;
 }
 
-.panel.results ul ul {
+div#result > ul ul {
   font-weight: normal;
+}
+
+div#result > ul ul ul {
   font-style: italic;
 }
 
-.panel.results li {
+div#result li {
   padding: 2px;
-
 }

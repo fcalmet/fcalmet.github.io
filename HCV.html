@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!--
+	 Copyright (C) 2025 by Fernando Calmet
+
+	 Author: Fernando Calmet
+
+	 This program is free software; you can redistribute it and/or modify
+	 it under the terms of the GNU General Public License as published by
+	 the Free Software Foundation, either version 3 of the License, or
+	 (at your option) any later version.
+
+	 This program is distributed in the hope that it will be useful,
+	 but WITHOUT ANY WARRANTY; without even the implied warranty of
+	 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	 GNU General Public License for more details.
+
+	 You should have received a copy of the GNU General Public License
+	 along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<html lang="en">
+  <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>HCV Treatment</title>
+	<link rel="stylesheet" href="style.css" />
+  </head>
+  <body onload="calculateHcv()">
+	<h1><span title="Hepatitis C virus">HCV</span> Treatment</h1>
+	<div class="app-container two">
+	  <div class="panel">
+		<div class="radio-field">
+		  <label for="genotype">Genotype:</label>
+		  <div id="genotype">
+			<label><input type="radio" onchange="calculateHcv()" name="genotype" value="1a" checked /> 1a</label>
+			<label><input type="radio" onchange="calculateHcv()" name="genotype" value="1b" /> 1b</label>
+			<label><input type="radio" onchange="calculateHcv()" name="genotype" value="2" /> 2</label>
+			<label><input type="radio" onchange="calculateHcv()" name="genotype" value="3" /> 3</label>
+			<label><input type="radio" onchange="calculateHcv()" name="genotype" value="4" /> 4</label>
+			<label><input type="radio" onchange="calculateHcv()" name="genotype" value="5" /> 5</label>
+			<label><input type="radio" onchange="calculateHcv()" name="genotype" value="6" /> 6</label>
+		  </div>
+		</div>
+		<div class="radio-field">
+		  <label for="cirrhosis">Cirrhosis:</label>
+		  <div id="cirrhosis">
+			<label><input type="radio" onchange="calculateHcv()" name="cirrhosis" value="noCirrhosis" checked /> No cirrhosis</label>
+			<label><input type="radio" onchange="calculateHcv()" name="cirrhosis" value="compensated" /> Compensated</label>
+			<label><input type="radio" onchange="calculateHcv()" name="cirrhosis" value="decompensated" /> Decompensated</label>
+		  </div>
+		</div>
+		<div class="radio-field">
+		  <label for="priorTreatment">Prior treatment:</label>
+		  <div id="priorTreatment">
+			<label><input type="radio" onchange="calculateHcv()" name="priorTreatment" value="naive" checked /> Treatment-naïve</label>
+			<label><input type="radio" onchange="calculateHcv()" name="priorTreatment" value="sofElbGzr" /> <span title="Sofosbuvir">SOF</span>-based, <span title="Elbasvir/grazoprevir">ELB/GZR</span></label>
+			<label><input type="radio" onchange="calculateHcv()" name="priorTreatment" value="glePib" /> <span title="Glecaprevir/pibrentasvir">GLE/PIB</span></label>
+			<label><input type="radio" onchange="calculateHcv()" name="priorTreatment" value="multipleDaa" /> Multiple <span title="Direct-acting antivirals">DAAs</span></label>
+		  </div>
+		</div>
+	  </div>
+	  <div class="panel results">
+		<h2>Results</h2>
+		<div id="result"></div>
+	  </div>
+	</div>
+	<footer id="footer-nav"></footer>
+	<script src="hepatology.js"></script>
+  </body>
+</html>

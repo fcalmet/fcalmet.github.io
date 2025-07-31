@@ -647,7 +647,7 @@ function getHcv(genotype, cirrhosis, priorTreatment) {
 			   new HCVTreatment('ledipasvir/sofosbuvir', 12, 'IIa B') ]
 	}
 	break;
-  case '5', '6':
+  case '5': case '6':
 	if (cirrhosis == 'noCirrhosis') {
 	  recs = [ new HCVTreatment('glecaprevir/pibrentasvir', 8, 'I A', 'HIV/HCV coinfection → Treat for 12 weeks'),
 			   new HCVTreatment('sofosbuvir/velpatasvir', 12, 'I B'),

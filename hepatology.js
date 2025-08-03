@@ -150,7 +150,7 @@ function calculateFib4() {
   const platelets = parseFloat(document.getElementById('platelets').value) || -1;
   const ast = parseFloat(document.getElementById('ast').value) || -1;
   const alt = parseFloat(document.getElementById('alt').value) || -1;
-  const isMasld = document.querySelector('input[name="isMasld"][value="masld"]').checked;
+  const isMasld = document.querySelector('input[name="etiology"][value="masld"]').checked;
   if (age < 0 || platelets < 0 || ast < 0 || alt < 0) return setResult();
   const fib4 = getFib4(age, platelets, ast, alt)
   const interpretation = getFib4Interpretation(fib4, age, isMasld)

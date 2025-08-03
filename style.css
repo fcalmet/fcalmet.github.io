@@ -17,6 +17,10 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: sans-serif;
   background-color: #f3f4f6;
@@ -31,8 +35,13 @@ h2 {
   text-align: center;
 }
 
-* {
-  box-sizing: border-box;
+label, input, select {
+  padding: 1px;
+  margin: 2px;
+}
+
+label[title] {
+  text-decoration: underline dashed;
 }
 
 /* layout responsiveness - 4 panels */
@@ -84,23 +93,20 @@ h2 {
   }
 }
 
-/* Text Fields */
-.text-field {
+/* Text/select Fields */
+.text-field,
+.select-field {
   display: flex;
 }
 .text-field label,
 .text-field input,
-.text-field select {
+.select-field label,
+.select-field select {
   width: calc(50% - 4px);
   margin: 2px;
 }
 .text-field input.time {
   width: calc(25% - 4px);
-  margin: 2px;
-}
-
-label, input, select {
-  padding: 1px;
   margin: 2px;
 }
 
@@ -124,10 +130,6 @@ label, input, select {
 }
 
 /* Tooltip Items */
-label[title] {
-  text-decoration: underline dashed;
-}
-
 .copy-icon {
   cursor: pointer;
   font-size: 0.9em;

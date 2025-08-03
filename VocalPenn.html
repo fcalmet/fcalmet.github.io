@@ -34,11 +34,11 @@
 		</div>
 		<div class="text-field">
           <label for="albumin">Albumin <em>(g/dL)</em>:</label>
-          <input type="number" oninput="calculateVocalPenn()" id="albumin" />
+          <input type="number" oninput="calculateVocalPenn()" id="albumin" step="0.1" />
 		</div>
 		<div class="text-field">
           <label for="bilirubin">Bilirubin <em>(mg/dL)</em>:</label>
-          <input type="number" oninput="calculateVocalPenn()" id="bilirubin" />
+          <input type="number" oninput="calculateVocalPenn()" id="bilirubin" step="0.1" />
 		</div>
 		<div class="text-field">
           <label for="platelets">Platelet count <em>(10<sup>9</sup>/L)</em>:</label>
@@ -73,7 +73,7 @@
 			<label><input type="radio" onchange="calculateVocalPenn()" name="isEmergency" value="yes" /> Yes</label>
 		  </div>
 		</div>
-		<div class="text-field">
+		<div class="select-field">
 		  <label for="surgeryType">Surgery type:</label>
 		  <select id="surgeryType" name="surgeryType" onchange="calculateVocalPenn()">
 			<option value="abdominalLap">Abdominal (laparosopic)</option>

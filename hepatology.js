@@ -23,6 +23,7 @@
 
 document.getElementById('footer-nav').innerHTML = `<ul>
   <li><a href="index.html">Home</a></li>
+  <li><a href="ALBI.html">ALBI</a></li>
   <li><a href="APRI.html">APRI</a></li>
   <li><a href="CPT.html">Child-Pugh-Turcotte</a></li>
   <li><a href="CLIF.html">CLIF-C OF/AD/ACLF</a></li>
@@ -48,6 +49,38 @@ function toPercent(p, decimals = 0) {
 
 function setResult(html = '') {
   document.getElementById('result').innerHTML = html;
+}
+
+/**********/
+/** APRI **/
+/**********/
+
+function getAlbi(albumin, bilirubin) {
+  const score = 0.66 * Math.log10(bilirubin / 0.058467) - 0.85 * albumin;
+  const grade = score <= -2.60 ? 1 : (score <= -1.39 ? 2 : 3);
+  return {
+	score: score,
+	grade: grade,
+	medianSurvival: [[18.5, 85.6], [5.3, 46.5], [2.3, 15.5]][grade-1]
+  }
+}
+
+function getAlbiInterpretation(albi) {
+  return `<ul>
+	  <li>ALBI score: ${albi.score.toFixed(3)}
+		<ul><li>Grade: ${albi.grade}</li></ul>
+		<ul><li>Median survival: ${albi.medianSurvival[0]}-${albi.medianSurvival[1]} months</li></ul>
+	  </li>
+	</ul>`
+}
+
+function calculateAlbi() {
+  const albumin = parseFloat(document.getElementById('albumin').value) || -1;
+  const bilirubin = parseFloat(document.getElementById('bilirubin').value) || -1;
+  if (albumin < 0 || bilirubin < 0) return setResult();
+  const albi = getAlbi(albumin, bilirubin)
+  const interpretation = getAlbiInterpretation(albi)
+  setResult(interpretation)
 }
 
 /**********/

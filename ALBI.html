@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--
+	 Copyright (C) 2025 by Fernando Calmet
+
+	 Author: Fernando Calmet
+
+	 This program is free software; you can redistribute it and/or modify
+	 it under the terms of the GNU General Public License as published by
+	 the Free Software Foundation, either version 3 of the License, or
+	 (at your option) any later version.
+
+	 This program is distributed in the hope that it will be useful,
+	 but WITHOUT ANY WARRANTY; without even the implied warranty of
+	 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	 GNU General Public License for more details.
+
+	 You should have received a copy of the GNU General Public License
+	 along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<html lang="en">
+  <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>ALBI Score for HCC Calculator</title>
+	<link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+	<h1><span title="Albumin-bilirubin">ALBI</span> Score for <span title="Hepatocellular carcinoma">HCC</span> Calculator</h1>
+	<div class="app-container two">
+	  <div class="panel">
+		<div class="text-field">
+          <label for="albumin">Albumin <em>(g/dL)</em>:</label>
+          <input type="number" oninput="calculateAlbi()" id="albumin" step="0.1" />
+		</div>
+		<div class="text-field">
+          <label for="bilirubin">Bilirubin <em>(mg/dL)</em>:</label>
+          <input type="number" oninput="calculateAlbi()" id="bilirubin" step="0.1" />
+		</div>
+	  </div>
+	  <div class="panel results">
+		<h2>Results</h2>
+		<div id="result"></div>
+	  </div>
+	</div>
+	<footer id="footer-nav"></footer>
+	<script src="hepatology.js"></script>
+  </body>
+</html>

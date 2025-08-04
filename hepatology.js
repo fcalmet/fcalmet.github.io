@@ -88,6 +88,30 @@ function calculateApri() {
   setResult(interpretation)
 }
 
+/*****************************/
+/** BCLC HCC Staging System **/
+/*****************************/
+
+function getBclc(diseaseBurden, performanceStatus) {
+  return ['0', 'A', 'B', 'C', 'D'][Math.max(diseaseBurden, performanceStatus)]
+}
+
+function getBclcInterpretation(bclc) {
+  return `
+	<ul>
+	  <li>BCLC stage: ${bclc}</li>
+	</ul>`
+}
+
+function calculateBclc() {
+  const diseaseBurden = parseInt(document.querySelector('input[name="diseaseBurden"]:checked').value);
+  const performanceStatus = parseInt(document.querySelector('input[name="performanceStatus"]:checked').value);
+
+  const bclc = getBclc(diseaseBurden, performanceStatus)
+  const interpretation = getBclcInterpretation(bclc)
+  setResult(interpretation)
+}
+
 /*************************/
 /** Child-Pugh-Turcotte **/
 /*************************/

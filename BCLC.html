@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!--
+	 Copyright (C) 2025 by Fernando Calmet
+
+	 Author: Fernando Calmet
+
+	 This program is free software; you can redistribute it and/or modify
+	 it under the terms of the GNU General Public License as published by
+	 the Free Software Foundation, either version 3 of the License, or
+	 (at your option) any later version.
+
+	 This program is distributed in the hope that it will be useful,
+	 but WITHOUT ANY WARRANTY; without even the implied warranty of
+	 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	 GNU General Public License for more details.
+
+	 You should have received a copy of the GNU General Public License
+	 along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<html lang="en">
+  <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>BCLC HCC Staging System</title>
+	<link rel="stylesheet" href="style.css" />
+  </head>
+  <body onload="calculateBclc()">
+	<h1><span title="Barcelona Clinic Liver Cancer">BCLC</span> <span title="Hepatocellular carcinoma">HCC</span> Staging System</h1>
+	<div class="app-container two">
+	  <div class="panel">
+		<div class="radio-field">
+		  <label for="diseaseBurden">Disease burden:</label>
+		  <div id="diseaseBurden">
+			<label><input type="radio" onchange="calculateBclc()" name="diseaseBurden" value="0" checked /> Single nodule &leq;2 cm</label>
+			<label><input type="radio" onchange="calculateBclc()" name="diseaseBurden" value="1" /> Single nodule &gt;2 cm <em>or</em> &leq;3 nodules &leq;3 cm</label>
+			<label><input type="radio" onchange="calculateBclc()" name="diseaseBurden" value="2" /> Multinodular</label>
+			<label><input type="radio" onchange="calculateBclc()" name="diseaseBurden" value="3" /> Portal invasion <em>and/or</em> extrahepatic spread</label>
+		  </div>
+		</div>
+		<div class="radio-field">
+		  <label for="performanceStatus">Performance status:</label>
+		  <div id="performanceStatus">
+			<label><input type="radio" onchange="calculateBclc()" name="performanceStatus" value="0" checked /> <span title="(*or tumor burden acceptable for transplant)">Preserved liver function*</span>, PS 0</label>
+			<label><input type="radio" onchange="calculateBclc()" name="performanceStatus" value="3" /> Preserved liver function, PS 1-2</label>
+			<label><input type="radio" onchange="calculateBclc()" name="performanceStatus" value="4" /> End-stage liver function, PS 3-4</label>
+		  </div>
+		</div>
+	  </div>
+	  <div class="panel results">
+		<h2>Results</h2>
+		<div id="result"></div>
+	  </div>
+	</div>
+	<footer id="footer-nav"></footer>
+	<script src="hepatology.js"></script>
+  </body>
+</html>

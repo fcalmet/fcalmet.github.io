@@ -4,7 +4,7 @@
 - [X] footer is crammed in narrow screens
 - [X] wrapped lined in index.htnl are left aligned in narrow screens
 
-* Calculators [10/24]
+* Calculators [11/25]
 - [X] APRI
 - [X] Lille
 - [X] MELD
@@ -15,6 +15,7 @@
 - [X] NAFLD fibrosis score
 - [X] Mayo perioperative score
 - [X] CLIF score
+- [X] ALBI (albumin-bilirubin) grade for HCC
 - [ ] ACLF criteria
 - [ ] NAC dosing
 - [ ] ANI score
@@ -28,7 +29,7 @@
 - [ ] ALFED (for ALF)
 - [ ] PBC Globe
 - [ ] PBC Mayo Survival Score
-- [ ] Rare [0/24]
+- [ ] Rare [0/23]
   - [ ] UK-ELD
   - [ ] EVendo esophageal varices
   - [ ] REACH-B score for HCC
@@ -36,7 +37,6 @@
   - [ ] Revised natural history model for PSC
   - [ ] Fatty liver index
   - [ ] Liver decompensation risk after hepatectomy for HCC
-  - [ ] ALBI (albumin-bilirubin) grade for HCC
   - [ ] ICI hepatitis grades severity
   - [ ] CAGE questions alcohol use
   - [ ] HOMA-IR

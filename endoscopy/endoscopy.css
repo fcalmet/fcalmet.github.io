@@ -1,0 +1,20 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: sans-serif;
+}
+.app {
+  display: flex;
+  gap: 1rem;
+  align-items: stretch;
+}
+.col {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.col > select, .col > textarea {
+  flex: 1;
+  width: 100%;
+}

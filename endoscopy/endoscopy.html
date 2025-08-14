@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+	<meta charset="UTF-8">
+	<title>Endoscopy Reporting System</title>
+	<link rel="stylesheet" href="endoscopy.css" />
+  </head>
+  <body>
+	<h1>Endoscopy Reporting System</h1>
+	<div class="app">
+	  <div class="col">
+		<h2>Procedure</h2>
+		<select id="procedure-list" size="30"></select>
+	  </div>
+	  <div class="col">
+		<h2>Report</h2>
+		<textarea id="report" cols="50"></textarea>
+	  </div>
+	  <div class="col">
+		<h2>Finding</h2>
+		<select id="finding-list" size="30"></select>
+	  </div>
+	  <div class="col" id="finding-options">
+	  </div>
+	  <div class="col" id="interventions">
+		<h2>Interventions</h2>
+		<select id="intervention-list" size="30"></select>
+	  </div>
+	  <div class="col" id="selected-interventions">
+		<h2>Selected</h2>
+		<select id="sel-intervention-list" size="30"></select>
+	  </div>
+	</div>
+	<button id="add-finding">Add Finding</button>
+	<a href="https://www.worldendo.org/assets-craft/pdf/resources/mst-3-0.pdf">MST 3.0</a>
+
+	<!-- TODO:
+		 Stomach/Duodenum: angiectasia, Dieulafoy
+		 Colon/TI: Dieulafoy, angiectasia, aphthae, ulcers, SRUS, IBD
+	-->
+	<!-- Inline JSON -->
+	<script id="jsonData" type="application/json">
+	 {
+	   "procedures": [
+		 { "name": "EGD", "sections": [ "Esophagus", "Stomach", "Duodenum", "Jejunum" ] },
+		 { "name": "Colonoscopy", "sections": [ "DRE", "Ileum", "Colon" ] },
+		 { "name": "Enteroscopy", "sections": [ "Esophagus", "Stomach", "Duodenum", "Jejunum", "Ileum", "Colon" ] },
+		 { "name": "ERCP", "sections": [ "Esophagus", "Stomach", "Duodenum", "Jejunum", "Biliary tree", "Pancreatic duct" ] },
+		 { "name": "EUS", "sections": [ "Esophagus", "Stomach", "Duodenum", "Pancreas", "Biliary tree", "Colorectal" ] }
+	   ],
+	   "organFindings": [
+		 { "organ": "Esophagus",
+		   "findings": [
+			 { "name": "Normal", "text": "Normal esophagus" },
+			 { "name": "Barrett esophagus", "text": "Salmon-colored mucosa in the distal esophagus {consistent-suggestive} Barrett esophagus (Prague C{#C} M{#M})" },
+			 { "name": "Candida esophagitis", "text": "Candida esophagitis" },
+			 { "name": "Diverticulum", "text": "A {small-large} diverticulum in the {esophagus-location}" },
+			 { "name": "Eosinophilic esophagitis", "text": "Esophageal rings and longitudinal furrows {consistent-suggestive} eosinophilic esophagitis" },
+			 { "name": "Esophagitis", "text": "LA grade {la-grade} esophagitis" },
+			 { "name": "Foreign body", "text": "Foreign body in the {esophagus-location}" },
+			 { "name": "Inlet patch", "text": "A {#Size (mm)} mm inlet patch in the proximal esophagus" },
+			 { "name": "Mallory-Weiss tear", "text": "Mallory-Weiss tear in the distal esophagus {bleeding-type}" },
+			 { "name": "Mass", "text": "{stricture-type} mass at {#Location (cm)} cm, {traversable} with an {gastroscope-type}" },
+			 { "name": "Nodule", "text": "A {#Size (mm)} mm nodule in the {esophagus-location}" },
+			 { "name": "Polyp", "text": "A {#Size (mm)} mm polyp in the {esophagus-location}" },
+			 { "name": "Postoperative anatomy", "text": "Postoperative anatomy consistent with prior {esophageal-surgery}" },
+			 { "name": "Stricture", "text": "{stricture-type} stricture at {#Location (cm)} cm, {traversable} with an {gastroscope-type}" },
+			 { "name": "Schatzki ring", "text": "{sr-obstructing} Schatzki ring at the EGJ" },
+			 { "name": "Varices", "text": "{small-large} esophageal varices {bleeding-type} {gev-hrs}" }
+		   ]
+		 },
+		 { "organ": "Stomach",
+		   "findings": [
+			 { "name": "Normal", "text": "Normal stomach" },
+			 { "name": "Bezoar", "text": "A {small-medium-large} bezoar in the {stomach-location-modifier} {stomach-location}" },
+			 { "name": "Diverticulum", "text": "A {small-medium-large} diverticulum in the {stomach-location-modifier} {stomach-location}" },
+			 { "name": "Gastropathy", "text": "{mild-moderate-severe} {gastropathy-type} gastropathy in the {stomach-location-modifier} {stomach-location}" },
+			 { "name": "GAVE", "text": "{mild-moderate-severe} gastric antral vascular ectasia" },
+			 { "name": "Mass", "text": "{stricture-type} mass in the {stomach-location-modifier} {stomach-location}" },
+			 { "name": "Nodule", "text": "A {#Size (mm)} mm nodule in the {stomach-location-modifier} {stomach-location}" },
+			 { "name": "Polyp (multiple)", "text": "Multiple {#Size (mm): from}-{#Size (mm): to} mm polyps in the {stomach-location-modifier} {stomach-location}" },
+			 { "name": "Polyp (single)", "text": "A {#Size (mm)} mm polyp in the {stomach-location-modifier} {stomach-location}" },
+			 { "name": "Postoperative anatomy", "text": "Postoperative anatomy consistent with prior {gastric-surgery}" },
+			 { "name": "Pyloric stenosis", "text": "Pyloric stenosis, {traversable} with an {gastroscope-type}" },
+			 { "name": "Varices", "text": "{small-medium-large} gastric varices in the {gv-type} {bleeding-type} {gev-hrs}" }
+		   ]
+		 },
+		 { "organ": "Duodenum",
+		   "findings": [
+			 { "name": "Normal", "text": "Normal examined duodenum" },
+			 { "name": "Celiac disease", "text": "Mucosal changes including scalloping in the {duodenum-location}, {consistent-suggestive} celiac disease" },
+			 { "name": "Diverticulum", "text": "A {small-medium-large} diverticulum in the {duodenum-location}" },
+			 { "name": "Duodenopathy", "text": "{mild-moderate-severe} {duodenopathy-type} gastropathy in the {duodenum-location}" },
+			 { "name": "Mass", "text": "{stricture-type} mass in the {duodenum-location}" },
+			 { "name": "Nodule", "text": "A {#Size (mm)} mm nodule in the {duodenum-location}" },
+			 { "name": "Polyp", "text": "A {#Size (mm)} mm polyp in the {duodenum-location}" }
+		   ]
+		 },
+		 { "organ": "DRE",
+		   "findings": [
+			 { "name": "Normal", "text": "Normal rectal exam" }
+		   ]
+		 },
+		 { "organ": "Ileum",
+		   "findings": [
+			 { "name": "Normal", "text": "Normal examined terminal ileum" }
+		   ]
+		 },
+		 { "organ": "Colon",
+		   "findings": [
+			 { "name": "Right colon retroflexion", "text": "Retroflexion performed in the right colon" },
+			 { "name": "Normal", "text": "Normal colon" },
+			 { "name": "Diverticulosis", "text": "{mild-moderate-severe} diverticulosis in the {colon-location}" },
+			 { "name": "Internal hemorrhoids", "text": "{small-medium-large} internal hemorrhoids" },
+			 { "name": "Mass", "text": "{stricture-type} mass in the {colon-location}" },
+			 { "name": "Polyp", "text": "A {#Size (mm)} mm {polyp-morphology} polyp in the {colon-location}" }
+		   ]
+		 }
+	   ],
+	   "selection": [
+		 { "name": "bleeding-type", "label": "Bleeding", "options": [ [ "no bleeding", "without bleeding" ], [ "oozing", "with oozing of blood" ], [ "spurting", "with spurting of blood" ] ] },
+		 { "name": "colon-location", "label": "Location", "options": [ "entire colon", "cecum", "ascending colon", "hepatic flexure", "transverse colon", "splenic flexure", "descending colon", "sigmoid colon", "rectum" ] },
+		 { "name": "consistent-suggestive", "label": "Diagnostic certainty", "options": [[ "consistent", "consistent with" ], [ "suggestive", "suggestive of" ]] },
+		 { "name": "duodenopathy-type", "label": "Duodenopathy type", "options": [ "", "erythematous", "erosive" ] },
+		 { "name": "duodenum-location", "label": "Location", "options": [ [ "entire examined duodenum", "entire examined duodenum" ], [ "D1", "duodenal bulb" ], [ "D2", "second portion of the duodenum" ], [ "D3", "third portion of the duodenum" ], [ "D4", "fourth portion of the duodenum" ], [ "periampullary region", "periampullary region" ], [ "D1-D2", "first and second portion of the duodenum" ], [ "D1-D3", "first, second, and third portion of the duodenum" ], [ "D1-D4", "entire duodenum" ], [ "D2-D3", "second and third portion of the duodenum" ], [ "D2-D4", "second, third, and fourth portion of the duodenum" ], [ "D3-D4", "third and fourth portion of the duodenum" ] ] },
+		 { "name": "esophageal-surgery", "label": "Surgery", "options": [ "esophagectomy with gastric pull-up", "esophagectomy with colonic interposition" ] },
+		 { "name": "esophagus-location", "label": "Location", "options": [ "proximal esophagus", "mid esophagus", "distal esophagus" ] },
+		 { "name": "gastric-surgery", "label": "Surgery", "options": [ "Rouy-en-Y gastric bypass", "sleeve gastrectomy", "Billroth I anastomosis", "Billroth II anastomosis" ] },
+		 { "name": "gastropathy-type", "label": "Gastropathy type", "options": [ "", "erythematous", "erosive", "portal hypertensive" ] },
+		 { "name": "gastroscope-type", "label": "Gastroscope type", "options": [ "adult gastroscope", "ultraslim gastroscope" ] },
+		 { "name": "gev-hrs", "label": "High risk stigmata", "options": [ [ "", "" ], [ "no", "without high risk stigmata" ], [ "yes", "with high risk stigmata" ] ] },
+		 { "name": "gv-type", "label": "GV Type", "options": [ [ "GOV1 (lesser curvature)", "lesser curvature in continuity with esophageal varices (GOV1)" ], [ "GOV2 (fundal)", "gastric fundus in continuity with esophageal varices (GOV2)" ], [ "IGV1 (fundus)", "gastric fundus (IGV1)" ], [ "IGV2 (body)", "gastric body (IGV2)" ], [ "IGV2 (antrum)", "gastric antrum (IGV2)" ] ] },
+		 { "name": "la-grade", "label": "LA grade", "options": [ "A", "B", "C", "D" ] },
+		 { "name": "mild-moderate-severe", "label": "Severity", "options": [ "Mild", "Moderate", "Severe" ] },
+		 { "name": "polyp-morphology", "label": "Morphology", "options": [ "sessile", "flat", "pedunculated", "carpetted" ] },
+		 { "name": "small-large", "label": "Size", "options": [ "small", "large" ] },
+		 { "name": "small-medium-large", "label": "Size", "options": [ "small", "medium", "large" ] },
+		 { "name": "sr-obstructing", "label": "Obstructing?", "options": [ "Widely patent, non-obstructing", "Partially obstructing", "Obstructing" ] },
+		 { "name": "stomach-location", "label": "Location", "options": [ "gastric fundus/body", "gastric body/antrum", "gastric fundus", "gastric body", "gastric antrum", "cardia", "incisura" ] },
+		 { "name": "stomach-location-modifier", "label": "Location", "options": [ [ "", "" ], [ "greater curvature", "greater curvature of the" ], [ "lesser curvature", "lesser curvature of the" ], [ "anterior wall", "anterior wall of the" ], [ "posterior wall", "posterior wall of the" ] ] },
+		 { "name": "stricture-type", "label": "Appearance", "options": [ "Benign-appearing", "Malignant-appearing", "Indeterminate" ] },
+		 { "name": "traversable", "label": "Traversable", "options": [ "traversable", "not traversable" ] }
+	   ],
+	   "organInterventions": [
+		 { "organ": "Esophagus",
+		   "interventions": [
+			 { "name": "Banding", "text": "{#Bands placed} band(s) deployed with adequate decompression" },
+			 { "name": "Botulinum toxin (LES)", "text": "LES botulinum toxin injection performed" },
+			 { "name": "Botulinum toxin (distal esophagus)", "text": "Distal esophageal botulinum toxin injection performed" },
+			 { "name": "Epinephrine injection", "text": "Epinephrine injection performed" },
+			 { "name": "Biopsies (Seattle protocol)", "text": "Biopsied as per Seattle protocol" },
+			 { "name": "Biopsies (proximal/distal)", "text": "Proximal and distal esophageal biopsies taken" },
+			 { "name": "Biopsies", "text": "Biopsied" },
+			 { "name": "Cautery (APC)", "text": "Treated with APC" },
+			 { "name": "Cautery (bipolar)", "text": "Treated with bipolar cautery" },
+			 { "name": "Clips", "text": "{#Clips deployed} clip(s) deployed" },
+			 { "name": "Dilation (Savary-Gilliard)", "text": "Savary-Gilliard dilation performed to {#Size (Fr)} Fr" },
+			 { "name": "Dilation (TTS balloon)", "text": "TTS balloon dilation performed to {#Size (mm)} mm" },
+			 { "name": "EMR (band)", "text": "Removed by band-EMR" },
+			 { "name": "EMR (one piece)", "text": "Removed by EMR in one piece" },
+			 { "name": "EMR (piecemeal", "text": "Removed by EMR in piecemeal fashion" },
+			 { "name": "Polypectomy (cold forceps)", "text": "Removed with cold biopsy forceps" },
+			 { "name": "Polypectomy (cold snare)", "text": "Removed with cold snare" },
+			 { "name": "Polypectomy (hot snare)", "text": "Removed with hot snare" },
+			 { "name": "RFA 360", "text": "Treated with RFA 360 ({#Ablations} ablations)" },
+			 { "name": "RFA 90", "text": "Treated with RFA 90 ({#Ablations} ablations)" },
+			 { "name": "RFA TTS", "text": "Treated with TTS RFA ({#Ablations} ablations)" }
+		   ]
+		 },
+		 { "organ": "Stomach",
+		   "interventions": [
+			 { "name": "Biopsies", "text": "Biopsied" },
+			 { "name": "Biopsies (random)", "text": "Random biopsies taken" },
+			 { "name": "Biopsies (Sydney protocol)", "text": "Biopsied as per Sydney protocol" },
+			 { "name": "Botulinum toxin (pyloric)", "text": "Pyloric botulinum toxin injection performed" },
+			 { "name": "Cautery (APC)", "text": "Treated with APC" },
+			 { "name": "Cautery (bipolar)", "text": "Treated with bipolar cautery" },
+			 { "name": "Clips", "text": "{#Clips deployed} clip(s) deployed" },
+			 { "name": "Dilation (TTS balloon)", "text": "TTS balloon dilation performed to {#Size (mm)} mm" },
+			 { "name": "EMR (band)", "text": "Removed by band-EMR" },
+			 { "name": "EMR (one piece)", "text": "Removed by EMR in one piece" },
+			 { "name": "EMR (piecemeal", "text": "Removed by EMR in piecemeal fashion" },
+			 { "name": "Epinephrine injection", "text": "Epinephrine injection performed" },
+			 { "name": "Polypectomy (cold forceps)", "text": "Removed with cold biopsy forceps" },
+			 { "name": "Polypectomy (cold snare)", "text": "Removed with cold snare" },
+			 { "name": "Polypectomy (hot snare)", "text": "Removed with hot snare" }
+		   ]
+		 },
+		 { "organ": "Duodenum",
+		   "interventions": [
+			 { "name": "Biopsies", "text": "Biopsied" },
+			 { "name": "Biopsies (random)", "text": "Random biopsies taken" },
+			 { "name": "Cautery (APC)", "text": "Treated with APC" },
+			 { "name": "Cautery (bipolar)", "text": "Treated with bipolar cautery" },
+			 { "name": "Clips", "text": "{#Clips deployed} clip(s) deployed" },
+			 { "name": "Dilation (TTS balloon)", "text": "TTS balloon dilation performed to {#Size (mm)} mm" },
+			 { "name": "EMR (band)", "text": "Removed by band-EMR" },
+			 { "name": "EMR (one piece)", "text": "Removed by EMR in one piece" },
+			 { "name": "EMR (piecemeal", "text": "Removed by EMR in piecemeal fashion" },
+			 { "name": "Epinephrine injection", "text": "Epinephrine injection performed" },
+			 { "name": "Polypectomy (cold forceps)", "text": "Removed with cold biopsy forceps" },
+			 { "name": "Polypectomy (cold snare)", "text": "Removed with cold snare" },
+			 { "name": "Polypectomy (hot snare)", "text": "Removed with hot snare" }
+		   ]
+		 },
+		 { "organ": "DRE",
+		   "interventions": []
+		 },
+		 { "organ": "Ileum",
+		   "interventions": [
+			 { "name": "Biopsies", "text": "Biopsied" },
+			 { "name": "Biopsies (random)", "text": "Random biopsies taken" },
+			 { "name": "Cautery (APC)", "text": "Treated with APC" },
+			 { "name": "Cautery (bipolar)", "text": "Treated with bipolar cautery" },
+			 { "name": "Clips", "text": "{#Clips deployed} clip(s) deployed" },
+			 { "name": "Dilation (TTS balloon)", "text": "TTS balloon dilation performed to {#Size (mm)} mm" },
+			 { "name": "EMR (band)", "text": "Removed by band-EMR" },
+			 { "name": "EMR (one piece)", "text": "Removed by EMR in one piece" },
+			 { "name": "EMR (piecemeal", "text": "Removed by EMR in piecemeal fashion" },
+			 { "name": "Epinephrine injection", "text": "Epinephrine injection performed" },
+			 { "name": "Polypectomy (cold forceps)", "text": "Removed with cold biopsy forceps" },
+			 { "name": "Polypectomy (cold snare)", "text": "Removed with cold snare" },
+			 { "name": "Polypectomy (hot snare)", "text": "Removed with hot snare" }
+		   ]
+		 },
+		 { "organ": "Colon",
+		   "interventions": [
+			 { "name": "Biopsies (random)", "text": "Random biopsies taken" },
+			 { "name": "Biopsies", "text": "Biopsied" },
+			 { "name": "Cautery (APC)", "text": "Treated with APC" },
+			 { "name": "Cautery (bipolar)", "text": "Treated with bipolar cautery" },
+			 { "name": "Clips", "text": "{#Clips deployed} clip(s) deployed" },
+			 { "name": "Dilation (TTS balloon)", "text": "TTS balloon dilation performed to {#Size (mm)} mm" },
+			 { "name": "EMR (band)", "text": "Removed by band-EMR" },
+			 { "name": "EMR (one piece)", "text": "Removed by EMR in one piece" },
+			 { "name": "EMR (piecemeal", "text": "Removed by EMR in piecemeal fashion" },
+			 { "name": "Epinephrine injection", "text": "Epinephrine injection performed" },
+			 { "name": "Hot avulsion", "text": "Treated with hot avulsion" },
+			 { "name": "Polypectomy (cold forceps)", "text": "Removed with cold biopsy forceps" },
+			 { "name": "Polypectomy (cold snare)", "text": "Removed with cold snare" },
+			 { "name": "Polypectomy (hot snare)", "text": "Removed with hot snare" },
+			 { "name": "Snare tip cautery", "text": "Snare tip cautery performed" }
+		   ]
+		 }
+
+	   ]
+	 }
+	</script>
+	<script src="endoscopy.js" type="text/javascript"></script>
+	<script>
+     const db = JSON.parse($('jsonData').textContent);
+
+	 populateProcedures();
+
+     $('procedure-list')
+	   .addEventListener('change', onProcedureListSelect);
+
+	 $('finding-list')
+	   .addEventListener('change', onFindingListSelect);
+
+	 $("intervention-list")
+	   .addEventListener("dblclick", onInterventionListDblClick);
+
+	 $("sel-intervention-list")
+	   .addEventListener("keydown", (event) => {
+		 if (event.ctrlKey && event.key === 'ArrowUp') {
+		   event.preventDefault();
+		   onSelInterventionListCtrlUp(event);
+		 }
+		 if (event.ctrlKey && event.key === 'ArrowDown') {
+		   event.preventDefault();
+		   onSelInterventionListCtrlDown(event);
+		 }
+		 if (event.key === 'Delete') {
+		   event.preventDefault();
+		   onSelInterventionListDelete(event);
+		 }
+	   });
+
+	 $("add-finding")
+	   .addEventListener('click', onAddFindingClick);
+
+	 $('procedure-list').selectedIndex = 0;
+	 $('procedure-list').dispatchEvent(new Event('change'));
+	 $('finding-list').selectedIndex = 1;
+	 $('finding-list').dispatchEvent(new Event('change'));
+
+	</script>
+  </body>
+</html>

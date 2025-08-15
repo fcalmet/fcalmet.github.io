@@ -41,8 +41,8 @@
 		 { "name": "EGD", "sections": [ "Esophagus", "Stomach", "Duodenum", "Jejunum" ] },
 		 { "name": "Colonoscopy", "sections": [ "DRE", "Ileum", "Colon" ] },
 		 { "name": "Enteroscopy", "sections": [ "Esophagus", "Stomach", "Duodenum", "Jejunum", "Ileum", "Colon" ] },
-		 { "name": "ERCP", "sections": [ "Esophagus", "Stomach", "Duodenum", "Jejunum", "Biliary tree", "Pancreatic duct" ] },
-		 { "name": "EUS", "sections": [ "Esophagus", "Stomach", "Duodenum", "Pancreas", "Biliary tree", "Colorectal" ] }
+		 { "name": "ERCP", "sections": [ "Esophagus", "Stomach", "Duodenum", "Jejunum", "Biliary", "Pancreatic duct" ] },
+		 { "name": "EUS", "sections": [ "Esophagus", "Stomach", "Duodenum", "Pancreas", "Biliary", "Liver", "Lymph nodes" ] }
 	   ],
 	   "organFindings": [
 		 { "organ": "Esophagus",
@@ -120,6 +120,31 @@
 			 { "name": "Polyp (single)", "text": "A {#Size (mm)} mm {polyp-morphology} polyp in the {colon-location}" },
 			 { "name": "Polyp (multiple)", "text": "{#Number} {#Min size (mm)}-{#Max size (mm)} mm {polyps-morphology} polyps in the {colon-location}" }
 		   ]
+		 },
+		 { "organ": "Pancreas",
+		   "findings": [
+			 { "name": "Normal", "text": "Normal pancreatic parenchyma and duct" },
+			 { "name": "PD dilation", "text": "PD dilation up to {#Size (mm)} mm" },
+			 { "name": "Mass", "text": "A {echogenicity} mass measuring at least {#Size 1 (mm)} x {#Size 2 (mm)} mm in the {pancreas-location}" }
+		   ]
+		 },
+		 { "organ": "Biliary",
+		   "findings": [
+			 { "name": "Normal (CBD)", "text": "Normal CBD measuring {#Size (mm)} mm" },
+			 { "name": "Normal (major papilla)", "text": "Normal major papilla on {mp-visualization} visualization" },
+			 { "name": "Normal (gallbladder)", "text": "Normal gallbladder" }
+
+		   ]
+		 },
+		 { "organ": "Liver",
+		   "findings": [
+			 { "name": "Normal (visualized)", "text": "Normal visualized portion of the liver" }
+		   ]
+		 },
+		 { "organ": "Lymph nodes",
+		   "findings": [
+			 { "name": "No lymphadenopathy", "text": "No lymphadenopathy identified" }
+		   ]
 		 }
 	   ],
 	   "selection": [
@@ -137,9 +162,12 @@
 		 { "name": "gev-hrs", "label": "High risk stigmata", "options": [ [ "", "" ], [ "no", "without high risk stigmata" ], [ "yes", "with high risk stigmata" ] ] },
 		 { "name": "gv-type", "label": "GV Type", "options": [ [ "GOV1 (lesser curvature)", "lesser curvature in continuity with esophageal varices (GOV1)" ], [ "GOV2 (fundal)", "gastric fundus in continuity with esophageal varices (GOV2)" ], [ "IGV1 (fundus)", "gastric fundus (IGV1)" ], [ "IGV2 (body)", "gastric body (IGV2)" ], [ "IGV2 (antrum)", "gastric antrum (IGV2)" ] ] },
 		 { "name": "la-grade", "label": "LA grade", "options": [ "A", "B", "C", "D" ] },
-		 { "name": "mild-moderate-severe", "label": "Severity", "options": [ "Mild", "Moderate", "Severe" ] },
+		 { "name": "mild-moderate-severe", "label": "Severity", "options": [ "mild", "moderate", "severe" ] },
+		 { "name": "mp-visualization", "label": "Visualization", "options": [ "endoscopic and endosonographic", "endosonographic", "endoscopic" ] },
 		 { "name": "polyp-morphology", "label": "Morphology", "options": [ "sessile", "flat", "pedunculated", "carpetted" ] },
 		 { "name": "polyps-morphology", "label": "Morphology", "options": [ "sessile", "flat", "pedunculated", "carpetted", "sessile/flat", "sessile/pedunculated", "flat/pedunculated" ] },
+		 { "name": "echogenicity", "label": "Echogenicity", "options": [ "hypoechoic", "isoechoic", "hyperechoic", "heterogeneous" ] },
+		 { "name": "pancreas-location", "label": "Location", "options": [ "pancreatic uncinate process", "pancreatic head", "pancreatic neck", "pancreatic body", "pancreatic tail" ] },
 		 { "name": "small-large", "label": "Size", "options": [ "small", "large" ] },
 		 { "name": "small-medium-large", "label": "Size", "options": [ "small", "medium", "large" ] },
 		 { "name": "sr-obstructing", "label": "Obstructing?", "options": [ "Widely patent, non-obstructing", "Partially obstructing", "Obstructing" ] },
@@ -249,6 +277,26 @@
 			 { "name": "Snare tip cautery", "text": "Snare tip cautery performed" },
 			 { "name": "Tattoo", "text": "Tattooed" }
 		   ]
+		 },
+		 { "organ": "Pancreas",
+		   "interventions": [
+			 { "name": "Biopsies (random)", "text": "Random biopsies taken" },
+			 { "name": "Biopsies", "text": "Biopsied" },
+			 { "name": "Cautery (APC)", "text": "Treated with APC" },
+			 { "name": "Cautery (bipolar)", "text": "Treated with bipolar cautery" },
+			 { "name": "Clips", "text": "{#Clips deployed} clip(s) deployed" },
+			 { "name": "Dilation (TTS balloon)", "text": "TTS balloon dilation performed to {#Size (mm)} mm" },
+			 { "name": "EMR (band)", "text": "Removed by band-EMR" },
+			 { "name": "EMR (one piece)", "text": "Removed by EMR in one piece" },
+			 { "name": "EMR (piecemeal", "text": "Removed by EMR in piecemeal fashion" },
+			 { "name": "Epinephrine injection", "text": "Epinephrine injection performed" },
+			 { "name": "Hot avulsion", "text": "Treated with hot avulsion" },
+			 { "name": "Polypectomy (cold forceps)", "text": "Removed with cold biopsy forceps" },
+			 { "name": "Polypectomy (cold snare)", "text": "Removed with cold snare" },
+			 { "name": "Polypectomy (hot snare)", "text": "Removed with hot snare" },
+			 { "name": "Snare tip cautery", "text": "Snare tip cautery performed" },
+			 { "name": "Tattoo", "text": "Tattooed" }
+		   ]
 		 }
 	   ]
 	 }
@@ -306,9 +354,6 @@
 		   onSelInterventionListDelete(event);
 		 }
 	   });
-
-	 /* $('add-finding') */
-	 /* .addEventListener('click', onAddFindingClick); */
 
 	 $('procedure-list').selectedIndex = 0;
 	 $('procedure-list').dispatchEvent(new Event('change'));

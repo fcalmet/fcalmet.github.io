@@ -43,7 +43,12 @@ function populateDivFindingOptions(options) {
 	if (opt[0] === '#') { // ADD NUMBER
 	  divFindingOptions.append(
 		createLabel(opt.slice(1), id),
-		createInputNumber(id)
+		createInputNumber(id, 'keydown', (event) => {
+		  if (event.ctrlKey && event.key === 'Enter') {
+			event.preventDefault();
+			onAddFindingClick(event);
+		  }
+		})
 	  )
 	} else {
 	  // ADD ITEM DEFINED IN SELECTION
@@ -51,13 +56,19 @@ function populateDivFindingOptions(options) {
 	  if (selOption.label) {
 		divFindingOptions.append(createLabel(selOption.label, selOption.name));
 	  }
-	  const select = document.createElement('select');
-	  select.id = id;
+	  const select = createSelect(id, selOption.options.length, 'keydown',
+								  (event) => {
+									if (event.ctrlKey && event.key === 'Enter') {
+									  event.preventDefault();
+									  onAddFindingClick(event);
+									}
+								  }
+								 );
 	  selOption.options.forEach(option => {
 		if (typeof(option) === 'string') option = [option, option]
 		select.appendChild(createOption(option[0], option[1]));
 	  });
-	  select.size = selOption.options.length;
+	  select.selectedIndex = 0;
 	  divFindingOptions.append(select);
 	}
 	index++;
@@ -203,10 +214,21 @@ function createLabel(textContent = '', htmlFor = '') {
   return element;
 }
 
-function createInputNumber(id = '') {
+function createInputNumber(id = '', eventName = false, eventFunction = null) {
   const element = document.createElement('input');
   element.type = 'number';
   element.id = id;
+  if (eventName)
+	element.addEventListener(eventName, eventFunction);
+  return element;
+}
+
+function createSelect(id = '', size = 1, eventName = false, eventFunction = null) {
+  const element = document.createElement('select');
+  element.id = id;
+  element.size = size;
+  if (eventName)
+	element.addEventListener(eventName, eventFunction);
   return element;
 }
 

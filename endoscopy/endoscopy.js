@@ -3,7 +3,7 @@
 /** POPULATE LISTS **/
 /********************/
 
-function populateProcedures() {
+function populateProcedureList() {
   const procedureList = $('procedure-list');
   db.procedures.forEach(procedure => {
 	procedureList.appendChild(createOption(procedure.name, procedure.name));
@@ -23,6 +23,7 @@ function populateFindingList(procedure) {
 	}
   })
   findingList.length -= 1;
+  findingList.selectedIndex = 1;
 }
 
 /*******************/
@@ -95,11 +96,12 @@ function onFindingListSelect(event) {
   populateDivFindingOptions(options);
   const organ = event.target.selectedOptions[0].dataset.organ;
   const organInterventions = db.organInterventions.find(it => it.organ === organ);
-  populateInterventions(organInterventions.interventions)
+  populateInterventions(organInterventions.interventions);
+  $('sel-intervention-list').length = 0;
 }
 
 function onInterventionListDblClick(event) {
-  const selectedOption = event.target;
+  const selectedOption = $('intervention-list').selectedOptions[0];
   if (!selectedOption.text) return;
   const selInterventionList = $('sel-intervention-list');
   const options = getOptions(selectedOption.value);
@@ -223,13 +225,14 @@ function $(id) {
 /******************************/
 
 function sanitizeSentence(str) {
-  return str
-    .trim()
-    .replace(/^./, c => c.toUpperCase()) // capitalize first letter
-    .replace(/(\d+)\s(\w+)\(s\)/g, (_, num, word) =>
-      num === "1" ? `${num} ${word}` : `${num} ${word}s`
-    ) // Check for '(s)': if preceding number is 1, delete, otherwise, replace with 's'
-    .replace(/([^.!?])$/, '$1.'); // ensure ending punctuation
+  return firstNumberToText(
+	str.trim()
+	  .replace(/(\d+)\s(\w+)\(s\)/g, (_, num, word) =>
+		num === "1" ? `${num} ${word}` : `${num} ${word}s`
+	  ) // Check for '(s)': if preceding number is 1, delete, otherwise, replace with 's'
+  ).replace(/^./, c => c.toUpperCase()) // capitalize first letter
+	.replace(/([^.!?])$/, '$1.') // ensure ending punctuation
+	.replace(/ {2,}/g, ' ');
 }
 
 function getOptions(str) {
@@ -239,4 +242,52 @@ function getOptions(str) {
 function parseOptions(template, values) {
   let i = 0;
   return template.replace(/\{.*?\}/g, () => values[i++] ?? '');
+}
+
+function firstNumberToText(str) {
+  const numberToText = (num) => {
+	const units = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+	const tens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+	if (num < 20) return units[num];
+	if (num < 100) return tens[Math.floor(num / 10)] + ((num % 10 !== 0) ? ' ' + units[num % 10] : '');
+	return num.toString(); // Fallback for numbers greater than 99
+  };
+  const match = str.match(/^\d+/);
+  return match
+	? str.replace(match[0], spellNumber(parseInt(match[0], 10)))
+	: str;
+}
+
+function spellNumber(n) {
+  const tOne = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+  const tTen = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+  const tThousand = ["", " thousand", " million", " billion", " trillion", " quadrillion"];
+  var result = (n == 0 ? "zero" : "");
+  var i = 0;
+  while (n > 0) {
+	const tri = n % 1000;
+	n = Math.floor(n / 1000);
+	if (tri > 0) {
+	  const hundred = Math.floor(tri / 100);
+	  var ten = tri % 100;
+	  var tTri = "";
+	  if (hundred > 0)
+		tTri += tOne[hundred] + " hundred" + (ten > 0 ? " " : "");
+	  if (ten > 0) {
+		if (ten < 20) {
+		  tTri += tOne[ten];
+		} else {
+		  const one = ten % 10;
+		  ten = Math.floor(ten / 10);
+		  if (ten > 0)
+			tTri += tTen[ten] + (one > 0 ? "-" : "");
+		  if (one > 0)
+			tTri += tOne[one];
+		}
+	  }
+	  result = tTri + tThousand[i] + " " + result;
+	}
+	i++;
+  }
+  return result.trim();
 }

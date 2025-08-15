@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
   <head>
 	<meta charset="UTF-8">
@@ -11,33 +10,29 @@
 	<div class="app">
 	  <div class="col">
 		<h2>Procedure</h2>
-		<select id="procedure-list" size="30"></select>
-	  </div>
-	  <div class="col">
+		<select id="procedure-list" size="5"></select>
 		<h2>Report</h2>
 		<textarea id="report" cols="50"></textarea>
 	  </div>
 	  <div class="col">
 		<h2>Finding</h2>
-		<select id="finding-list" size="30"></select>
+		<select id="finding-list" size="40"></select>
 	  </div>
-	  <div class="col" id="finding-options">
+	  <div class="col multi" id="finding-options">
 	  </div>
 	  <div class="col" id="interventions">
 		<h2>Interventions</h2>
-		<select id="intervention-list" size="30"></select>
+		<select id="intervention-list" size="40"></select>
 	  </div>
 	  <div class="col" id="selected-interventions">
 		<h2>Selected</h2>
-		<select id="sel-intervention-list" size="30"></select>
+		<select id="sel-intervention-list" size="40"></select>
 	  </div>
 	</div>
-	<button id="add-finding">Add Finding</button>
-	<a href="https://www.worldendo.org/assets-craft/pdf/resources/mst-3-0.pdf">MST 3.0</a>
 
 	<!-- TODO:
-		 Stomach/Duodenum: angiectasia, Dieulafoy
-		 Colon/TI: Dieulafoy, angiectasia, aphthae, ulcers, SRUS, IBD
+		 Stomach/Duodenum: ulcer
+		 Colon/TI: Dieulafoy, aphthae, ulcers, SRUS, IBD
 	-->
 	<!-- Inline JSON -->
 	<script id="jsonData" type="application/json">
@@ -53,8 +48,10 @@
 		 { "organ": "Esophagus",
 		   "findings": [
 			 { "name": "Normal", "text": "Normal esophagus" },
+			 { "name": "Angiectasia", "text": "{single-few-multiple-angiectasias} {bleeding-type} {esophagus-location}" },
 			 { "name": "Barrett esophagus", "text": "Salmon-colored mucosa in the distal esophagus {consistent-suggestive} Barrett esophagus (Prague C{#C} M{#M})" },
 			 { "name": "Candida esophagitis", "text": "Candida esophagitis" },
+			 { "name": "Dieulafoy", "text": "A Dieulafoy lesion {bleeding-type} {esophagus-location}" },
 			 { "name": "Diverticulum", "text": "A {small-large} diverticulum in the {esophagus-location}" },
 			 { "name": "Eosinophilic esophagitis", "text": "Esophageal rings and longitudinal furrows {consistent-suggestive} eosinophilic esophagitis" },
 			 { "name": "Esophagitis", "text": "LA grade {la-grade} esophagitis" },
@@ -73,7 +70,9 @@
 		 { "organ": "Stomach",
 		   "findings": [
 			 { "name": "Normal", "text": "Normal stomach" },
+			 { "name": "Angiectasia", "text": "{single-few-multiple-angiectasias} {bleeding-type} {stomach-location-modifier} {stomach-location}" },
 			 { "name": "Bezoar", "text": "A {small-medium-large} bezoar in the {stomach-location-modifier} {stomach-location}" },
+			 { "name": "Dieulafoy", "text": "A Dieulafoy lesion {bleeding-type} {stomach-location-modifier} {stomach-location}" },
 			 { "name": "Diverticulum", "text": "A {small-medium-large} diverticulum in the {stomach-location-modifier} {stomach-location}" },
 			 { "name": "Gastropathy", "text": "{mild-moderate-severe} {gastropathy-type} gastropathy in the {stomach-location-modifier} {stomach-location}" },
 			 { "name": "GAVE", "text": "{mild-moderate-severe} gastric antral vascular ectasia" },
@@ -89,7 +88,9 @@
 		 { "organ": "Duodenum",
 		   "findings": [
 			 { "name": "Normal", "text": "Normal examined duodenum" },
+			 { "name": "Angiectasia", "text": "{single-few-multiple-angiectasias} {bleeding-type} {duodenum-location}" },
 			 { "name": "Celiac disease", "text": "Mucosal changes including scalloping in the {duodenum-location}, {consistent-suggestive} celiac disease" },
+			 { "name": "Dieulafoy", "text": "A Dieulafoy lesion {bleeding-type} {duodenum-location}" },
 			 { "name": "Diverticulum", "text": "A {small-medium-large} diverticulum in the {duodenum-location}" },
 			 { "name": "Duodenopathy", "text": "{mild-moderate-severe} {duodenopathy-type} gastropathy in the {duodenum-location}" },
 			 { "name": "Mass", "text": "{stricture-type} mass in the {duodenum-location}" },
@@ -111,14 +112,18 @@
 		   "findings": [
 			 { "name": "Right colon retroflexion", "text": "Retroflexion performed in the right colon" },
 			 { "name": "Normal", "text": "Normal colon" },
+			 { "name": "Angiectasia", "text": "{single-few-multiple-angiectasias} {bleeding-type} {colon-location}" },
+			 { "name": "Dieulafoy", "text": "A Dieulafoy lesion {bleeding-type} {colon-location}" },
 			 { "name": "Diverticulosis", "text": "{mild-moderate-severe} diverticulosis in the {colon-location}" },
 			 { "name": "Internal hemorrhoids", "text": "{small-medium-large} internal hemorrhoids" },
 			 { "name": "Mass", "text": "{stricture-type} mass in the {colon-location}" },
-			 { "name": "Polyp", "text": "A {#Size (mm)} mm {polyp-morphology} polyp in the {colon-location}" }
+			 { "name": "Polyp (single)", "text": "A {#Size (mm)} mm {polyp-morphology} polyp in the {colon-location}" },
+			 { "name": "Polyp (multiple)", "text": "{#Number} {#Min size (mm)}-{#Max size (mm)} mm {polyps-morphology} polyps in the {colon-location}" }
 		   ]
 		 }
 	   ],
 	   "selection": [
+		 { "name": "single-few-multiple-angiectasias", "label": "Number", "options": [ ["single", "a single angiectasia"], ["few", "a few angiectasias"], ["multiple", "multiple angiectasias"] ] },
 		 { "name": "bleeding-type", "label": "Bleeding", "options": [ [ "no bleeding", "without bleeding" ], [ "oozing", "with oozing of blood" ], [ "spurting", "with spurting of blood" ] ] },
 		 { "name": "colon-location", "label": "Location", "options": [ "entire colon", "cecum", "ascending colon", "hepatic flexure", "transverse colon", "splenic flexure", "descending colon", "sigmoid colon", "rectum" ] },
 		 { "name": "consistent-suggestive", "label": "Diagnostic certainty", "options": [[ "consistent", "consistent with" ], [ "suggestive", "suggestive of" ]] },
@@ -134,6 +139,7 @@
 		 { "name": "la-grade", "label": "LA grade", "options": [ "A", "B", "C", "D" ] },
 		 { "name": "mild-moderate-severe", "label": "Severity", "options": [ "Mild", "Moderate", "Severe" ] },
 		 { "name": "polyp-morphology", "label": "Morphology", "options": [ "sessile", "flat", "pedunculated", "carpetted" ] },
+		 { "name": "polyps-morphology", "label": "Morphology", "options": [ "sessile", "flat", "pedunculated", "carpetted", "sessile/flat", "sessile/pedunculated", "flat/pedunculated" ] },
 		 { "name": "small-large", "label": "Size", "options": [ "small", "large" ] },
 		 { "name": "small-medium-large", "label": "Size", "options": [ "small", "medium", "large" ] },
 		 { "name": "sr-obstructing", "label": "Obstructing?", "options": [ "Widely patent, non-obstructing", "Partially obstructing", "Obstructing" ] },
@@ -240,10 +246,10 @@
 			 { "name": "Polypectomy (cold forceps)", "text": "Removed with cold biopsy forceps" },
 			 { "name": "Polypectomy (cold snare)", "text": "Removed with cold snare" },
 			 { "name": "Polypectomy (hot snare)", "text": "Removed with hot snare" },
-			 { "name": "Snare tip cautery", "text": "Snare tip cautery performed" }
+			 { "name": "Snare tip cautery", "text": "Snare tip cautery performed" },
+			 { "name": "Tattoo", "text": "Tattooed" }
 		   ]
 		 }
-
 	   ]
 	 }
 	</script>
@@ -251,7 +257,7 @@
 	<script>
      const db = JSON.parse($('jsonData').textContent);
 
-	 populateProcedures();
+	 populateProcedureList();
 
      $('procedure-list')
 	   .addEventListener('change', onProcedureListSelect);
@@ -259,27 +265,50 @@
 	 $('finding-list')
 	   .addEventListener('change', onFindingListSelect);
 
-	 $("intervention-list")
-	   .addEventListener("dblclick", onInterventionListDblClick);
+	 $('finding-list')
+	   .addEventListener('dblclick', onAddFindingClick); // cross event
 
-	 $("sel-intervention-list")
-	   .addEventListener("keydown", (event) => {
+	 $('finding-list')
+		 .addEventListener('keydown', (event) => {
+		   if (event.ctrlKey && event.key === 'Enter') {
+			 event.preventDefault();
+			 onAddFindingClick(event);
+		   }
+		 });
+
+	 $('intervention-list')
+	   .addEventListener('dblclick', onInterventionListDblClick);
+
+	 $('intervention-list')
+	   .addEventListener('keydown', (event) => {
+		 if (event.ctrlKey && event.key === 'Enter') {
+		   event.preventDefault();
+		   onAddFindingClick(event);
+		 } else if (event.key === 'Enter') {
+		   event.preventDefault();
+		   onInterventionListDblClick(event);
+		 }
+	   });
+
+	 $('sel-intervention-list')
+	   .addEventListener('keydown', (event) => {
 		 if (event.ctrlKey && event.key === 'ArrowUp') {
 		   event.preventDefault();
 		   onSelInterventionListCtrlUp(event);
-		 }
-		 if (event.ctrlKey && event.key === 'ArrowDown') {
+		 } else if (event.ctrlKey && event.key === 'ArrowDown') {
 		   event.preventDefault();
 		   onSelInterventionListCtrlDown(event);
-		 }
-		 if (event.key === 'Delete') {
+		 } else if (event.ctrlKey && event.key === 'Enter') {
+		   event.preventDefault();
+		   onAddFindingClick(event);
+		 } else if (event.key === 'Delete') {
 		   event.preventDefault();
 		   onSelInterventionListDelete(event);
 		 }
 	   });
 
-	 $("add-finding")
-	   .addEventListener('click', onAddFindingClick);
+	 /* $('add-finding') */
+	 /* .addEventListener('click', onAddFindingClick); */
 
 	 $('procedure-list').selectedIndex = 0;
 	 $('procedure-list').dispatchEvent(new Event('change'));

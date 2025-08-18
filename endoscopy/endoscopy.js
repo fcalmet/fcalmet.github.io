@@ -51,12 +51,14 @@ function populateDivFindingOptions(options) {
 		})
 	  )
 	} else {
+	  const multiSelect = opt[0] === '*';
+	  if (multiSelect) opt = opt.slice(1);
 	  // ADD ITEM DEFINED IN SELECTION
 	  const selOption = db.selection.find(x => x.name === opt);
 	  if (selOption.label) {
 		divFindingOptions.append(createLabel(selOption.label, selOption.name));
 	  }
-	  const select = createSelect(id, selOption.options.length, 'keydown',
+	  const select = createSelect(id, selOption.options.length, multiSelect, 'keydown',
 								  (event) => {
 									if (event.ctrlKey && event.key === 'Enter') {
 									  event.preventDefault();
@@ -175,7 +177,7 @@ function onAddFindingClick(event) {
 	  newValues.push(el.value);
 	  break;
 	case 'SELECT':
-	  newValues.push(el.options[el.selectedIndex].value);
+	  newValues.push(textList(Array.from(el.selectedOptions).map(x => x.value)));
 	  break;
 	}
   });
@@ -223,10 +225,11 @@ function createInputNumber(id = '', eventName = false, eventFunction = null) {
   return element;
 }
 
-function createSelect(id = '', size = 1, eventName = false, eventFunction = null) {
+function createSelect(id = '', size = 1, multiSelect = false, eventName = false, eventFunction = null) {
   const element = document.createElement('select');
   element.id = id;
   element.size = size;
+  element.multiple = multiSelect;
   if (eventName)
 	element.addEventListener(eventName, eventFunction);
   return element;
@@ -312,4 +315,13 @@ function spellNumber(n) {
 	i++;
   }
   return result.trim();
+}
+
+function textList(strings) {
+  switch(strings.length) {
+  case 0: return '';
+  case 1: return strings[0];
+  case 2: return `${strings[0]} and ${strings[1]}`;
+  default: return `${strings.slice(0, -1).join(', ')}, and ${strings[strings.length - 1]}`;
+  }
 }

@@ -45,21 +45,21 @@
 		 { "organ": "Esophagus",
 		   "findings": [
 			 { "name": "Normal", "text": "Normal esophagus" },
-			 { "name": "Angiectasia", "text": "{single-few-multiple-angiectasias} {bleeding-type} {esophagus-location}" },
+			 { "name": "Angiectasia", "text": "{single-few-multiple-angiectasias} {bleeding-type} in the {*esophagus-location}" },
 			 { "name": "Barrett esophagus", "text": "Salmon-colored mucosa in the distal esophagus {consistent-suggestive} Barrett esophagus (Prague C{#C} M{#M})" },
 			 { "name": "Candida esophagitis", "text": "Candida esophagitis" },
-			 { "name": "Dieulafoy", "text": "A Dieulafoy lesion {bleeding-type} {esophagus-location}" },
+			 { "name": "Dieulafoy", "text": "A Dieulafoy lesion {bleeding-type} in the {esophagus-location}" },
 			 { "name": "Diverticulum", "text": "A {small-large} diverticulum in the {esophagus-location}" },
 			 { "name": "Eosinophilic esophagitis", "text": "Esophageal rings and longitudinal furrows {consistent-suggestive} eosinophilic esophagitis" },
 			 { "name": "Esophagitis", "text": "LA grade {la-grade} esophagitis" },
-			 { "name": "Foreign body", "text": "Foreign body in the {esophagus-location}" },
+			 { "name": "Foreign body", "text": "Foreign body in the {*esophagus-location}" },
 			 { "name": "Inlet patch", "text": "A {#Size (mm)} mm inlet patch in the proximal esophagus" },
 			 { "name": "Mallory-Weiss tear", "text": "Mallory-Weiss tear in the distal esophagus {bleeding-type}" },
-			 { "name": "Mass", "text": "{stricture-type} mass at {#Location (cm)} cm, {traversable} with an {gastroscope-type}" },
+			 { "name": "Mass", "text": "{stricture-type} mass in the {esophagus-location} at {#Location (cm)} cm, {traversable} with an {*gastroscope-type}" },
 			 { "name": "Nodule", "text": "A {#Size (mm)} mm nodule in the {esophagus-location}" },
 			 { "name": "Polyp", "text": "A {#Size (mm)} mm polyp in the {esophagus-location}" },
 			 { "name": "Postoperative anatomy", "text": "Postoperative anatomy consistent with prior {esophageal-surgery}" },
-			 { "name": "Stricture", "text": "{stricture-type} stricture at {#Location (cm)} cm, {traversable} with an {gastroscope-type}" },
+			 { "name": "Stricture", "text": "{stricture-type} stricture at {#Location (cm)} cm, {traversable} with an {*gastroscope-type}" },
 			 { "name": "Schatzki ring", "text": "{sr-obstructing} Schatzki ring at the EGJ" },
 			 { "name": "Varices", "text": "{small-large} esophageal varices {bleeding-type} {gev-hrs}" }
 		   ]
@@ -68,19 +68,19 @@
 		 { "organ": "Stomach",
 		   "findings": [
 			 { "name": "Normal", "text": "Normal stomach" },
-			 { "name": "Angiectasia", "text": "{single-few-multiple-angiectasias} {bleeding-type} {stomach-location-modifier} {stomach-location}" },
-			 { "name": "Bezoar", "text": "A {small-medium-large} bezoar in the {stomach-location-modifier} {stomach-location}" },
+			 { "name": "Angiectasia", "text": "{single-few-multiple-angiectasias} {bleeding-type} {*stomach-location-modifier} {*stomach-location}" },
+			 { "name": "Bezoar", "text": "A {small-medium-large} bezoar in the {*stomach-location-modifier} {*stomach-location}" },
 			 { "name": "Dieulafoy", "text": "A Dieulafoy lesion {bleeding-type} {stomach-location-modifier} {stomach-location}" },
 			 { "name": "Diverticulum", "text": "A {small-medium-large} diverticulum in the {stomach-location-modifier} {stomach-location}" },
-			 { "name": "Gastropathy", "text": "{mild-moderate-severe} {gastropathy-type} gastropathy in the {stomach-location-modifier} {stomach-location}" },
+			 { "name": "Gastropathy", "text": "{mild-moderate-severe} {gastropathy-type} gastropathy in the {*stomach-location-modifier} {*stomach-location}" },
 			 { "name": "GAVE", "text": "{mild-moderate-severe} gastric antral vascular ectasia" },
 			 { "name": "Mass", "text": "{stricture-type} mass in the {stomach-location-modifier} {stomach-location}" },
 			 { "name": "Nodule", "text": "A {#Size (mm)} mm nodule in the {stomach-location-modifier} {stomach-location}" },
-			 { "name": "Polyp (multiple)", "text": "Multiple {#Size (mm): from}-{#Size (mm): to} mm polyps in the {stomach-location-modifier} {stomach-location}" },
+			 { "name": "Polyp (multiple)", "text": "Multiple {#Size (mm): from}-{#Size (mm): to} mm polyps in the {*stomach-location-modifier} {*stomach-location}" },
 			 { "name": "Polyp (single)", "text": "A {#Size (mm)} mm polyp in the {stomach-location-modifier} {stomach-location}" },
 			 { "name": "Postoperative anatomy", "text": "Postoperative anatomy consistent with prior {gastric-surgery}" },
 			 { "name": "Pyloric stenosis", "text": "Pyloric stenosis, {traversable} with an {gastroscope-type}" },
-			 { "name": "Ulcer", "text": "{#Number} ulcer(s) measuring up to {#Size (mm)} mm with {pud-forrest} in the {stomach-location-modifier} {stomach-location}" },
+			 { "name": "Ulcer", "text": "{#Number} ulcer(s) measuring up to {#Size (mm)} mm with {pud-forrest} in the {*stomach-location-modifier} {*stomach-location}" },
 			 { "name": "Varices", "text": "{small-medium-large} gastric varices in the {gv-type} {bleeding-type} {gev-hrs}" }
 		   ]
 		 },
@@ -88,15 +88,15 @@
 		 { "organ": "Duodenum",
 		   "findings": [
 			 { "name": "Normal", "text": "Normal examined duodenum" },
-			 { "name": "Angiectasia", "text": "{single-few-multiple-angiectasias} {bleeding-type} {duodenum-location}" },
-			 { "name": "Celiac disease", "text": "Mucosal changes including scalloping in the {duodenum-location}, {consistent-suggestive} celiac disease" },
+			 { "name": "Angiectasia", "text": "{single-few-multiple-angiectasias} {bleeding-type} {*duodenum-location}" },
+			 { "name": "Celiac disease", "text": "Mucosal changes including scalloping in the {*duodenum-location}, {consistent-suggestive} celiac disease" },
 			 { "name": "Dieulafoy", "text": "A Dieulafoy lesion {bleeding-type} {duodenum-location}" },
 			 { "name": "Diverticulum", "text": "A {small-medium-large} diverticulum in the {duodenum-location}" },
-			 { "name": "Duodenopathy", "text": "{mild-moderate-severe} {duodenopathy-type} gastropathy in the {duodenum-location}" },
+			 { "name": "Duodenopathy", "text": "{mild-moderate-severe} {duodenopathy-type} gastropathy in the {*duodenum-location}" },
 			 { "name": "Mass", "text": "{stricture-type} mass in the {duodenum-location}" },
 			 { "name": "Nodule", "text": "A {#Size (mm)} mm nodule in the {duodenum-location}" },
 			 { "name": "Polyp", "text": "A {#Size (mm)} mm polyp in the {duodenum-location}" },
-			 { "name": "Ulcer", "text": "{#Number} ulcer(s) measuring up to {#Size (mm)} mm with {pud-forrest} in the {stomach-location-modifier} {stomach-location}" }
+			 { "name": "Ulcer", "text": "{#Number} ulcer(s) measuring up to {#Size (mm)} mm with {pud-forrest} in the {*duodenum-location}" }
 		   ]
 		 },
 
@@ -116,13 +116,13 @@
 		   "findings": [
 			 { "name": "Right colon retroflexion", "text": "Retroflexion performed in the right colon" },
 			 { "name": "Normal", "text": "Normal colon" },
-			 { "name": "Angiectasia", "text": "{single-few-multiple-angiectasias} {bleeding-type} {colon-location}" },
+			 { "name": "Angiectasia", "text": "{single-few-multiple-angiectasias} {bleeding-type} {*colon-location}" },
 			 { "name": "Dieulafoy", "text": "A Dieulafoy lesion {bleeding-type} {colon-location}" },
-			 { "name": "Diverticulosis", "text": "{mild-moderate-severe} diverticulosis in the {colon-location}" },
+			 { "name": "Diverticulosis", "text": "{mild-moderate-severe} diverticulosis in the {*colon-location}" },
 			 { "name": "Internal hemorrhoids", "text": "{small-medium-large} internal hemorrhoids" },
 			 { "name": "Mass", "text": "{stricture-type} mass in the {colon-location}" },
 			 { "name": "Polyp (single)", "text": "A {#Size (mm)} mm {polyp-morphology} polyp in the {colon-location}" },
-			 { "name": "Polyp (multiple)", "text": "{#Number} {#Min size (mm)}-{#Max size (mm)} mm {polyps-morphology} polyps in the {colon-location}" },
+			 { "name": "Polyp (multiple)", "text": "{#Number} {#Min size (mm)}-{#Max size (mm)} mm {polyps-morphology} polyps in the {*colon-location}" },
 			 { "name": "Solitary rectal ulcer syndromoe", "text": "A {#Size (mm)} ulcer in the distal rectum, consistent with solitary rectal ulcer syndrome" },
 			 { "name": "Ulcerative colitis", "text": "Continuous inflammation from the rectum to the {colon-location} {consistent-suggestive} {uc-extent} ({uc-mayo})" },
 			 { "name": "Ulcerative proctitis", "text": "Inflammation in the rectum {consistent-suggestive} ulcerative proctitis ({uc-mayo}) " }
@@ -133,7 +133,7 @@
 		   "findings": [
 			 { "name": "Normal", "text": "Normal pancreatic parenchyma and duct" },
 			 { "name": "PD dilation", "text": "PD dilation up to {#Size (mm)} mm" },
-			 { "name": "Mass", "text": "A {echogenicity} mass measuring at least {#Size 1 (mm)} x {#Size 2 (mm)} mm in the {pancreas-location}" }
+			 { "name": "Mass", "text": "A {echogenicity} mass measuring at least {#Size 1 (mm)} x {#Size 2 (mm)} mm in the {*pancreas-location}" }
 		   ]
 		 },
 
@@ -300,7 +300,7 @@
 		 { "name": "duodenum-location", "label": "Location", "options": [ [ "entire examined duodenum", "entire examined duodenum" ], [ "D1", "duodenal bulb" ], [ "D2", "second portion of the duodenum" ], [ "D3", "third portion of the duodenum" ], [ "D4", "fourth portion of the duodenum" ], [ "periampullary region", "periampullary region" ], [ "D1-D2", "first and second portion of the duodenum" ], [ "D1-D3", "first, second, and third portion of the duodenum" ], [ "D1-D4", "entire duodenum" ], [ "D2-D3", "second and third portion of the duodenum" ], [ "D2-D4", "second, third, and fourth portion of the duodenum" ], [ "D3-D4", "third and fourth portion of the duodenum" ] ] },
 		 { "name": "echogenicity", "label": "Echogenicity", "options": [ "hypoechoic", "isoechoic", "hyperechoic", "heterogeneous" ] },
 		 { "name": "esophageal-surgery", "label": "Surgery", "options": [ "esophagectomy with gastric pull-up", "esophagectomy with colonic interposition" ] },
-		 { "name": "esophagus-location", "label": "Location", "options": [ "proximal esophagus", "mid esophagus", "distal esophagus" ] },
+		 { "name": "esophagus-location", "label": "Location", "options": [ "entire esophagus", "proximal esophagus", "mid esophagus", "distal esophagus" ] },
 		 { "name": "fnab-preliminary", "label": "Preliminary cytology", "options": [ [ "", "" ], [ "benign", "with preliminary cytology negative for malignancy" ], [ "indeterminate", "with preliminary cytology indeterminate for malignancy" ], [ "malignant", "with preliminary cytology suggestive of malignancy" ]   ] },
 		 { "name": "gastric-surgery", "label": "Surgery", "options": [ "Rouy-en-Y gastric bypass", "sleeve gastrectomy", "Billroth I anastomosis", "Billroth II anastomosis" ] },
 		 { "name": "gastropathy-type", "label": "Gastropathy type", "options": [ "", "erythematous", "erosive", "portal hypertensive" ] },

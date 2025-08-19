@@ -24,29 +24,33 @@ function populateFindingList(procedure) {
   })
   findingList.length -= 1;
   findingList.selectedIndex = 1;
+  selectFinding();
 }
 
 /*******************/
 /** POPULATE DIVS **/
 /*******************/
 
-function populateDivFindingOptions(options) {
-  const divFindingOptions = $('finding-options');
-  clearDiv('finding-options');
+function populateDivOptions(div, options, eventCtrlEnter = null, eventEnter = null) {
+  const divOptions = $(div);
+  clearDiv(div);
   var index = 0;
   // Create 'Options' subtitle if options present
   if (options.length) {
-	divFindingOptions.appendChild(createH2('Options'));
+	divOptions.appendChild(createH2('Options'));
   }
   options.forEach(opt => {
-	const id = `finding-option-{index}`
+	const id = `${div}-${index}`
 	if (opt[0] === '#') { // ADD NUMBER
-	  divFindingOptions.append(
+	  divOptions.append(
 		createLabel(opt.slice(1), id),
 		createInputNumber(id, 'keydown', (event) => {
-		  if (event.ctrlKey && event.key === 'Enter') {
+		  if (event.ctrlKey && event.key === 'Enter' && eventCtrlEnter !== null) {
 			event.preventDefault();
-			onAddFindingClick(event);
+			eventCtrlEnter();
+		  } else if (event.key === 'Enter' && eventEnter !== null) {
+			event.preventDefault();
+			eventEnter();
 		  }
 		})
 	  )
@@ -56,13 +60,16 @@ function populateDivFindingOptions(options) {
 	  // ADD ITEM DEFINED IN SELECTION
 	  const selOption = db.selection.find(x => x.name === opt);
 	  if (selOption.label) {
-		divFindingOptions.append(createLabel(selOption.label, selOption.name));
+		divOptions.append(createLabel(selOption.label, selOption.name));
 	  }
 	  const select = createSelect(id, selOption.options.length, multiSelect, 'keydown',
 								  (event) => {
-									if (event.ctrlKey && event.key === 'Enter') {
+									if (event.ctrlKey && event.key === 'Enter' && eventCtrlEnter !== null) {
 									  event.preventDefault();
-									  onAddFindingClick(event);
+									  eventCtrlEnter();
+									} else if (event.key === 'Enter' && eventEnter !== null) {
+									  event.preventDefault();
+									  eventEnter();
 									}
 								  }
 								 );
@@ -71,7 +78,7 @@ function populateDivFindingOptions(options) {
 		select.appendChild(createOption(option[0], option[1]));
 	  });
 	  select.selectedIndex = 0;
-	  divFindingOptions.append(select);
+	  divOptions.append(select);
 	}
 	index++;
   })
@@ -85,13 +92,14 @@ function populateInterventions(interventions) {
 	  createOption(intervention.name, intervention.text)
 	);
   });
+  clearDiv('intervention-options');
 }
 
 /************/
 /** EVENTS **/
 /************/
 
-function onProcedureListSelect(event) {
+function selectProcedure() {
   const procedureList = $('procedure-list');
   const report = $('report');
   const procedure = db.procedures.find(it =>
@@ -103,34 +111,39 @@ function onProcedureListSelect(event) {
   clearDiv('finding-options');
 }
 
-function onFindingListSelect(event) {
-  // event.target.value == "{Small-large} EV {bleeding-type}."
-  const options = getOptions(event.target.value);
-  populateDivFindingOptions(options);
-  const organ = event.target.selectedOptions[0].dataset.organ;
+function selectFinding() {
+  const selectedOption = $('finding-list').selectedOptions[0]
+  const options = getOptions(selectedOption.value);
+  populateDivOptions('finding-options', options, addFinding, addFinding);
+  const organ = selectedOption.dataset.organ;
   const organInterventions = db.organInterventions.find(it => it.organ === organ);
   populateInterventions(organInterventions.interventions);
   $('sel-intervention-list').length = 0;
 }
 
-function onInterventionListDblClick(event) {
+function selectIntervention() {
+  console.log('selectIntervention');
+  const options = getOptions($('intervention-list').selectedOptions[0].value);
+  populateDivOptions('intervention-options', options, addFinding, addIntervention);
+  $('sel-intervention-list').length = 0;
+}
+
+function addIntervention() {
+  if (emptyOptionSetFocus()) return;
   const selectedOption = $('intervention-list').selectedOptions[0];
   if (!selectedOption.text) return;
   const selInterventionList = $('sel-intervention-list');
   const options = getOptions(selectedOption.value);
-  const optionValues = []
-  options.forEach(option => {
-	optionValues.push(prompt(option.slice(1)));
-  });
+  const { values: optionValues, texts: optionTexts } = getDivOptions('intervention-options');
   selInterventionList.appendChild(
 	createOption(
-	  selectedOption.text + (optionValues.length ? (' --- ' + optionValues.join(' / ')) : ''),
+	  selectedOption.text + (optionTexts.length ? (' --- ' + optionTexts.join(' / ')) : ''),
 	  parseOptions(selectedOption.value, optionValues)
 	)
   );
 }
 
-function onSelInterventionListCtrlUp(event) {
+function moveSelectedInterventionUp() {
   const sel = $('sel-intervention-list');
   const i = sel.selectedIndex;
   if (i > 0) {
@@ -141,7 +154,7 @@ function onSelInterventionListCtrlUp(event) {
   }
 }
 
-function onSelInterventionListCtrlDown(event) {
+function moveSelectedInterventionDown() {
   const sel = $('sel-intervention-list');
   const i = sel.selectedIndex;
   if (i !== -1 && i < sel.options.length - 1) {
@@ -152,7 +165,7 @@ function onSelInterventionListCtrlDown(event) {
   }
 }
 
-function onSelInterventionListDelete(event) {
+function deleteSelectedIntervention() {
   const sel = $('sel-intervention-list');
   const i = sel.selectedIndex;
   if (i !== -1) {
@@ -163,33 +176,51 @@ function onSelInterventionListDelete(event) {
   }
 }
 
-function onAddFindingClick(event) {
+function addFinding() {
+  if (emptyOptionSetFocus()) return;
   // get item selected in finding list
   const findingList = $('finding-list');
   var text = findingList.options[findingList.selectedIndex].value;
-
   // get finding option values
-  const elements = document.querySelectorAll('[id^="finding-option-"]');
-  const newValues = []
-  elements.forEach(el => {
-	switch(el.tagName) {
-	case 'INPUT':
-	  newValues.push(el.value);
-	  break;
-	case 'SELECT':
-	  newValues.push(textList(Array.from(el.selectedOptions).map(x => x.value)));
-	  break;
-	}
-  });
+  const newValues = getDivOptions('finding-options').values;
   text = sanitizeSentence(parseOptions(text, newValues));
-
   // get selected interventions and add to text
   const selInterventionList = $('sel-intervention-list');
   for (const option of selInterventionList.options) {
 	text += ' ' + sanitizeSentence(option.value);
   };
-
   $('report').value += `- ${sanitizeSentence(text)}\n`
+}
+
+function emptyOptionSetFocus() {
+  // Called before adding finding or intervention - sets focus of empty number inputs
+  const elements = document.querySelectorAll(`input[type="number"][id^="finding-options-"], input[type="number"][id^="intervention-options-"]`);
+  for (const el of elements) {
+	if (!el.value) {
+	  el.focus();
+	  return true;
+	}
+  };
+  return false;
+}
+
+function getDivOptions(div) {
+  const elements = document.querySelectorAll(`[id^='${div}-']`);
+  const values = []
+  const texts = []
+  elements.forEach(el => {
+	switch(el.tagName) {
+	case 'INPUT':
+	  values.push(el.value);
+	  texts.push(el.text);
+	  break;
+	case 'SELECT':
+	  values.push(textList(Array.from(el.selectedOptions).map(x => x.value)));
+	  texts.push(textList(Array.from(el.selectedOptions).map(x => x.text)));
+	  break;
+	}
+  });
+  return { values: values, texts: texts }
 }
 
 /***************************/
@@ -253,7 +284,7 @@ function sanitizeSentence(str) {
   return firstNumberToText(
 	str.trim()
 	  .replace(/(\d+)\s(\w+)\(s\)/g, (_, num, word) =>
-		num === "1" ? `${num} ${word}` : `${num} ${word}s`
+		num === '1' ? `${num} ${word}` : `${num} ${word}s`
 	  ) // Check for '(s)': if preceding number is 1, delete, otherwise, replace with 's'
   ).replace(/^./, c => c.toUpperCase()) // capitalize first letter
 	.replace(/([^.!?])$/, '$1.') // ensure ending punctuation
@@ -284,10 +315,10 @@ function firstNumberToText(str) {
 }
 
 function spellNumber(n) {
-  const tOne = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
-  const tTen = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
-  const tThousand = ["", " thousand", " million", " billion", " trillion", " quadrillion"];
-  var result = (n == 0 ? "zero" : "");
+  const tOne = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+  const tTen = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+  const tThousand = ['', ' thousand', ' million', ' billion', ' trillion', ' quadrillion'];
+  var result = (n == 0 ? 'zero' : '');
   var i = 0;
   while (n > 0) {
 	const tri = n % 1000;
@@ -295,9 +326,9 @@ function spellNumber(n) {
 	if (tri > 0) {
 	  const hundred = Math.floor(tri / 100);
 	  var ten = tri % 100;
-	  var tTri = "";
+	  var tTri = '';
 	  if (hundred > 0)
-		tTri += tOne[hundred] + " hundred" + (ten > 0 ? " " : "");
+		tTri += tOne[hundred] + ' hundred' + (ten > 0 ? ' ' : '');
 	  if (ten > 0) {
 		if (ten < 20) {
 		  tTri += tOne[ten];
@@ -305,12 +336,12 @@ function spellNumber(n) {
 		  const one = ten % 10;
 		  ten = Math.floor(ten / 10);
 		  if (ten > 0)
-			tTri += tTen[ten] + (one > 0 ? "-" : "");
+			tTri += tTen[ten] + (one > 0 ? '-' : '');
 		  if (one > 0)
 			tTri += tOne[one];
 		}
 	  }
-	  result = tTri + tThousand[i] + " " + result;
+	  result = tTri + tThousand[i] + ' ' + result;
 	}
 	i++;
   }

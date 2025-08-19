@@ -20,9 +20,11 @@
 	  </div>
 	  <div class="col multi" id="finding-options">
 	  </div>
-	  <div class="col" id="interventions">
+	  <div class="col">
 		<h2>Interventions</h2>
 		<select id="intervention-list" size="40"></select>
+	  </div>
+	  <div class="col multi" id="intervention-options">
 	  </div>
 	  <div class="col" id="selected-interventions">
 		<h2>Selected</h2>
@@ -336,33 +338,36 @@
 	 populateProcedureList();
 
      $('procedure-list')
-	   .addEventListener('change', onProcedureListSelect);
+	   .addEventListener('change', selectProcedure);
 
 	 $('finding-list')
-	   .addEventListener('change', onFindingListSelect);
+	   .addEventListener('change', selectFinding);
 
 	 $('finding-list')
-	   .addEventListener('dblclick', onAddFindingClick); // cross event
+	   .addEventListener('dblclick', addFinding); // cross event
 
 	 $('finding-list')
 		 .addEventListener('keydown', (event) => {
 		   if (event.ctrlKey && event.key === 'Enter') {
 			 event.preventDefault();
-			 onAddFindingClick(event);
+			 addFinding();
 		   }
 		 });
 
 	 $('intervention-list')
-	   .addEventListener('dblclick', onInterventionListDblClick);
+	   .addEventListener('change', selectIntervention);
+
+	 $('intervention-list')
+	   .addEventListener('dblclick', addIntervention);
 
 	 $('intervention-list')
 	   .addEventListener('keydown', (event) => {
 		 if (event.ctrlKey && event.key === 'Enter') {
 		   event.preventDefault();
-		   onAddFindingClick(event);
+		   addFinding();
 		 } else if (event.key === 'Enter') {
 		   event.preventDefault();
-		   onInterventionListDblClick(event);
+		   addIntervention();
 		 }
 	   });
 
@@ -370,16 +375,16 @@
 	   .addEventListener('keydown', (event) => {
 		 if (event.ctrlKey && event.key === 'ArrowUp') {
 		   event.preventDefault();
-		   onSelInterventionListCtrlUp(event);
+		   moveSelectedInterventionUp();
 		 } else if (event.ctrlKey && event.key === 'ArrowDown') {
 		   event.preventDefault();
-		   onSelInterventionListCtrlDown(event);
+		   moveSelectedInterventionDown(event);
 		 } else if (event.ctrlKey && event.key === 'Enter') {
 		   event.preventDefault();
-		   onAddFindingClick(event);
+		   addFinding();
 		 } else if (event.key === 'Delete') {
 		   event.preventDefault();
-		   onSelInterventionListDelete(event);
+		   deleteSelectedIntervention(event);
 		 }
 	   });
 
@@ -387,7 +392,6 @@
 	 $('procedure-list').dispatchEvent(new Event('change'));
 	 $('finding-list').selectedIndex = 1;
 	 $('finding-list').dispatchEvent(new Event('change'));
-
 	</script>
   </body>
 </html>

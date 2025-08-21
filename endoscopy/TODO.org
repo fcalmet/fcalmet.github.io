@@ -1,3 +1,9 @@
+* Bugs
+- [ ] Unable to add more than one intervention. Selecting an intervention clears sel-intervention-list
+
+* General
+- [ ] Allow creating detailed findings and summarized impression
+
 * EGD
 - [ ] previously placed clips
 - [ ] Cameron lesions

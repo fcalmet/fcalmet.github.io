@@ -125,7 +125,6 @@ function selectIntervention() {
   console.log('selectIntervention');
   const options = getOptions($('intervention-list').selectedOptions[0].value);
   populateDivOptions('intervention-options', options, addFinding, addIntervention);
-  $('sel-intervention-list').length = 0;
 }
 
 function addIntervention() {

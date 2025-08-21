@@ -1,0 +1,38 @@
+* EGD
+- [ ] previously placed clips
+- [ ] Cameron lesions
+- [ ] achalasia
+- [ ] sel
+- [ ] ectopic pancreas
+
+* Enteroscopy
+- [ ] lymphangiectasias
+- [ ] tattoo placed at deepest extent reached
+
+* EUS
+- [ ] pancreatic cyst
+- [ ] fiducials
+- [ ] subepithelial lesion
+- [ ] chronic pancreatitis
+- [ ] gallbladder stones/polyps
+- [ ] CBD stones/dilation
+- [ ] liver cysts
+- [ ] steatosis
+- [ ] lymphadenopathy
+
+* ERCP
+- [ ] periampullary diverticulum
+- [ ] cannulation: double wire, over PD stent
+- [ ] sphincterotomy
+- [ ] precut
+- [ ] sphincteroplasty
+- [ ] stenosis
+- [ ] brushings
+- [ ] cholangioscopy
+- [ ] TTS dilation
+- [ ] balloon sweeps
+- [ ] basket
+- [ ] stones
+- [ ] post-sphincterotomy bleeding
+- [ ] prior sphincterotomy
+- [ ] CBD dilation

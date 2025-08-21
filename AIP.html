@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<!--
+	 Copyright (C) 2025 by Fernando Calmet
+
+	 Author: Fernando Calmet
+
+	 This program is free software; you can redistribute it and/or modify
+	 it under the terms of the GNU General Public License as published by
+	 the Free Software Foundation, either version 3 of the License, or
+	 (at your option) any later version.
+
+	 This program is distributed in the hope that it will be useful,
+	 but WITHOUT ANY WARRANTY; without even the implied warranty of
+	 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	 GNU General Public License for more details.
+
+	 You should have received a copy of the GNU General Public License
+	 along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<html lang="en">
+  <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Autoimmune Pancreatitis</title>
+	<link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+	<h1>Autoimmune Pancreatitis</h1>
+	<div class="app-container two">
+	  <div class="panel">
+		<div class="radio-field">
+		  <label for="aip-p">Parenchymal imaging (P) — AIP 1 &amp; 2</label>
+		  <div id="aip-p">
+			<label><input type="radio" onchange="calculateAip()" name="aip-p" value="1" /> Typical: Diffuse enlargement with delayed enhancement (sometimes associated with rim-like enhancement)</label>
+			<label><input type="radio" onchange="calculateAip()" name="aip-p" value="2" /> <span title="†Atypical: Some AIP cases may show low-density mass, pancreatic ductal dilatation, or distal atrophy. Such atypical imaging findings in patients with obstructive jaundice and/or pancreatic mass are highly suggestive of pancreatic cancer. Such patients should be managed as pancreatic cancer unless there is strong collateral evidence for AIP, and a thorough workup for cancer is negative (see algorithm).">Indeterminate (including atypical†): Segmental/focal enlargement with delayed enhancement</span></label>
+			<label><input type="radio" onchange="calculateAip()" name="aip-p" value="0" checked /> N/A</label>
+		  </div>
+		</div>
+
+		<div class="radio-field">
+		  <label for="aip-d">Ductal imaging (<span title="Endoscopic retrograde pancreatography">ERP</span>) (D) — AIP 1 &amp; 2</label>
+		  <div id="aip-d">
+			<label><input type="radio" onchange="calculateAip()" name="aip-d" value="1" /> Long (>1/3 length of the main pancreatic duct) or multiple strictures without marked upstream dilatation</label>
+			<label><input type="radio" onchange="calculateAip()" name="aip-d" value="2" /> Segmental/focal narrowing without marked upstream dilatation (duct size, &lt;5 mm)</label>
+			<label><input type="radio" onchange="calculateAip()" name="aip-d" value="0" checked /> N/A</label>
+		  </div>
+		</div>
+
+		<div class="radio-field">
+		  <label for="aip-s">Serology (S) — AIP 1</label>
+		  <div id="aip-s">
+			<label><input type="radio" onchange="calculateAip()" name="aip-s" value="1" /> IgG4, &gt;2× upper limit of normal value</label>
+			<label><input type="radio" onchange="calculateAip()" name="aip-s" value="2" /> IgG4, 1-2× upper limit of normal value</label>
+			<label><input type="radio" onchange="calculateAip()" name="aip-s" value="0" checked /> N/A</label>
+		  </div>
+		</div>
+
+		<div class="radio-field">
+		  <label for="aip-ooi1">Other organ involvement (OOI) — AIP 1</label>
+		  <div id="aip-ooi1">
+			<label><input type="radio" onchange="calculateAip()" name="aip-ooi1" value="1" /> a or b
+			  <ol type="a">
+				<li>Histology of extrapancreatic organs<br />
+				  Any three of the following:
+				  <ol>
+					<li>Marked lymphoplasmacytic infiltration with fibrosis and without granulocytic infiltration</li>
+					<li>Storiform fibrosis</li>
+					<li>Obliterative phlebitis</li>
+					<li>Abundant (>10 cells/<span title="High-power field">HPF</span>) IgG4-positive cells</li>
+				  </ol>
+				</li>
+				<li>Typical radiological evidence<br />
+				  At least one of the following:
+				  <ol>
+					<li>Segmental/multiple proximal (hilar/intrahepatic) or proximal and distal bile duct stricture</li>
+					<li>Retroperitoneal fibrosis</li>
+				  </ol>
+				</li>
+			  </ol>
+			</label>
+			<label><input type="radio" onchange="calculateAip()" name="aip-ooi1" value="2" />
+			  a or b
+			  <ol type="a">
+				<li><span title="‡Endoscopic biopsy of duodenal papilla is a useful adjunctive method because ampulla often is involved pathologically in AIP.">Histology of extrapancreatic organs including endoscopic biopsies of bile duct‡:</span><br />
+				  Both of the following:
+				  <ol>
+					<li>Marked lymphoplasmacytic infiltration without granulocytic infiltration</li>
+					<li>Abundant (>10 cells/<span title="High-power field">HPF</span>) IgG4-positive cells</li>
+				  </ol>
+				</li>
+				<li>Physical or radiological evidence<br />
+				  At least one of the following:
+				  <ol>
+					<li>Symmetrically enlarged salivary/lachrymal glands</li>
+					<li>Radiological evidence of renal involvement described in association with <span title="Autoimmune pancreatitis">AIP</span></li>
+				  </ol>
+				</li>
+			  </ol>
+			</label>
+			<label><input type="radio" onchange="calculateAip()" name="aip-ooi1" value="0" checked /> N/A</label>
+		  </div>
+		</div>
+
+		<div class="radio-field">
+		  <label for="aip-ooi2">Other organ involvement (OOI) — AIP 2</label>
+		  <div id="aip-ooi2">
+			<label><input type="radio" onchange="calculateAip()" name="aip-ooi2" value="2" />Clinically diagnosed inflammatory bowel disease</label>
+			<label><input type="radio" onchange="calculateAip()" name="aip-ooi2" value="0" checked /> N/A</label>
+		  </div>
+		</div>
+
+		<div class="radio-field">
+		  <label for="aip-h1">Histology of the pancreas (H) — AIP 1</label>
+		  <div id="aip-h1">
+			<label><input type="radio" onchange="calculateAip()" name="aip-h1" value="1" />
+			  <span title="Lymphoplasmacytic sclerosing pancreatitis">LPSP</span> (core biopsy/resection)<br />
+			  At least 3 of the following:
+			  <ol>
+				<li>Periductal lymphoplasmacytic infiltrate without granulocytic infiltration</li>
+				<li>Obliterative phlebitis</li>
+				<li>Storiform fibrosis</li>
+				<li>Abundant (>10 cells/<span title="High-power field">HPF</span>) IgG4-positive cells</li>
+			  </ol>
+			</label>
+			<label><input type="radio" onchange="calculateAip()" name="aip-h1" value="2" />
+			  <span title="Lymphoplasmacytic sclerosing pancreatitis">LPSP</span> (core biopsy)<br />
+			  Any 2 of the following:
+			  <ol>
+				<li>Periductal lymphoplasmacytic infiltrate without granulocytic infiltration</li>
+				<li>Obliterative phlebitis</li>
+				<li>Storiform fibrosis</li>
+				<li>Abundant (>10 cells/<span title="High-power field">HPF</span>) IgG4-positive cells</li>
+			  </ol>
+			</label>
+			<label><input type="radio" onchange="calculateAip()" name="aip-h1" value="0" checked /> N/A</label>
+		  </div>
+		</div>
+
+		<div class="radio-field">
+		  <label for="aip-h2">Histology of the pancreas (H) — AIP 2</label>
+		  <div id="aip-h2">
+			<label><input type="radio" onchange="calculateAip()" name="aip-h2" value="1" />
+			  <span title="Idiopathic duct-centric pancreatitis">IDCP:</span><br />
+			  Both of the following:
+			  <ol>
+				<li>Granulocytic infiltration of duct wall (GEL) with or without granulocytic acinar inflammation</li>
+				<li>Absent or scant (0-10 cells/HPF) IgG4-positive cells</li>
+			  </ol>
+			</label>
+			<label><input type="radio" onchange="calculateAip()" name="aip-h2" value="2" />
+			  <span title="Idiopathic duct-centric pancreatitis">IDCP:</span><br />
+			  Both of the following:
+			  <ol>
+				<li>Granulocytic and lymphoplasmacytic acinar infiltrate</li>
+				<li>Absent or scant (0-10 cells/HPF) IgG4-positive cells</li>
+			  </ol>
+			</label>
+			<label><input type="radio" onchange="calculateAip()" name="aip-h2" value="0" checked /> N/A</label>
+		  </div>
+		</div>
+
+		<div class="radio-field">
+		  <label for="aip-rt"><span title="*Diagnostic steroid trial should be conducted carefully by pancreatologists with caveats only after negative workup for cancer including endoscopic ultrasound-guided fine needle aspiration.">Response to steroid* (Rt)</span></label>
+		  <div id="aip-rt">
+			<label><input type="radio" onchange="calculateAip()" name="aip-rt" value="1" />
+			  Diagnostic steroid trial:<br />
+			  Rapid (&leq;2 wk) radiologically demonstrable resolution or marked improvement in pancreatic/extrapancreatic manifestations
+			</label>
+			<label><input type="radio" onchange="calculateAip()" name="aip-rt" value="0" checked /> N/A</label>
+		  </div>
+		</div>
+	  </div>
+	  <div class="panel results">
+		<h2>Results</h2>
+		<div id="result"></div>
+	  </div>
+	</div>
+	<footer id="footer-nav"></footer>
+	<script src="pancreas.js"></script>
+  </body>
+</html>

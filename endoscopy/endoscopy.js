@@ -211,7 +211,7 @@ function getDivOptions(div) {
 	switch(el.tagName) {
 	case 'INPUT':
 	  values.push(el.value);
-	  texts.push(el.text);
+	  texts.push(el.value);
 	  break;
 	case 'SELECT':
 	  values.push(textList(Array.from(el.selectedOptions).map(x => x.value)));

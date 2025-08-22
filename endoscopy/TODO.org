@@ -1,6 +1,4 @@
-* Bugs
-- [ ] sel-intervention-list not displaying parameters
-
+#+TITLE: Endoscopy Reporting System
 * General
 - [ ] Allow creating detailed findings and summarized impression
 

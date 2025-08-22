@@ -128,7 +128,7 @@ function selectIntervention() {
 }
 
 function addIntervention() {
-  if (emptyOptionSetFocus()) return;
+  if (emptyOptionSetFocus('intervention-options')) return;
   const selectedOption = $('intervention-list').selectedOptions[0];
   if (!selectedOption.text) return;
   const selInterventionList = $('sel-intervention-list');
@@ -176,7 +176,7 @@ function deleteSelectedIntervention() {
 }
 
 function addFinding() {
-  if (emptyOptionSetFocus()) return;
+  if (emptyOptionSetFocus('finding-options', 'intervention-options')) return;
   // get item selected in finding list
   const findingList = $('finding-list');
   var text = findingList.options[findingList.selectedIndex].value;
@@ -191,9 +191,10 @@ function addFinding() {
   $('report').value += `- ${sanitizeSentence(text)}\n`
 }
 
-function emptyOptionSetFocus() {
-  // Called before adding finding or intervention - sets focus of empty number inputs
-  const elements = document.querySelectorAll(`input[type="number"][id^="finding-options-"], input[type="number"][id^="intervention-options-"]`);
+function emptyOptionSetFocus(...options) {
+  // Called before adding finding or intervention - sets focus on relevant empty number inputs
+  query = options.map(x => `input[type="number"][id^="${x}-"]`).join(', ')
+  const elements = document.querySelectorAll(query);
   for (const el of elements) {
 	if (!el.value) {
 	  el.focus();

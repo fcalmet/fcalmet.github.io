@@ -40,7 +40,7 @@
 		 { "name": "Colonoscopy", "sections": [ "DRE", "Ileum", "Colon" ] },
 		 { "name": "Enteroscopy", "sections": [ "Esophagus", "Stomach", "Duodenum", "Jejunum", "Ileum", "Colon" ] },
 		 { "name": "ERCP", "sections": [ "Esophagus", "Stomach", "Duodenum", "Jejunum", "Biliary", "Pancreatic duct" ] },
-		 { "name": "EUS", "sections": [ "Esophagus", "Stomach", "Duodenum", "Pancreas", "Biliary", "Liver", "Lymph nodes" ] }
+		 { "name": "EUS", "sections": [ "Endoscopic (EUS)", "Luminal (EUS)", "Pancreas (EUS)", "Biliary (EUS)", "Liver (EUS)", "Lymph nodes (EUS)" ] }
 	   ],
 
 	   "organFindings": [
@@ -72,7 +72,7 @@
 			 { "name": "Normal", "text": "Normal stomach" },
 			 { "name": "Angiectasia", "text": "{single-few-multiple-angiectasias} {bleeding-type} {*stomach-location-modifier} {*stomach-location}" },
 			 { "name": "Bezoar", "text": "A {small-medium-large} bezoar in the {*stomach-location-modifier} {*stomach-location}" },
-			 { "name": "Dieulafoy", "text": "A Dieulafoy lesion {bleeding-type} {stomach-location-modifier} {stomach-location}" },
+			 { "name": "Dieulafoy", "text": "A Dieulafoy lesion {bleeding-type} in the {stomach-location-modifier} {stomach-location}" },
 			 { "name": "Diverticulum", "text": "A {small-medium-large} diverticulum in the {stomach-location-modifier} {stomach-location}" },
 			 { "name": "Gastropathy", "text": "{mild-moderate-severe} {gastropathy-type} gastropathy in the {*stomach-location-modifier} {*stomach-location}" },
 			 { "name": "GAVE", "text": "{mild-moderate-severe} gastric antral vascular ectasia" },
@@ -131,7 +131,21 @@
 		   ]
 		 },
 
-		 { "organ": "Pancreas",
+		 { "organ": "Endoscopic (EUS)",
+		   "findings": [
+			 { "name": "Normal", "text": "Normal esophagus, stomach, and examined duodenum on limited examination with the echoendoscope" }
+		   ]
+		 },
+
+		 { "organ": "Luminal (EUS)",
+		   "findings": [
+			 { "name": "SEL", "text": "A {#Size 1 (mm)} x {#Size 2 (mm)} mm {echogenicity} subepithelial lesion in the {esophagus-location}, arising from {eus-layer}" },
+			 { "name": "SEL", "text": "A {#Size 1 (mm)} x {#Size 2 (mm)} mm {echogenicity} subepithelial lesion in the {stomach-location-modifier} {stomach-location}, arising from {eus-layer}" },
+			 { "name": "SEL", "text": "A {#Size 1 (mm)} x {#Size 2 (mm)} mm {echogenicity} subepithelial lesion in the {duodenum-location}, arising from {eus-layer}" }
+		   ]
+		 },
+
+		 { "organ": "Pancreas (EUS)",
 		   "findings": [
 			 { "name": "Normal", "text": "Normal pancreatic parenchyma and duct" },
 			 { "name": "PD dilation", "text": "PD dilation up to {#Size (mm)} mm" },
@@ -139,7 +153,7 @@
 		   ]
 		 },
 
-		 { "organ": "Biliary",
+		 { "organ": "Biliary (EUS)",
 		   "findings": [
 			 { "name": "Normal (CBD)", "text": "Normal CBD measuring {#Size (mm)} mm" },
 			 { "name": "Normal (major papilla)", "text": "Normal major papilla on {mp-visualization} visualization" },
@@ -148,13 +162,13 @@
 		   ]
 		 },
 
-		 { "organ": "Liver",
+		 { "organ": "Liver (EUS)",
 		   "findings": [
 			 { "name": "Normal (visualized)", "text": "Normal visualized portion of the liver" }
 		   ]
 		 },
 
-		 { "organ": "Lymph nodes",
+		 { "organ": "Lymph nodes (EUS)",
 		   "findings": [
 			 { "name": "No lymphadenopathy", "text": "No lymphadenopathy identified" }
 		   ]
@@ -303,6 +317,7 @@
 		 { "name": "echogenicity", "label": "Echogenicity", "options": [ "hypoechoic", "isoechoic", "hyperechoic", "heterogeneous" ] },
 		 { "name": "esophageal-surgery", "label": "Surgery", "options": [ "esophagectomy with gastric pull-up", "esophagectomy with colonic interposition" ] },
 		 { "name": "esophagus-location", "label": "Location", "options": [ "entire esophagus", "proximal esophagus", "mid esophagus", "distal esophagus" ] },
+		 { "name": "eus-layer", "label": "EUS layer", "options": [ "layer 1 (superficial mucosa)", "layer 2 (deep mucosa)", "layer 3 (submucosa)", "layer 4 (muscularis propria)", "layer 5 (serosa)" ] },
 		 { "name": "fnab-preliminary", "label": "Preliminary cytology", "options": [ [ "", "" ], [ "benign", "with preliminary cytology negative for malignancy" ], [ "indeterminate", "with preliminary cytology indeterminate for malignancy" ], [ "malignant", "with preliminary cytology suggestive of malignancy" ]   ] },
 		 { "name": "gastric-surgery", "label": "Surgery", "options": [ "Rouy-en-Y gastric bypass", "sleeve gastrectomy", "Billroth I anastomosis", "Billroth II anastomosis" ] },
 		 { "name": "gastropathy-type", "label": "Gastropathy type", "options": [ "", "erythematous", "erosive", "portal hypertensive" ] },

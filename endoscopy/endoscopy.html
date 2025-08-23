@@ -65,6 +65,7 @@
 		 { "organ": "Esophagus",
 		   "findings": [
 			 { "name": "Normal", "text": "Normal esophagus" },
+			 { "name": "Achalasia", "text": "Dilated lumen with a tight lower esophageal sphincter, {consistent-suggestive} achalasia" },
 			 { "name": "Angiectasia", "text": "{single-few-multiple-angiectasias} {bleeding-type} in the {*esophagus-location}" },
 			 { "name": "Barrett esophagus", "text": "Salmon-colored mucosa in the distal esophagus {consistent-suggestive} Barrett esophagus (Prague C{#C} M{#M})" },
 			 { "name": "Candida esophagitis", "text": "Candida esophagitis" },
@@ -80,8 +81,9 @@
 			 { "name": "Nodule", "text": "A {#Size (mm)} mm nodule in the {esophagus-location}" },
 			 { "name": "Polyp", "text": "A {#Size (mm)} mm polyp in the {esophagus-location}" },
 			 { "name": "Postoperative anatomy", "text": "Postoperative anatomy consistent with prior {esophageal-surgery}" },
-			 { "name": "Stricture", "text": "{stricture-type} stricture at {#Location (cm)} cm, {traversable} with an {*gastroscope-type}" },
 			 { "name": "Schatzki ring", "text": "{sr-obstructing} Schatzki ring at the EGJ" },
+			 { "name": "Stricture", "text": "{stricture-type} stricture at {#Location (cm)} cm, {traversable} with an {*gastroscope-type}" },
+			 { "name": "Subepithelial lesion", "text": "A {#Size (mm)} mm subepithelial lesion in the {esophagus-location}" },
 			 { "name": "Varices", "text": "{small-large} esophageal varices {bleeding-type} {gev-hrs}" }
 		   ]
 		 },
@@ -94,14 +96,17 @@
 			 { "name": "Clips", "text": "{#Number} previously placed clip(s) in the {*stomach-location-modifier} {*stomach-location}" },
 			 { "name": "Dieulafoy", "text": "A Dieulafoy lesion {bleeding-type} in the {stomach-location-modifier} {stomach-location}" },
 			 { "name": "Diverticulum", "text": "A {small-medium-large} diverticulum in the {stomach-location-modifier} {stomach-location}" },
-			 { "name": "Gastropathy", "text": "{mild-moderate-severe} {gastropathy-type} gastropathy in the {*stomach-location-modifier} {*stomach-location}" },
+			 { "name": "Ectopic pancreas", "text": "A {#Size (mm)} mm subepithelial lesion with central umbilication in the gastric antrum, {consistent-suggestive} of an ectopic pancreas" },
 			 { "name": "GAVE", "text": "{mild-moderate-severe} gastric antral vascular ectasia" },
+			 { "name": "Gastropathy", "text": "{mild-moderate-severe} {gastropathy-type} gastropathy in the {*stomach-location-modifier} {*stomach-location}" },
+			 { "name": "Hiatal hernia", "text": "A {#Size (cm)} hiatal hernia {cameron-lesions}" },
 			 { "name": "Mass", "text": "{stricture-type} mass in the {stomach-location-modifier} {stomach-location}" },
 			 { "name": "Nodule", "text": "A {#Size (mm)} mm nodule in the {stomach-location-modifier} {stomach-location}" },
 			 { "name": "Polyp (multiple)", "text": "Multiple {#Size (mm): from}-{#Size (mm): to} mm polyps in the {*stomach-location-modifier} {*stomach-location}" },
 			 { "name": "Polyp (single)", "text": "A {#Size (mm)} mm polyp in the {stomach-location-modifier} {stomach-location}" },
 			 { "name": "Postoperative anatomy", "text": "Postoperative anatomy consistent with prior {gastric-surgery}" },
 			 { "name": "Pyloric stenosis", "text": "Pyloric stenosis, {traversable} with an {gastroscope-type}" },
+			 { "name": "Subepithelial lesion", "text": "A {#Size (mm)} mm subepithelial lesion in the {stomach-location-modifier} {stomach-location}" },
 			 { "name": "Ulcer", "text": "{#Number} ulcer(s) measuring up to {#Size (mm)} mm with {pud-forrest} in the {*stomach-location-modifier} {*stomach-location}" },
 			 { "name": "Varices", "text": "{small-medium-large} gastric varices in the {gv-type} {bleeding-type} {gev-hrs}" }
 		   ]
@@ -119,6 +124,7 @@
 			 { "name": "Mass", "text": "{stricture-type} mass in the {duodenum-location}" },
 			 { "name": "Nodule", "text": "A {#Size (mm)} mm nodule in the {duodenum-location}" },
 			 { "name": "Polyp", "text": "A {#Size (mm)} mm polyp in the {duodenum-location}" },
+			 { "name": "Subepithelial lesion", "text": "A {#Size (mm)} mm subepithelial lesion in the {duodenum-location}" },
 			 { "name": "Ulcer", "text": "{#Number} ulcer(s) measuring up to {#Size (mm)} mm with {pud-forrest} in the {*duodenum-location}" }
 		   ]
 		 },
@@ -332,6 +338,7 @@
 	   "selection": [
 		 { "name": "bleeding-type", "label": "Bleeding", "options": [ [ "no bleeding", "without bleeding" ], [ "oozing", "with oozing of blood" ], [ "spurting", "with spurting of blood" ] ] },
 		 { "name": "colon-location", "label": "Location", "options": [ "entire colon", "cecum", "ascending colon", "hepatic flexure", "transverse colon", "splenic flexure", "descending colon", "sigmoid colon", "rectum" ] },
+		 { "name": "cameron-lesions", "label": "Cameron lesions", "options": [ [ "", "" ], [ "none", " without Cameron lesions" ], [ "non-bleeding", " with non-bleeding Cameron lesions" ], [ "oozing", " with Cameron lesions with oozing" ], [ "spurting", " with Cameron lesions with spurting" ] ] },
 		 { "name": "consistent-suggestive", "label": "Diagnostic certainty", "options": [[ "consistent", "consistent with" ], [ "suggestive", "suggestive of" ]] },
 		 { "name": "duodenopathy-type", "label": "Duodenopathy type", "options": [ "", "erythematous", "erosive" ] },
 		 { "name": "duodenum-location", "label": "Location", "options": [ [ "entire examined duodenum", "entire examined duodenum" ], [ "D1", "duodenal bulb" ], [ "D2", "second portion of the duodenum" ], [ "D3", "third portion of the duodenum" ], [ "D4", "fourth portion of the duodenum" ], [ "periampullary region", "periampullary region" ], [ "D1-D2", "first and second portion of the duodenum" ], [ "D1-D3", "first, second, and third portion of the duodenum" ], [ "D1-D4", "entire duodenum" ], [ "D2-D3", "second and third portion of the duodenum" ], [ "D2-D4", "second, third, and fourth portion of the duodenum" ], [ "D3-D4", "third and fourth portion of the duodenum" ] ] },

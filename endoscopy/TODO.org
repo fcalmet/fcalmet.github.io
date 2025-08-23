@@ -3,11 +3,12 @@
 - [ ] Allow creating detailed findings and summarized impression
 
 * EGD
-- [ ] previously placed clips
-- [ ] Cameron lesions
-- [ ] achalasia
-- [ ] sel
-- [ ] ectopic pancreas
+- [X] previously placed clips
+- [X] Cameron lesions
+- [X] hiatal hernia
+- [X] achalasia
+- [X] sel
+- [X] ectopic pancreas
 
 * Enteroscopy
 - [ ] lymphangiectasias

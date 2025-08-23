@@ -283,7 +283,7 @@ function $(id) {
 function sanitizeSentence(str) {
   return firstNumberToText(
 	str.trim()
-	  .replace(/(\d+)\s(\w+)\(s\)/g, (_, num, word) =>
+	  .replace(/(\d+)\s(.+?)\(s\)/g, (_, num, word) =>
 		num === '1' ? `${num} ${word}` : `${num} ${word}s`
 	  ) // Check for '(s)': if preceding number is 1, delete, otherwise, replace with 's'
   ).replace(/^./, c => c.toUpperCase()) // capitalize first letter

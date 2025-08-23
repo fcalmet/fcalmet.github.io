@@ -15,9 +15,9 @@
 - [ ] tattoo placed at deepest extent reached
 
 * EUS
+- [X] subepithelial lesion
 - [ ] pancreatic cyst
 - [ ] fiducials
-- [ ] subepithelial lesion
 - [ ] chronic pancreatitis
 - [ ] gallbladder stones/polyps
 - [ ] CBD stones/dilation

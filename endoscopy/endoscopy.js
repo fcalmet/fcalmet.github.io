@@ -207,7 +207,7 @@ function addFinding() {
   for (const option of selInterventionList.options) {
 	text += ' ' + sanitizeSentence(option.value);
   };
-  $('report').value += `- ${sanitizeSentence(text)}\n`;
+  $('report').value += `- ${shortenSentence(sanitizeSentence(text))}\n`;
   findingList.focus();
 }
 
@@ -309,6 +309,12 @@ function sanitizeSentence(str) {
   ).replace(/^./, c => c.toUpperCase()) // capitalize first letter
 	.replace(/([^.!?])$/, '$1.') // ensure ending punctuation
 	.replace(/ {2,}/g, ' ');
+}
+
+function shortenSentence(str) {
+  const map = Object.fromEntries(db.replace);
+  const regex = new RegExp(Object.keys(map).map(s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|"), "g");
+  return str.replace(regex, match => map[match]);
 }
 
 function getOptions(str) {

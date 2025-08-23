@@ -140,6 +140,7 @@ function addIntervention() {
 	  parseOptions(selectedOption.value, optionValues)
 	)
   );
+  $('intervention-list').focus();
 }
 
 function moveSelectedInterventionUp() {
@@ -189,6 +190,7 @@ function addFinding() {
 	text += ' ' + sanitizeSentence(option.value);
   };
   $('report').value += `- ${sanitizeSentence(text)}\n`
+  findingList.focus();
 }
 
 function emptyOptionSetFocus(...options) {

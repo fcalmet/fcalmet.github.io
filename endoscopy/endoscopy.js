@@ -21,7 +21,7 @@ function populateFindingList(procedure) {
 	  });
 	  findingList.appendChild(createOption('', '', true));
 	}
-  })
+  });
   findingList.length -= 1;
   findingList.selectedIndex = 1;
   selectFinding();
@@ -40,7 +40,7 @@ function populateDivOptions(div, options, eventCtrlEnter = null, eventEnter = nu
 	divOptions.appendChild(createH2('Options'));
   }
   options.forEach(opt => {
-	const id = `${div}-${index}`
+	const id = `${div}-${index}`;
 	if (opt[0] === '#') { // ADD NUMBER
 	  divOptions.append(
 		createLabel(opt.slice(1), id),
@@ -53,7 +53,7 @@ function populateDivOptions(div, options, eventCtrlEnter = null, eventEnter = nu
 			eventEnter();
 		  }
 		})
-	  )
+	  );
 	} else {
 	  const multiSelect = opt[0] === '*';
 	  if (multiSelect) opt = opt.slice(1);
@@ -74,19 +74,19 @@ function populateDivOptions(div, options, eventCtrlEnter = null, eventEnter = nu
 								  }
 								 );
 	  selOption.options.forEach(option => {
-		if (typeof(option) === 'string') option = [option, option]
+		if (typeof(option) === 'string') option = [option, option];
 		select.appendChild(createOption(option[0], option[1]));
 	  });
 	  select.selectedIndex = 0;
 	  divOptions.append(select);
 	}
 	index++;
-  })
+  });
 }
 
 function populateInterventions(interventions) {
   const interventionList = $('intervention-list');
-  interventionList.length = 0
+  interventionList.length = 0;
   interventions.forEach(intervention => {
 	interventionList.appendChild(
 	  createOption(intervention.name, intervention.text)
@@ -107,12 +107,12 @@ function selectProcedure() {
   // add title to report
   report.value = `${procedure.name}\n`;
   // add organs/findings to finding select box
-  populateFindingList(procedure)
+  populateFindingList(procedure);
   clearDiv('finding-options');
 }
 
 function selectFinding() {
-  const selectedOption = $('finding-list').selectedOptions[0]
+  const selectedOption = $('finding-list').selectedOptions[0];
   const options = getOptions(selectedOption.value);
   populateDivOptions('finding-options', options, addFinding, addFinding);
   const organ = selectedOption.dataset.organ;
@@ -189,13 +189,13 @@ function addFinding() {
   for (const option of selInterventionList.options) {
 	text += ' ' + sanitizeSentence(option.value);
   };
-  $('report').value += `- ${sanitizeSentence(text)}\n`
+  $('report').value += `- ${sanitizeSentence(text)}\n`;
   findingList.focus();
 }
 
 function emptyOptionSetFocus(...options) {
   // Called before adding finding or intervention - sets focus on relevant empty number inputs
-  query = options.map(x => `input[type="number"][id^="${x}-"]`).join(', ')
+  query = options.map(x => `input[type="number"][id^="${x}-"]`).join(', ');
   const elements = document.querySelectorAll(query);
   for (const el of elements) {
 	if (!el.value) {
@@ -208,8 +208,8 @@ function emptyOptionSetFocus(...options) {
 
 function getDivOptions(div) {
   const elements = document.querySelectorAll(`[id^='${div}-']`);
-  const values = []
-  const texts = []
+  const values = [];
+  const texts = [];
   elements.forEach(el => {
 	switch(el.tagName) {
 	case 'INPUT':

@@ -58,7 +58,7 @@
 		 { "name": "Colonoscopy", "sections": [ "DRE", "Ileum", "Colon" ] },
 		 { "name": "Enteroscopy", "sections": [ "Esophagus", "Stomach", "Duodenum", "Jejunum", "Ileum", "Colon" ] },
 		 { "name": "ERCP", "sections": [ "Esophagus", "Stomach", "Duodenum", "Jejunum", "Biliary", "Pancreatic duct" ] },
-		 { "name": "EUS", "sections": [ "Endoscopic (EUS)", "Luminal (EUS)", "Pancreas (EUS)", "Biliary (EUS)", "Liver (EUS)", "Lymph nodes (EUS)" ] }
+		 { "name": "EUS", "sections": [ "Endoscopic (EUS)", "Luminal (EUS)", "Pancreas (EUS)", "CBD (EUS)", "Gallbladder (EUS)", "Major papilla (EUS)", "Liver (EUS)", "Lymph nodes (EUS)" ] }
 	   ],
 
 	   "organFindings": [
@@ -102,8 +102,8 @@
 			 { "name": "Hiatal hernia", "text": "A {#Size (cm)} hiatal hernia {cameron-lesions}" },
 			 { "name": "Mass", "text": "{stricture-type} mass in the {stomach-location-modifier} {stomach-location}" },
 			 { "name": "Nodule", "text": "A {#Size (mm)} mm nodule in the {stomach-location-modifier} {stomach-location}" },
-			 { "name": "Polyp (multiple)", "text": "Multiple {#Size (mm): from}-{#Size (mm): to} mm polyps in the {*stomach-location-modifier} {*stomach-location}" },
 			 { "name": "Polyp (single)", "text": "A {#Size (mm)} mm polyp in the {stomach-location-modifier} {stomach-location}" },
+			 { "name": "Polyps (multiple)", "text": "{few-multiple} {#Size (mm): from}-{#Size (mm): to} mm polyps in the {*stomach-location-modifier} {*stomach-location}" },
 			 { "name": "Postoperative anatomy", "text": "Postoperative anatomy consistent with prior {gastric-surgery}" },
 			 { "name": "Pyloric stenosis", "text": "Pyloric stenosis, {traversable} with an {gastroscope-type}" },
 			 { "name": "Subepithelial lesion", "text": "A {#Size (mm)} mm subepithelial lesion in the {stomach-location-modifier} {stomach-location}" },
@@ -176,23 +176,51 @@
 		 { "organ": "Pancreas (EUS)",
 		   "findings": [
 			 { "name": "Normal", "text": "Normal pancreatic parenchyma and duct" },
+			 { "name": "Chronic pancreatitis", "text": "Pancreatic parenchymal changes include {*cp-parenchyma}. Pancreatic ductal changes include {*cp-duct}. Findings {cp-consistent} chronic pancreatitis" },
+			 { "name": "Cyst (single)", "text": "A cyst measuring at least {#Size 1 (mm)} x {#Size 2 (mm)} mm in the {*pancreas-location} {pancreatic-cyst-risk-features}" },
+			 { "name": "Cysts (multiple)", "text": "{few-multiple} cysts measuring up to {#Size 1 (mm)} x {#Size 2 (mm)} mm in the {*pancreas-location} {pancreatic-cyst-risk-features}" },
 			 { "name": "PD dilation", "text": "PD dilation up to {#Size (mm)} mm" },
 			 { "name": "Mass", "text": "A {echogenicity} mass measuring at least {#Size 1 (mm)} x {#Size 2 (mm)} mm in the {*pancreas-location}" }
 		   ]
 		 },
 
-		 { "organ": "Biliary (EUS)",
+		 { "organ": "CBD (EUS)",
 		   "findings": [
-			 { "name": "Normal (CBD)", "text": "Normal CBD measuring {#Size (mm)} mm" },
-			 { "name": "Normal (major papilla)", "text": "Normal major papilla on {mp-visualization} visualization" },
-			 { "name": "Normal (gallbladder)", "text": "Normal gallbladder" }
+			 { "name": "Normal", "text": "Normal CBD measuring {#Size (mm)} mm {stones-sludge}" },
+			 { "name": "CBD dilation", "text": "CBD dilation to {#Size (mm)} mm {stones-sludge}" },
+			 { "name": "Stone (single)", "text": "A {#Size (mm)} mm CBD stone {shadowing}" },
+			 { "name": "Stones (multiple)", "text": "{few-multiple} CBD stones measuring up to {#Size (mm)} mm {shadowing}" }
+		   ]
+		 },
 
+		 { "organ": "Gallbladder (EUS)",
+		   "findings": [
+			 { "name": "Normal", "text": "Normal gallbladder" },
+			 { "name": "Dilated", "text": "Dilated gallbladder" },
+			 { "name": "Polyp (single)", "text": "A {#Size (mm)} mm gallbladder polyp" },
+			 { "name": "Polyps (multiple)", "text": "{few-multiple} gallbladder polyps measuring up to {#Size (mm)} mm" },
+			 { "name": "Sludge", "text": "Sludge noted within the gallbladder" },
+			 { "name": "Stone (single)", "text": "A {#Size (mm)} mm gallbladder stone {shadowing}" },
+			 { "name": "Stones (multiple)", "text": "{few-multiple} gallbladder stones measuring up to {#Size (mm)} mm {shadowing}" },
+			 { "name": "Wall thickening", "text": "Gallbladder wall thickening to {#Size (mm)} mm" }
+		   ]
+		 },
+
+		 { "organ": "Major papilla (EUS)",
+		   "findings": [
+			 { "name": "Normal", "text": "Normal major papilla on {mp-visualization} visualization" },
+			 { "name": "Periampullary diverticulum", "text": "Major papilla located {periampullary-location} a {small-medium-large} duodenal diverticulum" },
+			 { "name": "Prior sphincterotomy", "text": "Major papilla with evidence of prior sphincterotomy" }
 		   ]
 		 },
 
 		 { "organ": "Liver (EUS)",
 		   "findings": [
-			 { "name": "Normal (visualized)", "text": "Normal visualized portion of the liver" }
+			 { "name": "Normal (visualized)", "text": "Normal visualized portion of the liver" },
+			 { "name": "Cyst (single)", "text": "A hepatic cyst measuring at least {#Size 1 (mm)} x {#Size 2 (mm)} mm" },
+			 { "name": "Cysts (multiple)", "text": "{few-multiple} hepatic cysts measuring up to {#Size 1 (mm)} x {#Size 2 (mm)} mm" },
+			 { "name": "Mass", "text": "A {echogenicity} mass measuring at least {#Size 1 (mm)} x {#Size 2 (mm)} mm in the liver" },
+			 { "name": "Steatosis", "text": "Hyperechoic hepatic parenchyma suggestive of steatosis" }
 		   ]
 		 },
 
@@ -310,28 +338,40 @@
 		   ]
 		 },
 
-		 { "organ": "Pancreas",
+		 { "organ": "Endoscopic (EUS)", "interventions": [] },
+
+		 { "organ": "Luminal (EUS)",
 		   "interventions": [
 			 { "name": "FNA", "text": "FNA performed ({#Passes} passes) {fnab-preliminary}" },
 			 { "name": "FNB", "text": "FNB performed ({#Passes} passes)" }
 		   ]
 		 },
 
-		 { "organ": "Biliary",
+		 { "organ": "Pancreas (EUS)",
 		   "interventions": [
-			 { "name": "", "text": "" }
+			 { "name": "Fiducials", "text": "{#Number} fiducial(s) placed" },
+			 { "name": "FNA", "text": "FNA performed ({#Passes} passes) {fnab-preliminary}" },
+			 { "name": "FNB", "text": "FNB performed ({#Passes} passes)" }
 		   ]
 		 },
 
-		 { "organ": "Liver",
+		 { "organ": "CBD (EUS)", "interventions": [] },
+
+		 { "organ": "Gallbladder (EUS)", "interventions": [] },
+
+		 { "organ": "Major papilla (EUS)", "interventions": [] },
+
+		 { "organ": "Liver (EUS)",
 		   "interventions": [
-			 { "name": "", "text": "" }
+			 { "name": "FNA", "text": "FNA performed ({#Passes} passes) {fnab-preliminary}" },
+			 { "name": "FNB", "text": "FNB performed ({#Passes} passes)" }
 		   ]
 		 },
 
-		 { "organ": "Lymph nodes",
+		 { "organ": "Lymph nodes (EUS)",
 		   "interventions": [
-			 { "name": "", "text": "" }
+			 { "name": "FNA", "text": "FNA performed ({#Passes} passes) {fnab-preliminary}" },
+			 { "name": "FNB", "text": "FNB performed ({#Passes} passes)" }
 		   ]
 		 }
 	   ],
@@ -340,7 +380,10 @@
 		 { "name": "bleeding-type", "label": "Bleeding", "options": [ [ "no bleeding", "without bleeding" ], [ "oozing", "with oozing of blood" ], [ "spurting", "with spurting of blood" ] ] },
 		 { "name": "colon-location", "label": "Location", "options": [ "entire colon", "cecum", "ascending colon", "hepatic flexure", "transverse colon", "splenic flexure", "descending colon", "sigmoid colon", "rectum" ] },
 		 { "name": "cameron-lesions", "label": "Cameron lesions", "options": [ [ "", "" ], [ "none", " without Cameron lesions" ], [ "non-bleeding", " with non-bleeding Cameron lesions" ], [ "oozing", " with Cameron lesions with oozing" ], [ "spurting", " with Cameron lesions with spurting" ] ] },
-		 { "name": "consistent-suggestive", "label": "Diagnostic certainty", "options": [[ "consistent", "consistent with" ], [ "suggestive", "suggestive of" ]] },
+		 { "name": "consistent-suggestive", "label": "Diagnostic certainty", "options": [ [ "consistent", "consistent with" ], [ "suggestive", "suggestive of" ] ] },
+		 { "name": "cp-consistent", "label": "Diagnostic certainty", "options": [ [ "consistent (≥4 criteria)", "consistent with" ], [ "not consistent (<4 criteria)", "not consistent with" ] ] },
+		 { "name": "cp-duct", "label": "Ductal changes", "options": [ "dilation", "irregular margins", "hyperechoic margins", "visible side branches" ] },
+		 { "name": "cp-parenchyma", "label": "Parenchymal changes", "options": [ "hyperechoic foci", "hyperechoic strands", "lobularity", "shadowing calcifications", "cysts" ] },
 		 { "name": "duodenopathy-type", "label": "Duodenopathy type", "options": [ "", "erythematous", "erosive" ] },
 		 { "name": "duodenum-location", "label": "Location", "options": [ [ "entire examined duodenum", "entire examined duodenum" ], [ "D1", "duodenal bulb" ], [ "D2", "second portion of the duodenum" ], [ "D3", "third portion of the duodenum" ], [ "D4", "fourth portion of the duodenum" ], [ "periampullary region", "periampullary region" ], [ "D1-D2", "first and second portion of the duodenum" ], [ "D1-D3", "first, second, and third portion of the duodenum" ], [ "D1-D4", "entire duodenum" ], [ "D2-D3", "second and third portion of the duodenum" ], [ "D2-D4", "second, third, and fourth portion of the duodenum" ], [ "D3-D4", "third and fourth portion of the duodenum" ] ] },
 		 { "name": "echogenicity", "label": "Echogenicity", "options": [ "hypoechoic", "isoechoic", "hyperechoic", "heterogeneous" ] },
@@ -348,6 +391,7 @@
 		 { "name": "esophagus-location", "label": "Location", "options": [ "entire esophagus", "proximal esophagus", "mid esophagus", "distal esophagus" ] },
 		 { "name": "eus-layer", "label": "EUS layer", "options": [ "layer 1 (superficial mucosa)", "layer 2 (deep mucosa)", "layer 3 (submucosa)", "layer 4 (muscularis propria)", "layer 5 (serosa)" ] },
 		 { "name": "fnab-preliminary", "label": "Preliminary cytology", "options": [ [ "", "" ], [ "benign", "with preliminary cytology negative for malignancy" ], [ "indeterminate", "with preliminary cytology indeterminate for malignancy" ], [ "malignant", "with preliminary cytology suggestive of malignancy" ]   ] },
+		 { "name": "few-multiple", "label": "Few/multiple", "options": [ [ "few", "a few" ], [ "multiple", "multiple" ] ] },
 		 { "name": "gastric-surgery", "label": "Surgery", "options": [ "Rouy-en-Y gastric bypass", "sleeve gastrectomy", "Billroth I anastomosis", "Billroth II anastomosis" ] },
 		 { "name": "gastropathy-type", "label": "Gastropathy type", "options": [ "", "erythematous", "erosive", "portal hypertensive" ] },
 		 { "name": "gastroscope-type", "label": "Gastroscope type", "options": [ "adult gastroscope", "ultraslim gastroscope" ] },
@@ -357,15 +401,19 @@
 		 { "name": "mild-moderate-severe", "label": "Severity", "options": [ "mild", "moderate", "severe" ] },
 		 { "name": "mp-visualization", "label": "Visualization", "options": [ "endoscopic and endosonographic", "endosonographic", "endoscopic" ] },
 		 { "name": "pancreas-location", "label": "Location", "options": [ "pancreatic uncinate process", "pancreatic head", "pancreatic neck", "pancreatic body", "pancreatic tail" ] },
+		 { "name": "pancreatic-cyst-risk-features", "label": "High-risk features", "options": [ [ "none", "without high risk features" ], [ "thin septae", "with thin septae" ], [ "thick septae", "with this septae" ], [ "mural nodule", "with a mural nodule" ] ] },
+		 { "name": "periampullary-location", "label": "Location", "options": [ [ "entirely within", "entirely within" ], [ "partially within", "partially within a" ], [ "on the rim", "on the rim of" ], [ "adjacent", "adjacent to" ] ] },
 		 { "name": "polyp-morphology", "label": "Morphology", "options": [ "sessile", "flat", "pedunculated", "carpetted" ] },
 		 { "name": "polyps-morphology", "label": "Morphology", "options": [ "sessile", "flat", "pedunculated", "carpetted", "sessile/flat", "sessile/pedunculated", "flat/pedunculated" ] },
 		 { "name": "pud-forrest", "label": "Forrest classification", "options": [ "pulsatile bleeding (Forrest Ia)", "oozing of blood (Forrest Ib)", "a visible vessel (Forrest IIa)", "an adherent clot (Forrest IIb)", "a pigmented spot (Forrest IIc)", "a clean-base (Forrest III)" ] },
+		 { "name": "shadowing", "label": "Shadowing", "options": [ [ "no", "without shadowing" ], [ "yes", "with shadowing" ] ] },
 		 { "name": "single-few-multiple-angiectasias", "label": "Number", "options": [ ["single", "a single angiectasia"], ["few", "a few angiectasias"], ["multiple", "multiple angiectasias"] ] },
 		 { "name": "small-large", "label": "Size", "options": [ "small", "large" ] },
 		 { "name": "small-medium-large", "label": "Size", "options": [ "small", "medium", "large" ] },
 		 { "name": "sr-obstructing", "label": "Obstructing?", "options": [ "Widely patent, non-obstructing", "Partially obstructing", "Obstructing" ] },
 		 { "name": "stomach-location", "label": "Location", "options": [ "gastric fundus/body", "gastric body/antrum", "gastric fundus", "gastric body", "gastric antrum", "cardia", "incisura" ] },
 		 { "name": "stomach-location-modifier", "label": "Location", "options": [ [ "", "" ], [ "greater curvature", "greater curvature of the" ], [ "lesser curvature", "lesser curvature of the" ], [ "anterior wall", "anterior wall of the" ], [ "posterior wall", "posterior wall of the" ] ] },
+		 { "name": "stones-sludge", "label": "Stones/sludge", "options": [ [ "none", "without stones/sludge" ], [ "sludge", "with sludge" ], [ "stone (one)", "with a stone" ], [ "stones (few)", "with a few stones" ], [ "sludge/stones", "with sludge and stones" ] ] },
 		 { "name": "stricture-type", "label": "Appearance", "options": [ "Benign-appearing", "Malignant-appearing", "Indeterminate" ] },
 		 { "name": "traversable", "label": "Traversable", "options": [ "traversable", "not traversable" ] },
 		 { "name": "uc-extent", "label": "UC extent", "options": [ "left-sided UC", "pancolonic UC" ] },

@@ -10,19 +10,24 @@
 - [X] sel
 - [X] ectopic pancreas
 
+* Colonoscopy
+- [ ] Crohn disease
+- [ ] stricture
+
 * Enteroscopy
 - [ ] lymphangiectasias
 - [ ] tattoo placed at deepest extent reached
 
 * EUS
 - [X] subepithelial lesion
-- [ ] pancreatic cyst
-- [ ] fiducials
-- [ ] chronic pancreatitis
-- [ ] gallbladder stones/polyps
-- [ ] CBD stones/dilation
-- [ ] liver cysts
-- [ ] steatosis
+- [X] pancreatic cyst
+- [X] fiducials
+- [X] chronic pancreatitis
+- [X] gallbladder polyps
+- [X] gallbladder stones
+- [X] CBD stones/dilation
+- [X] liver cysts
+- [X] steatosis
 - [ ] lymphadenopathy
 
 * ERCP

@@ -9,10 +9,13 @@
 - [X] achalasia
 - [X] sel
 - [X] ectopic pancreas
+- [ ] gastrojejunal anastomosis as location (for strictures, ulcers)
+- [ ] remove combined locations (e.g. gastric fundus/body and body/antrum)
 
 * Colonoscopy
 - [ ] Crohn disease
 - [ ] stricture
+- [ ] post-operative anatomy
 
 * Enteroscopy
 - [ ] lymphangiectasias

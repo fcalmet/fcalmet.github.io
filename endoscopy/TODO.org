@@ -9,13 +9,17 @@
 - [X] achalasia
 - [X] sel
 - [X] ectopic pancreas
-- [ ] gastrojejunal anastomosis as location (for strictures, ulcers)
-- [ ] remove combined locations (e.g. gastric fundus/body and body/antrum)
+- [x] gastrojejunal anastomosis as location (for strictures, ulcers)
+- [x] remove combined locations (e.g. gastric fundus/body and body/antrum)
+- [ ] add stenosis for stomach (for GJA stenosis for example)
+- [ ] add Ovesco
 
 * Colonoscopy
 - [ ] Crohn disease
 - [ ] stricture
 - [ ] post-operative anatomy
+- [ ] add coagrasper
+- [ ] add Ovesco
 
 * Enteroscopy
 - [ ] lymphangiectasias
@@ -49,3 +53,7 @@
 - [ ] post-sphincterotomy bleeding
 - [ ] prior sphincterotomy
 - [ ] CBD dilation
+- [ ] selective cannulation of left/right systems
+- [ ] epi injection
+- [ ] clips
+- [ ] scout film

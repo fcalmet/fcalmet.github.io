@@ -1,6 +1,10 @@
 #+TITLE: Endoscopy Reporting System
 * General
 - [ ] Allow creating detailed findings and summarized impression
+- [ ] Allow functions:
+  - [ ] Sum: [sumcount 1, 2, 3] → sum count of index 1, 2, 3
+  - [ ] Count: [sum 1, 2, 3] → sum value from number 1, 2, 3
+  - [ ] If sum count greater than: [if_sumcount 1, 2, 3 > 4 ? string1 : string2] → if sumcount 1,2,3 is >4, return string1 else string2
 
 * EGD
 - [X] previously placed clips
@@ -11,15 +15,15 @@
 - [X] ectopic pancreas
 - [x] gastrojejunal anastomosis as location (for strictures, ulcers)
 - [x] remove combined locations (e.g. gastric fundus/body and body/antrum)
-- [ ] add stenosis for stomach (for GJA stenosis for example)
-- [ ] add Ovesco
+- [X] add stenosis for stomach (for GJA stenosis for example)
+- [X] add Ovesco
 
 * Colonoscopy
 - [ ] Crohn disease
 - [ ] stricture
 - [ ] post-operative anatomy
-- [ ] add coagrasper
-- [ ] add Ovesco
+- [X] add coagrasper
+- [X] add Ovesco
 
 * Enteroscopy
 - [ ] lymphangiectasias
@@ -36,13 +40,15 @@
 - [X] liver cysts
 - [X] steatosis
 - [ ] lymphadenopathy
+- [ ] LAMS
 
 * ERCP
-- [ ] periampullary diverticulum
-- [ ] cannulation: double wire, over PD stent
-- [ ] sphincterotomy
-- [ ] precut
-- [ ] sphincteroplasty
+- [X] periampullary diverticulum
+- [ ] scout film
+- [X] cannulation: double wire, over PD stent
+- [X] sphincterotomy
+- [X] precut
+- [X] sphincteroplasty
 - [ ] stenosis
 - [ ] brushings
 - [ ] cholangioscopy
@@ -51,9 +57,8 @@
 - [ ] basket
 - [ ] stones
 - [ ] post-sphincterotomy bleeding
-- [ ] prior sphincterotomy
+- [X] prior sphincterotomy
 - [ ] CBD dilation
 - [ ] selective cannulation of left/right systems
 - [ ] epi injection
 - [ ] clips
-- [ ] scout film

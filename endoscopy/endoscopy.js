@@ -31,11 +31,11 @@ function populateProcedureList() {
 function populateFindingList(procedure) {
   const findingList = $('finding-list');
   findingList.length = 0;
-  db.organFindings.forEach(organFinding => {
-	if (procedure.sections.includes(organFinding.organ)) {
-	  findingList.appendChild(createOption(`--- ${organFinding.organ} ---`, '', true));
-	  organFinding.findings.forEach(finding => {
-		findingList.appendChild(createOption(finding.name, finding.text, false, organFinding.organ));
+  db.sections.forEach(section => {
+	if (procedure.sections.includes(section.organ)) {
+	  findingList.appendChild(createOption(`--- ${section.organ} ---`, '', true));
+	  section.findings.forEach(finding => {
+		findingList.appendChild(createOption(finding.name, finding.text, false, section.organ));
 	  });
 	  findingList.appendChild(createOption('', '', true));
 	}
@@ -134,8 +134,8 @@ function selectFinding() {
   const options = getOptions(selectedOption.value);
   populateDivOptions('finding-options', options, addFinding, addFinding);
   const organ = selectedOption.dataset.organ;
-  const organInterventions = db.organInterventions.find(it => it.organ === organ);
-  populateInterventions(organInterventions.interventions);
+  const section = db.sections.find(it => it.organ === organ);
+  populateInterventions(section.interventions);
   $('sel-intervention-list').length = 0;
 }
 

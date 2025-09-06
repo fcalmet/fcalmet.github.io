@@ -61,7 +61,7 @@
 		 { "name": "EUS", "sections": [ "Endoscopic (EUS)", "Luminal (EUS)", "Pancreas (EUS)", "CBD (EUS)", "Gallbladder (EUS)", "Major papilla (EUS)", "Liver (EUS)", "Lymph nodes (EUS)" ] }
 	   ],
 
-	   "organFindings": [
+	   "sections": [
 		 { "organ": "Esophagus",
 		   "findings": [
 			 { "name": "Normal", "text": "Normal esophagus" },
@@ -85,197 +85,7 @@
 			 { "name": "Stricture", "text": "{stricture-type} stricture at {#Location (cm)} cm, {traversable} with an {*gastroscope-type}" },
 			 { "name": "Subepithelial lesion", "text": "A {#Size (mm)} mm subepithelial lesion in the {esophagus-location}" },
 			 { "name": "Varices", "text": "{small-large} esophageal varices {bleeding-type} {gev-hrs}" }
-		   ]
-		 },
-
-		 { "organ": "Stomach",
-		   "findings": [
-			 { "name": "Normal", "text": "Normal stomach" },
-			 { "name": "Angiectasia", "text": "{single-few-multiple-angiectasias} {bleeding-type} {*stomach-location-modifier} {*stomach-location}" },
-			 { "name": "Bezoar", "text": "A {small-medium-large} bezoar in the {*stomach-location-modifier} {*stomach-location}" },
-			 { "name": "Clips", "text": "{#Number} previously placed clip(s) in the {*stomach-location-modifier} {*stomach-location}" },
-			 { "name": "Dieulafoy", "text": "A Dieulafoy lesion {bleeding-type} in the {stomach-location-modifier} {stomach-location}" },
-			 { "name": "Diverticulum", "text": "A {small-medium-large} diverticulum in the {stomach-location-modifier} {stomach-location}" },
-			 { "name": "Ectopic pancreas", "text": "A {#Size (mm)} mm subepithelial lesion with central umbilication in the gastric antrum, {consistent-suggestive} of an ectopic pancreas" },
-			 { "name": "GAVE", "text": "{mild-moderate-severe} gastric antral vascular ectasia" },
-			 { "name": "Gastropathy", "text": "{mild-moderate-severe} {gastropathy-type} gastropathy in the {*stomach-location-modifier} {*stomach-location}" },
-			 { "name": "Hiatal hernia", "text": "A {#Size (cm)} hiatal hernia {cameron-lesions}" },
-			 { "name": "Mass", "text": "{stricture-type} mass in the {stomach-location-modifier} {stomach-location}" },
-			 { "name": "Nodule", "text": "A {#Size (mm)} mm nodule in the {stomach-location-modifier} {stomach-location}" },
-			 { "name": "Polyp (single)", "text": "A {#Size (mm)} mm polyp in the {stomach-location-modifier} {stomach-location}" },
-			 { "name": "Polyps (multiple)", "text": "{few-multiple} {#Size (mm): from}-{#Size (mm): to} mm polyps in the {*stomach-location-modifier} {*stomach-location}" },
-			 { "name": "Postoperative anatomy", "text": "Postoperative anatomy consistent with prior {gastric-surgery}" },
-			 { "name": "Stenosis", "text": "Stenosis in the {stomach-location-modifier} {stomach-location}, {traversable} with an {gastroscope-type}" },
-			 { "name": "Subepithelial lesion", "text": "A {#Size (mm)} mm subepithelial lesion in the {stomach-location-modifier} {stomach-location}" },
-			 { "name": "Ulcer", "text": "{#Number} ulcer(s) measuring up to {#Size (mm)} mm with {pud-forrest} in the {*stomach-location-modifier} {*stomach-location}" },
-			 { "name": "Varices", "text": "{small-medium-large} gastric varices in the {gv-type} {bleeding-type} {gev-hrs}" }
-		   ]
-		 },
-
-		 { "organ": "Duodenum",
-		   "findings": [
-			 { "name": "Normal", "text": "Normal examined duodenum" },
-			 { "name": "Angiectasia", "text": "{single-few-multiple-angiectasias} {bleeding-type} {*duodenum-location}" },
-			 { "name": "Celiac disease", "text": "Mucosal changes including scalloping in the {*duodenum-location}, {consistent-suggestive} celiac disease" },
-			 { "name": "Clips", "text": "{#Number} previously placed clip(s) in the {*duodenum-location}" },
-			 { "name": "Dieulafoy", "text": "A Dieulafoy lesion {bleeding-type} {duodenum-location}" },
-			 { "name": "Diverticulum", "text": "A {small-medium-large} diverticulum in the {duodenum-location}" },
-			 { "name": "Duodenopathy", "text": "{mild-moderate-severe} {duodenopathy-type} gastropathy in the {*duodenum-location}" },
-			 { "name": "Mass", "text": "{stricture-type} mass in the {duodenum-location}" },
-			 { "name": "Nodule", "text": "A {#Size (mm)} mm nodule in the {duodenum-location}" },
-			 { "name": "Polyp", "text": "A {#Size (mm)} mm polyp in the {duodenum-location}" },
-			 { "name": "Subepithelial lesion", "text": "A {#Size (mm)} mm subepithelial lesion in the {duodenum-location}" },
-			 { "name": "Ulcer", "text": "{#Number} ulcer(s) measuring up to {#Size (mm)} mm with {pud-forrest} in the {*duodenum-location}" }
-		   ]
-		 },
-
-		 { "organ": "DRE",
-		   "findings": [
-			 { "name": "Normal", "text": "Normal rectal exam" }
-		   ]
-		 },
-
-		 { "organ": "Ileum",
-		   "findings": [
-			 { "name": "Normal", "text": "Normal examined terminal ileum" }
-		   ]
-		 },
-
-		 { "organ": "Colon",
-		   "findings": [
-			 { "name": "Right colon retroflexion", "text": "Retroflexion performed in the right colon" },
-			 { "name": "Normal", "text": "Normal colon" },
-			 { "name": "Angiectasia", "text": "{single-few-multiple-angiectasias} {bleeding-type} {*colon-location}" },
-			 { "name": "Dieulafoy", "text": "A Dieulafoy lesion {bleeding-type} {colon-location}" },
-			 { "name": "Diverticulosis", "text": "{mild-moderate-severe} diverticulosis in the {*colon-location}" },
-			 { "name": "Internal hemorrhoids", "text": "{small-medium-large} internal hemorrhoids" },
-			 { "name": "Mass", "text": "{stricture-type} mass in the {colon-location}" },
-			 { "name": "Polyp (single)", "text": "A {#Size (mm)} mm {polyp-morphology} polyp in the {colon-location}" },
-			 { "name": "Polyp (multiple)", "text": "{#Number} {#Min size (mm)}-{#Max size (mm)} mm {polyps-morphology} polyps in the {*colon-location}" },
-			 { "name": "Solitary rectal ulcer syndromoe", "text": "A {#Size (mm)} ulcer in the distal rectum, consistent with solitary rectal ulcer syndrome" },
-			 { "name": "Ulcerative colitis", "text": "Continuous inflammation from the rectum to the {colon-location} {consistent-suggestive} {uc-extent} ({uc-mayo})" },
-			 { "name": "Ulcerative proctitis", "text": "Inflammation in the rectum {consistent-suggestive} ulcerative proctitis ({uc-mayo}) " }
-		   ]
-		 },
-
-		 { "organ": "Scout film (ERCP)",
-		   "findings": [
-			 { "name": "Normal", "text": "Normal scout film" },
-			 { "name": "Cholecystectomy clips", "text": "Clips from prior cholecystectomy noted on scout film" },
-			 { "name": "Stents (metal)", "text": "{#Number} metal stent(s) noted in the {biliary-stent-location}" },
-			 { "name": "Stents (plastic)", "text": "{#Number} plastic stent(s) noted in the {biliary-stent-location}" },
-			 { "name": "Stents (metal and plastic)", "text": "{#Metal stents} metal stent(s) noted in the {biliary-stent-location} and {#Plastic stents} plastic stent(s) noted in the {biliary-stent-location}" }
-		   ]
-		 },
-
-		 { "organ": "Endoscopic (ERCP)",
-		   "findings": [
-			 { "name": "Normal", "text": "Normal esophagus, stomach, and examined duodenum on examination with the duodenoscope" },
-			 { "name": "Normal major papilla", "text": "Normal major papilla" },
-			 { "name": "Periampullary diverticulum", "text": "Major papilla located {periampullary-location} a {small-medium-large} duodenal diverticulum" },
-			 { "name": "Prior sphincterotomy", "text": "Major papilla with evidence of prior sphincterotomy" },
-			 { "name": "Prior CBD stents in place", "text": "{#Number} {plastic-metal} stent(s) seen emerging from the biliary orifice. {stent-removal}" },
-			 { "name": "Prior PD stent in place", "text": "Plastic stent seen emerging from the pancreatic orifice. {stent-removal}" }
-		   ]
-		 },
-
-		 { "organ": "Biliary access (ERCP)",
-		   "findings": [
-			 { "name": "CBD cannulation", "text": "CBD cannulation performed with {sphincterotome-balloon}" },
-			 { "name": "CBD cannulation (difficult)", "text": "Difficult CBD cannulation performed with a sphincterotome using {*difficult-cannulation-technique}" },
-			 { "name": "PD cannulation", "text": "PD cannulation performed with {sphincterotome-balloon}" },
-			 { "name": "Biliary sphincterotomy", "text": "Biliary sphincterotomy performed" },
-			 { "name": "Biliary sphincteroplasty", "text": "Biliary sphincteroplasty performed to {#Size (mm)} mm" },
-			 { "name": "Pancreatic sphincterotomy", "text": "Pancreatic sphincterotomy performed" },
-			 { "name": "Pancreatic sphincteroplasty", "text": "Pancreatic sphincteroplasty performed to {#Size (mm)} mm" }
-		   ]
-		 },
-
-		 { "organ": "Cholangiogram (ERCP)",
-		   "findings": [
-			 { "name": "Normal", "text": "Normal cholangiogram with CBD measuring {#CBD size (mm)} mm" },
-			 { "name": "CBD dilation", "text": "Cholangiogram significant for CBD dilation to {#CBD size (mm)} mm" },
-			 { "name": "CBD dilation + Filling defects", "text": "Cholangiogram significant for CBD dilation to {#CBD size (mm)} mm with {filling-defects}" },
-			 { "name": "Filling defects", "text": "Cholangiogram significant for a CBD measuring {#CBD size (mm)} mm with {filling-defects}" },
-			 { "name": "Stricture", "text": "Cholangiogram significant for a {#Length (mm)} mm long, {mild-moderate-severe}, {stricture-type} stricture in the {biliary-stricture-location} with upstream dilation to {#Upstream dilation to (mm)} mm" }
-		   ]
-		 },
-
-		 { "organ": "Endoscopic (EUS)",
-		   "findings": [
-			 { "name": "Normal", "text": "Normal esophagus, stomach, and examined duodenum on examination with the echoendoscope" }
-		   ]
-		 },
-
-		 { "organ": "Luminal (EUS)",
-		   "findings": [
-			 { "name": "SEL (esophagus)", "text": "A {#Size 1 (mm)} x {#Size 2 (mm)} mm {echogenicity} subepithelial lesion in the {esophagus-location}, arising from {eus-layer}" },
-			 { "name": "SEL (stomach)", "text": "A {#Size 1 (mm)} x {#Size 2 (mm)} mm {echogenicity} subepithelial lesion in the {stomach-location-modifier} {stomach-location}, arising from {eus-layer}" },
-			 { "name": "SEL (duodenum)", "text": "A {#Size 1 (mm)} x {#Size 2 (mm)} mm {echogenicity} subepithelial lesion in the {duodenum-location}, arising from {eus-layer}" },
-			 { "name": "SEL (colon)", "text": "A {#Size 1 (mm)} x {#Size 2 (mm)} mm {echogenicity} subepithelial lesion in the {colon-location}, arising from {eus-layer}" }
-		   ]
-		 },
-
-		 { "organ": "Pancreas (EUS)",
-		   "findings": [
-			 { "name": "Normal", "text": "Normal pancreatic parenchyma and duct" },
-			 { "name": "Chronic pancreatitis", "text": "Pancreatic parenchymal changes include {*cp-parenchyma}. Pancreatic ductal changes include {*cp-duct}. Findings {cp-consistent} chronic pancreatitis" },
-			 { "name": "Cyst (single)", "text": "A cyst measuring at least {#Size 1 (mm)} x {#Size 2 (mm)} mm in the {*pancreas-location} {pancreatic-cyst-risk-features}" },
-			 { "name": "Cysts (multiple)", "text": "{few-multiple} cysts measuring up to {#Size 1 (mm)} x {#Size 2 (mm)} mm in the {*pancreas-location} {pancreatic-cyst-risk-features}" },
-			 { "name": "PD dilation", "text": "PD dilation up to {#Size (mm)} mm" },
-			 { "name": "Mass", "text": "A {echogenicity} mass measuring at least {#Size 1 (mm)} x {#Size 2 (mm)} mm in the {*pancreas-location}" }
-		   ]
-		 },
-
-		 { "organ": "CBD (EUS)",
-		   "findings": [
-			 { "name": "Normal", "text": "Normal CBD measuring {#Size (mm)} mm {stones-sludge}" },
-			 { "name": "CBD dilation", "text": "CBD dilation to {#Size (mm)} mm {stones-sludge}" },
-			 { "name": "Stone (single)", "text": "A {#Size (mm)} mm CBD stone {shadowing}" },
-			 { "name": "Stones (multiple)", "text": "{few-multiple} CBD stones measuring up to {#Size (mm)} mm {shadowing}" }
-		   ]
-		 },
-
-		 { "organ": "Gallbladder (EUS)",
-		   "findings": [
-			 { "name": "Normal", "text": "Normal gallbladder" },
-			 { "name": "Dilated", "text": "Dilated gallbladder" },
-			 { "name": "Polyp (single)", "text": "A {#Size (mm)} mm gallbladder polyp" },
-			 { "name": "Polyps (multiple)", "text": "{few-multiple} gallbladder polyps measuring up to {#Size (mm)} mm" },
-			 { "name": "Sludge", "text": "Sludge noted within the gallbladder" },
-			 { "name": "Stone (single)", "text": "A {#Size (mm)} mm gallbladder stone {shadowing}" },
-			 { "name": "Stones (multiple)", "text": "{few-multiple} gallbladder stones measuring up to {#Size (mm)} mm {shadowing}" },
-			 { "name": "Wall thickening", "text": "Gallbladder wall thickening to {#Size (mm)} mm" }
-		   ]
-		 },
-
-		 { "organ": "Major papilla (EUS)",
-		   "findings": [
-			 { "name": "Normal", "text": "Normal major papilla on {mp-visualization} visualization" },
-			 { "name": "Periampullary diverticulum", "text": "Major papilla located {periampullary-location} a {small-medium-large} duodenal diverticulum" },
-			 { "name": "Prior sphincterotomy", "text": "Major papilla with evidence of prior sphincterotomy" }
-		   ]
-		 },
-
-		 { "organ": "Liver (EUS)",
-		   "findings": [
-			 { "name": "Normal (visualized)", "text": "Normal visualized portion of the liver" },
-			 { "name": "Cyst (single)", "text": "A hepatic cyst measuring at least {#Size 1 (mm)} x {#Size 2 (mm)} mm" },
-			 { "name": "Cysts (multiple)", "text": "{few-multiple} hepatic cysts measuring up to {#Size 1 (mm)} x {#Size 2 (mm)} mm" },
-			 { "name": "Mass", "text": "A {echogenicity} mass measuring at least {#Size 1 (mm)} x {#Size 2 (mm)} mm in the liver" },
-			 { "name": "Steatosis", "text": "Hyperechoic hepatic parenchyma suggestive of steatosis" }
-		   ]
-		 },
-
-		 { "organ": "Lymph nodes (EUS)",
-		   "findings": [
-			 { "name": "No lymphadenopathy", "text": "No lymphadenopathy identified" }
-		   ]
-		 }
-	   ],
-
-	   "organInterventions": [
-		 { "organ": "Esophagus",
+		   ],
 		   "interventions": [
 			 { "name": "Banding", "text": "{#Bands placed} band(s) deployed with adequate decompression" },
 			 { "name": "Botulinum toxin (LES)", "text": "LES botulinum toxin injection performed" },
@@ -302,7 +112,29 @@
 			 { "name": "RFA TTS", "text": "Treated with TTS RFA ({#Ablations} ablations)" }
 		   ]
 		 },
+
 		 { "organ": "Stomach",
+		   "findings": [
+			 { "name": "Normal", "text": "Normal stomach" },
+			 { "name": "Angiectasia", "text": "{single-few-multiple-angiectasias} {bleeding-type} {*stomach-location-modifier} {*stomach-location}" },
+			 { "name": "Bezoar", "text": "A {small-medium-large} bezoar in the {*stomach-location-modifier} {*stomach-location}" },
+			 { "name": "Clips", "text": "{#Number} previously placed clip(s) in the {*stomach-location-modifier} {*stomach-location}" },
+			 { "name": "Dieulafoy", "text": "A Dieulafoy lesion {bleeding-type} in the {stomach-location-modifier} {stomach-location}" },
+			 { "name": "Diverticulum", "text": "A {small-medium-large} diverticulum in the {stomach-location-modifier} {stomach-location}" },
+			 { "name": "Ectopic pancreas", "text": "A {#Size (mm)} mm subepithelial lesion with central umbilication in the gastric antrum, {consistent-suggestive} of an ectopic pancreas" },
+			 { "name": "GAVE", "text": "{mild-moderate-severe} gastric antral vascular ectasia" },
+			 { "name": "Gastropathy", "text": "{mild-moderate-severe} {gastropathy-type} gastropathy in the {*stomach-location-modifier} {*stomach-location}" },
+			 { "name": "Hiatal hernia", "text": "A {#Size (cm)} hiatal hernia {cameron-lesions}" },
+			 { "name": "Mass", "text": "{stricture-type} mass in the {stomach-location-modifier} {stomach-location}" },
+			 { "name": "Nodule", "text": "A {#Size (mm)} mm nodule in the {stomach-location-modifier} {stomach-location}" },
+			 { "name": "Polyp (single)", "text": "A {#Size (mm)} mm polyp in the {stomach-location-modifier} {stomach-location}" },
+			 { "name": "Polyps (multiple)", "text": "{few-multiple} {#Size (mm): from}-{#Size (mm): to} mm polyps in the {*stomach-location-modifier} {*stomach-location}" },
+			 { "name": "Postoperative anatomy", "text": "Postoperative anatomy consistent with prior {gastric-surgery}" },
+			 { "name": "Stenosis", "text": "Stenosis in the {stomach-location-modifier} {stomach-location}, {traversable} with an {gastroscope-type}" },
+			 { "name": "Subepithelial lesion", "text": "A {#Size (mm)} mm subepithelial lesion in the {stomach-location-modifier} {stomach-location}" },
+			 { "name": "Ulcer", "text": "{#Number} ulcer(s) measuring up to {#Size (mm)} mm with {pud-forrest} in the {*stomach-location-modifier} {*stomach-location}" },
+			 { "name": "Varices", "text": "{small-medium-large} gastric varices in the {gv-type} {bleeding-type} {gev-hrs}" }
+		   ],
 		   "interventions": [
 			 { "name": "Biopsies", "text": "Biopsied" },
 			 { "name": "Biopsies (random)", "text": "Random biopsies taken" },
@@ -325,6 +157,20 @@
 		 },
 
 		 { "organ": "Duodenum",
+		   "findings": [
+			 { "name": "Normal", "text": "Normal examined duodenum" },
+			 { "name": "Angiectasia", "text": "{single-few-multiple-angiectasias} {bleeding-type} {*duodenum-location}" },
+			 { "name": "Celiac disease", "text": "Mucosal changes including scalloping in the {*duodenum-location}, {consistent-suggestive} celiac disease" },
+			 { "name": "Clips", "text": "{#Number} previously placed clip(s) in the {*duodenum-location}" },
+			 { "name": "Dieulafoy", "text": "A Dieulafoy lesion {bleeding-type} {duodenum-location}" },
+			 { "name": "Diverticulum", "text": "A {small-medium-large} diverticulum in the {duodenum-location}" },
+			 { "name": "Duodenopathy", "text": "{mild-moderate-severe} {duodenopathy-type} gastropathy in the {*duodenum-location}" },
+			 { "name": "Mass", "text": "{stricture-type} mass in the {duodenum-location}" },
+			 { "name": "Nodule", "text": "A {#Size (mm)} mm nodule in the {duodenum-location}" },
+			 { "name": "Polyp", "text": "A {#Size (mm)} mm polyp in the {duodenum-location}" },
+			 { "name": "Subepithelial lesion", "text": "A {#Size (mm)} mm subepithelial lesion in the {duodenum-location}" },
+			 { "name": "Ulcer", "text": "{#Number} ulcer(s) measuring up to {#Size (mm)} mm with {pud-forrest} in the {*duodenum-location}" }
+		   ],
 		   "interventions": [
 			 { "name": "Biopsies", "text": "Biopsied" },
 			 { "name": "Biopsies (random)", "text": "Random biopsies taken" },
@@ -345,10 +191,16 @@
 		 },
 
 		 { "organ": "DRE",
+		   "findings": [
+			 { "name": "Normal", "text": "Normal rectal exam" }
+		   ],
 		   "interventions": []
 		 },
 
 		 { "organ": "Ileum",
+		   "findings": [
+			 { "name": "Normal", "text": "Normal examined terminal ileum" }
+		   ],
 		   "interventions": [
 			 { "name": "Biopsies", "text": "Biopsied" },
 			 { "name": "Biopsies (random)", "text": "Random biopsies taken" },
@@ -369,6 +221,20 @@
 		 },
 
 		 { "organ": "Colon",
+		   "findings": [
+			 { "name": "Right colon retroflexion", "text": "Retroflexion performed in the right colon" },
+			 { "name": "Normal", "text": "Normal colon" },
+			 { "name": "Angiectasia", "text": "{single-few-multiple-angiectasias} {bleeding-type} {*colon-location}" },
+			 { "name": "Dieulafoy", "text": "A Dieulafoy lesion {bleeding-type} {colon-location}" },
+			 { "name": "Diverticulosis", "text": "{mild-moderate-severe} diverticulosis in the {*colon-location}" },
+			 { "name": "Internal hemorrhoids", "text": "{small-medium-large} internal hemorrhoids" },
+			 { "name": "Mass", "text": "{stricture-type} mass in the {colon-location}" },
+			 { "name": "Polyp (single)", "text": "A {#Size (mm)} mm {polyp-morphology} polyp in the {colon-location}" },
+			 { "name": "Polyp (multiple)", "text": "{#Number} {#Min size (mm)}-{#Max size (mm)} mm {polyps-morphology} polyps in the {*colon-location}" },
+			 { "name": "Solitary rectal ulcer syndromoe", "text": "A {#Size (mm)} ulcer in the distal rectum, consistent with solitary rectal ulcer syndrome" },
+			 { "name": "Ulcerative colitis", "text": "Continuous inflammation from the rectum to the {colon-location} {consistent-suggestive} {uc-extent} ({uc-mayo})" },
+			 { "name": "Ulcerative proctitis", "text": "Inflammation in the rectum {consistent-suggestive} ulcerative proctitis ({uc-mayo}) " }
+		   ],
 		   "interventions": [
 			 { "name": "Biopsies (random)", "text": "Random biopsies taken" },
 			 { "name": "Biopsies", "text": "Biopsied" },
@@ -391,15 +257,41 @@
 		   ]
 		 },
 
-		 { "organ": "Scout film (ERCP)", "interventions": [] },
+		 { "organ": "Scout film (ERCP)",
+		   "findings": [
+			 { "name": "Normal", "text": "Normal scout film" },
+			 { "name": "Cholecystectomy clips", "text": "Clips from prior cholecystectomy noted on scout film" },
+			 { "name": "Stents (metal)", "text": "{#Number} metal stent(s) noted in the {biliary-stent-location}" },
+			 { "name": "Stents (plastic)", "text": "{#Number} plastic stent(s) noted in the {biliary-stent-location}" },
+			 { "name": "Stents (metal and plastic)", "text": "{#Metal stents} metal stent(s) noted in the {biliary-stent-location} and {#Plastic stents} plastic stent(s) noted in the {biliary-stent-location}" }
+		   ],
+		   "interventions": []
+		 },
 
 		 { "organ": "Endoscopic (ERCP)",
+		   "findings": [
+			 { "name": "Normal", "text": "Normal esophagus, stomach, and examined duodenum on examination with the duodenoscope" },
+			 { "name": "Normal major papilla", "text": "Normal major papilla" },
+			 { "name": "Periampullary diverticulum", "text": "Major papilla located {periampullary-location} a {small-medium-large} duodenal diverticulum" },
+			 { "name": "Prior sphincterotomy", "text": "Major papilla with evidence of prior sphincterotomy" },
+			 { "name": "Prior CBD stents in place", "text": "{#Number} {plastic-metal} stent(s) seen emerging from the biliary orifice. {stent-removal}" },
+			 { "name": "Prior PD stent in place", "text": "Plastic stent seen emerging from the pancreatic orifice. {stent-removal}" }
+		   ],
 		   "interventions": [
 			 { "name": "Stent removal", "text": "Removed with a {snare-forceps}" }
 		   ]
 		 },
 
 		 { "organ": "Biliary access (ERCP)",
+		   "findings": [
+			 { "name": "CBD cannulation", "text": "CBD cannulation performed with {sphincterotome-balloon}" },
+			 { "name": "CBD cannulation (difficult)", "text": "Difficult CBD cannulation performed with a sphincterotome using {*difficult-cannulation-technique}" },
+			 { "name": "PD cannulation", "text": "PD cannulation performed with {sphincterotome-balloon}" },
+			 { "name": "Biliary sphincterotomy", "text": "Biliary sphincterotomy performed" },
+			 { "name": "Biliary sphincteroplasty", "text": "Biliary sphincteroplasty performed to {#Size (mm)} mm" },
+			 { "name": "Pancreatic sphincterotomy", "text": "Pancreatic sphincterotomy performed" },
+			 { "name": "Pancreatic sphincteroplasty", "text": "Pancreatic sphincteroplasty performed to {#Size (mm)} mm" }
+		   ],
 		   "interventions": [
 			 { "name": "Clip(s)", "text": "{#Number} clip(s) deployed for hemostasis" },
 			 { "name": "Epinephrine", "text": "Epinephrine injected for hemostasis" },
@@ -408,6 +300,13 @@
 		 },
 
 		 { "organ": "Cholangiogram (ERCP)",
+		   "findings": [
+			 { "name": "Normal", "text": "Normal cholangiogram with CBD measuring {#CBD size (mm)} mm" },
+			 { "name": "CBD dilation", "text": "Cholangiogram significant for CBD dilation to {#CBD size (mm)} mm" },
+			 { "name": "CBD dilation + Filling defects", "text": "Cholangiogram significant for CBD dilation to {#CBD size (mm)} mm with {filling-defects}" },
+			 { "name": "Filling defects", "text": "Cholangiogram significant for a CBD measuring {#CBD size (mm)} mm with {filling-defects}" },
+			 { "name": "Stricture", "text": "Cholangiogram significant for a {#Length (mm)} mm long, {mild-moderate-severe}, {stricture-type} stricture in the {biliary-stricture-location} with upstream dilation to {#Upstream dilation to (mm)} mm" }
+		   ],
 		   "interventions": [
 			 { "name": "Balloon sweeps", "text": "Balloon sweeps performed with a {extraction-balloon-size} balloon with removal of {*stones-sludge-pus}" },
 			 { "name": "Basket sweeps", "text": "{#Stones removed} stone(s) removed with a basket" },
@@ -418,9 +317,20 @@
 		   ]
 		 },
 
-		 { "organ": "Endoscopic (EUS)", "interventions": [] },
+		 { "organ": "Endoscopic (EUS)",
+		   "findings": [
+			 { "name": "Normal", "text": "Normal esophagus, stomach, and examined duodenum on examination with the echoendoscope" }
+		   ],
+		   "interventions": []
+		 },
 
 		 { "organ": "Luminal (EUS)",
+		   "findings": [
+			 { "name": "SEL (esophagus)", "text": "A {#Size 1 (mm)} x {#Size 2 (mm)} mm {echogenicity} subepithelial lesion in the {esophagus-location}, arising from {eus-layer}" },
+			 { "name": "SEL (stomach)", "text": "A {#Size 1 (mm)} x {#Size 2 (mm)} mm {echogenicity} subepithelial lesion in the {stomach-location-modifier} {stomach-location}, arising from {eus-layer}" },
+			 { "name": "SEL (duodenum)", "text": "A {#Size 1 (mm)} x {#Size 2 (mm)} mm {echogenicity} subepithelial lesion in the {duodenum-location}, arising from {eus-layer}" },
+			 { "name": "SEL (colon)", "text": "A {#Size 1 (mm)} x {#Size 2 (mm)} mm {echogenicity} subepithelial lesion in the {colon-location}, arising from {eus-layer}" }
+		   ],
 		   "interventions": [
 			 { "name": "FNA", "text": "FNA performed ({#Passes} passes) {fnab-preliminary}" },
 			 { "name": "FNB", "text": "FNB performed ({#Passes} passes)" }
@@ -428,6 +338,14 @@
 		 },
 
 		 { "organ": "Pancreas (EUS)",
+		   "findings": [
+			 { "name": "Normal", "text": "Normal pancreatic parenchyma and duct" },
+			 { "name": "Chronic pancreatitis", "text": "Pancreatic parenchymal changes include {*cp-parenchyma}. Pancreatic ductal changes include {*cp-duct}. Findings {cp-consistent} chronic pancreatitis" },
+			 { "name": "Cyst (single)", "text": "A cyst measuring at least {#Size 1 (mm)} x {#Size 2 (mm)} mm in the {*pancreas-location} {pancreatic-cyst-risk-features}" },
+			 { "name": "Cysts (multiple)", "text": "{few-multiple} cysts measuring up to {#Size 1 (mm)} x {#Size 2 (mm)} mm in the {*pancreas-location} {pancreatic-cyst-risk-features}" },
+			 { "name": "PD dilation", "text": "PD dilation up to {#Size (mm)} mm" },
+			 { "name": "Mass", "text": "A {echogenicity} mass measuring at least {#Size 1 (mm)} x {#Size 2 (mm)} mm in the {*pancreas-location}" }
+		   ],
 		   "interventions": [
 			 { "name": "Fiducials", "text": "{#Number} fiducial(s) placed" },
 			 { "name": "FNA", "text": "FNA performed ({#Passes} passes) {fnab-preliminary}" },
@@ -435,13 +353,47 @@
 		   ]
 		 },
 
-		 { "organ": "CBD (EUS)", "interventions": [] },
+		 { "organ": "CBD (EUS)",
+		   "findings": [
+			 { "name": "Normal", "text": "Normal CBD measuring {#Size (mm)} mm {stones-sludge}" },
+			 { "name": "CBD dilation", "text": "CBD dilation to {#Size (mm)} mm {stones-sludge}" },
+			 { "name": "Stone (single)", "text": "A {#Size (mm)} mm CBD stone {shadowing}" },
+			 { "name": "Stones (multiple)", "text": "{few-multiple} CBD stones measuring up to {#Size (mm)} mm {shadowing}" }
+		   ],
+		   "interventions": []
+		 },
 
-		 { "organ": "Gallbladder (EUS)", "interventions": [] },
+		 { "organ": "Gallbladder (EUS)",
+		   "findings": [
+			 { "name": "Normal", "text": "Normal gallbladder" },
+			 { "name": "Dilated", "text": "Dilated gallbladder" },
+			 { "name": "Polyp (single)", "text": "A {#Size (mm)} mm gallbladder polyp" },
+			 { "name": "Polyps (multiple)", "text": "{few-multiple} gallbladder polyps measuring up to {#Size (mm)} mm" },
+			 { "name": "Sludge", "text": "Sludge noted within the gallbladder" },
+			 { "name": "Stone (single)", "text": "A {#Size (mm)} mm gallbladder stone {shadowing}" },
+			 { "name": "Stones (multiple)", "text": "{few-multiple} gallbladder stones measuring up to {#Size (mm)} mm {shadowing}" },
+			 { "name": "Wall thickening", "text": "Gallbladder wall thickening to {#Size (mm)} mm" }
+		   ],
+		   "interventions": []
+		 },
 
-		 { "organ": "Major papilla (EUS)", "interventions": [] },
+		 { "organ": "Major papilla (EUS)",
+		   "findings": [
+			 { "name": "Normal", "text": "Normal major papilla on {mp-visualization} visualization" },
+			 { "name": "Periampullary diverticulum", "text": "Major papilla located {periampullary-location} a {small-medium-large} duodenal diverticulum" },
+			 { "name": "Prior sphincterotomy", "text": "Major papilla with evidence of prior sphincterotomy" }
+		   ],
+		   "interventions": []
+		 },
 
 		 { "organ": "Liver (EUS)",
+		   "findings": [
+			 { "name": "Normal (visualized)", "text": "Normal visualized portion of the liver" },
+			 { "name": "Cyst (single)", "text": "A hepatic cyst measuring at least {#Size 1 (mm)} x {#Size 2 (mm)} mm" },
+			 { "name": "Cysts (multiple)", "text": "{few-multiple} hepatic cysts measuring up to {#Size 1 (mm)} x {#Size 2 (mm)} mm" },
+			 { "name": "Mass", "text": "A {echogenicity} mass measuring at least {#Size 1 (mm)} x {#Size 2 (mm)} mm in the liver" },
+			 { "name": "Steatosis", "text": "Hyperechoic hepatic parenchyma suggestive of steatosis" }
+		   ],
 		   "interventions": [
 			 { "name": "FNA", "text": "FNA performed ({#Passes} passes) {fnab-preliminary}" },
 			 { "name": "FNB", "text": "FNB performed ({#Passes} passes)" }
@@ -449,6 +401,9 @@
 		 },
 
 		 { "organ": "Lymph nodes (EUS)",
+		   "findings": [
+			 { "name": "No lymphadenopathy", "text": "No lymphadenopathy identified" }
+		   ],
 		   "interventions": [
 			 { "name": "FNA", "text": "FNA performed ({#Passes} passes) {fnab-preliminary}" },
 			 { "name": "FNB", "text": "FNB performed ({#Passes} passes)" }

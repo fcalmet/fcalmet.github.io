@@ -57,7 +57,7 @@
 		 { "name": "EGD", "sections": [ "Esophagus", "Stomach", "Duodenum", "Jejunum" ] },
 		 { "name": "Colonoscopy", "sections": [ "DRE", "Ileum", "Colon" ] },
 		 { "name": "Enteroscopy", "sections": [ "Esophagus", "Stomach", "Duodenum", "Jejunum", "Ileum", "Colon" ] },
-		 { "name": "ERCP", "sections": [ "Endoscopic (ERCP)", "Biliary access (ERCP)", "Cholangiogram (ERCP)" ] },
+		 { "name": "ERCP", "sections": [ "Scout film (ERCP)", "Endoscopic (ERCP)", "Biliary access (ERCP)", "Cholangiogram (ERCP)" ] },
 		 { "name": "EUS", "sections": [ "Endoscopic (EUS)", "Luminal (EUS)", "Pancreas (EUS)", "CBD (EUS)", "Gallbladder (EUS)", "Major papilla (EUS)", "Liver (EUS)", "Lymph nodes (EUS)" ] }
 	   ],
 
@@ -158,6 +158,16 @@
 		   ]
 		 },
 
+		 { "organ": "Scout film (ERCP)",
+		   "findings": [
+			 { "name": "Normal", "text": "Normal scout film" },
+			 { "name": "Cholecystectomy clips", "text": "Clips from prior cholecystectomy noted on scout film" },
+			 { "name": "Stents (metal)", "text": "{#Number} metal stent(s) noted in the {biliary-stent-location}" },
+			 { "name": "Stents (plastic)", "text": "{#Number} plastic stent(s) noted in the {biliary-stent-location}" },
+			 { "name": "Stents (metal and plastic)", "text": "{#Metal stents} metal stent(s) noted in the {biliary-stent-location} and {#Plastic stents} plastic stent(s) noted in the {biliary-stent-location}" }
+		   ]
+		 },
+
 		 { "organ": "Endoscopic (ERCP)",
 		   "findings": [
 			 { "name": "Normal", "text": "Normal esophagus, stomach, and examined duodenum on examination with the duodenoscope" },
@@ -183,7 +193,11 @@
 
 		 { "organ": "Cholangiogram (ERCP)",
 		   "findings": [
-			 { "name": "Normal", "text": "Normal esophagus, stomach, and examined duodenum on limited examination with the echoendoscope" }
+			 { "name": "Normal", "text": "Normal cholangiogram with CBD measuring {#CBD size (mm)} mm" },
+			 { "name": "CBD dilation", "text": "Cholangiogram significant for CBD dilation to {#CBD size (mm)} mm" },
+			 { "name": "CBD dilation + Filling defects", "text": "Cholangiogram significant for CBD dilation to {#CBD size (mm)} mm with {filling-defects}" },
+			 { "name": "Filling defects", "text": "Cholangiogram significant for a CBD measuring {#CBD size (mm)} mm with {filling-defects}" },
+			 { "name": "Stricture", "text": "Cholangiogram significant for a {#Length (mm)} mm long, {mild-moderate-severe}, {stricture-type} stricture in the {biliary-stricture-location} with upstream dilation to {#Upstream dilation to (mm)} mm" }
 		   ]
 		 },
 
@@ -377,6 +391,33 @@
 		   ]
 		 },
 
+		 { "organ": "Scout film (ERCP)", "interventions": [] },
+
+		 { "organ": "Endoscopic (ERCP)",
+		   "interventions": [
+			 { "name": "Stent removal", "text": "Removed with a {snare-forceps}" }
+		   ]
+		 },
+
+		 { "organ": "Biliary access (ERCP)",
+		   "interventions": [
+			 { "name": "Clip(s)", "text": "{#Number} clip(s) deployed for hemostasis" },
+			 { "name": "Epinephrine", "text": "Epinephrine injected for hemostasis" },
+			 { "name": "Epinephrine + Clip(s)", "text": "Epinephrine injected and {#Number} clip(s) deployed for hemostasis" }
+		   ]
+		 },
+
+		 { "organ": "Cholangiogram (ERCP)",
+		   "interventions": [
+			 { "name": "Balloon sweeps", "text": "Balloon sweeps performed with a {extraction-balloon-size} balloon with removal of {*stones-sludge-pus}" },
+			 { "name": "Basket sweeps", "text": "{#Stones removed} stone(s) removed with a basket" },
+			 { "name": "Stents (plastic)", "text": "{#Number} {#Width (Fr)} Fr × {#Length (cm)} cm {plastic-stent-type} plastic stents placed {stent-placement}" },
+			 { "name": "Stents (metal)", "text": "{#Number} {#Width (mm)} × {#Length (mm)} mm {metal-stent-type} self-expanding metal stent placed {stent-placement}" },
+			 { "name": "Stricture brushings", "text": "Stricture brushings performed for cytology" },
+			 { "name": "Stricture dilation", "text": "Stricture dilation performed to {#Size (mm)} mm" }
+		   ]
+		 },
+
 		 { "organ": "Endoscopic (EUS)", "interventions": [] },
 
 		 { "organ": "Luminal (EUS)",
@@ -416,9 +457,11 @@
 	   ],
 
 	   "selection": [
+		 { "name": "biliary-stent-location", "label": "Location", "options": [ "CBD", "left hepatic duct", "right hepatic duct", "left and right hepatic duct" ] },
+		 { "name": "biliary-stricture-location", "label": "Location", "options": [ "distal CBD", "mid CBD", "proximal CBD", "CHD", "left hepatic duct", "right hepatic duct", "left and right hepatic duct" ] },
 		 { "name": "bleeding-type", "label": "Bleeding", "options": [ [ "no bleeding", "without bleeding" ], [ "oozing", "with oozing of blood" ], [ "spurting", "with spurting of blood" ] ] },
-		 { "name": "colon-location", "label": "Location", "options": [ "entire colon", "cecum", "ascending colon", "hepatic flexure", "transverse colon", "splenic flexure", "descending colon", "sigmoid colon", "rectum", "ileocolic anastomosis", "colocolic anastomosis", "ileorectal anastomosis" ] },
 		 { "name": "cameron-lesions", "label": "Cameron lesions", "options": [ [ "", "" ], [ "none", " without Cameron lesions" ], [ "non-bleeding", " with non-bleeding Cameron lesions" ], [ "oozing", " with Cameron lesions with oozing" ], [ "spurting", " with Cameron lesions with spurting" ] ] },
+		 { "name": "colon-location", "label": "Location", "options": [ "entire colon", "cecum", "ascending colon", "hepatic flexure", "transverse colon", "splenic flexure", "descending colon", "sigmoid colon", "rectum", "ileocolic anastomosis", "colocolic anastomosis", "ileorectal anastomosis" ] },
 		 { "name": "consistent-suggestive", "label": "Diagnostic certainty", "options": [ [ "consistent", "consistent with" ], [ "suggestive", "suggestive of" ] ] },
 		 { "name": "cp-consistent", "label": "Diagnostic certainty", "options": [ [ "consistent (≥4 criteria)", "consistent with" ], [ "not consistent (<4 criteria)", "not consistent with" ] ] },
 		 { "name": "cp-duct", "label": "Ductal changes", "options": [ "dilation", "irregular margins", "hyperechoic margins", "visible side branches" ] },
@@ -430,20 +473,24 @@
 		 { "name": "esophageal-surgery", "label": "Surgery", "options": [ "esophagectomy with gastric pull-up", "esophagectomy with colonic interposition" ] },
 		 { "name": "esophagus-location", "label": "Location", "options": [ "entire esophagus", "proximal esophagus", "mid esophagus", "distal esophagus" ] },
 		 { "name": "eus-layer", "label": "EUS layer", "options": [ "layer 1 (superficial mucosa)", "layer 2 (deep mucosa)", "layer 3 (submucosa)", "layer 4 (muscularis propria)", "layer 5 (serosa)" ] },
-		 { "name": "fnab-preliminary", "label": "Preliminary cytology", "options": [ [ "", "" ], [ "benign", "with preliminary cytology negative for malignancy" ], [ "indeterminate", "with preliminary cytology indeterminate for malignancy" ], [ "malignant", "with preliminary cytology suggestive of malignancy" ]   ] },
+		 { "name": "extraction-balloon-size", "label": "Extraction Balloon", "options": [ "9-12 mm", "12-15 mm", "15-18 mm" ] },
 		 { "name": "few-multiple", "label": "Few/multiple", "options": [ [ "few", "a few" ], [ "multiple", "multiple" ] ] },
+		 { "name": "filling-defects", "label": "Filling defects", "options": [ [ "single", "a filling defect suggestive of a stone" ], [ "few", "a few filling defects suggestive of stones" ], [ "multiple", "multiple filling defects suggestive of stones" ], [ "sluldge", "filling defects suggestive of sludge" ] ] },
+		 { "name": "fnab-preliminary", "label": "Preliminary cytology", "options": [ [ "", "" ], [ "benign", "with preliminary cytology negative for malignancy" ], [ "indeterminate", "with preliminary cytology indeterminate for malignancy" ], [ "malignant", "with preliminary cytology suggestive of malignancy" ]   ] },
 		 { "name": "gastric-surgery", "label": "Surgery", "options": [ "Rouy-en-Y gastric bypass", "sleeve gastrectomy", "Billroth I anastomosis", "Billroth II anastomosis" ] },
 		 { "name": "gastropathy-type", "label": "Gastropathy type", "options": [ "", "erythematous", "erosive", "portal hypertensive" ] },
 		 { "name": "gastroscope-type", "label": "Gastroscope type", "options": [ "adult gastroscope", "ultraslim gastroscope" ] },
 		 { "name": "gev-hrs", "label": "High risk stigmata", "options": [ [ "", "" ], [ "no", "without high risk stigmata" ], [ "yes", "with high risk stigmata" ] ] },
 		 { "name": "gv-type", "label": "GV Type", "options": [ [ "GOV1 (lesser curvature)", "lesser curvature in continuity with esophageal varices (GOV1)" ], [ "GOV2 (fundal)", "gastric fundus in continuity with esophageal varices (GOV2)" ], [ "IGV1 (fundus)", "gastric fundus (IGV1)" ], [ "IGV2 (body)", "gastric body (IGV2)" ], [ "IGV2 (antrum)", "gastric antrum (IGV2)" ] ] },
 		 { "name": "la-grade", "label": "LA grade", "options": [ "A", "B", "C", "D" ] },
+		 { "name": "metal-stent-type", "label": "Stent type", "options": [ "uncovered", "partially covered", "fully covered" ] },
 		 { "name": "mild-moderate-severe", "label": "Severity", "options": [ "mild", "moderate", "severe" ] },
 		 { "name": "mp-visualization", "label": "Visualization", "options": [ "endoscopic and endosonographic", "endosonographic", "endoscopic" ] },
 		 { "name": "pancreas-location", "label": "Location", "options": [ "pancreatic uncinate process", "pancreatic head", "pancreatic neck", "pancreatic body", "pancreatic tail" ] },
 		 { "name": "pancreatic-cyst-risk-features", "label": "High-risk features", "options": [ [ "none", "without high risk features" ], [ "thin septae", "with thin septae" ], [ "thick septae", "with this septae" ], [ "mural nodule", "with a mural nodule" ] ] },
 		 { "name": "periampullary-location", "label": "Location", "options": [ [ "entirely within", "entirely within" ], [ "partially within", "partially within a" ], [ "on the rim", "on the rim of" ], [ "adjacent", "adjacent to" ] ] },
 		 { "name": "plastic-metal", "label": "Stent type", "options": [ "plastic", "metal" ] },
+		 { "name": "plastic-stent-type", "label": "Stent type", "options": [ "straight", "double pigtail", "single pigtail" ] },
 		 { "name": "polyp-morphology", "label": "Morphology", "options": [ "sessile", "flat", "pedunculated", "carpetted" ] },
 		 { "name": "polyps-morphology", "label": "Morphology", "options": [ "sessile", "flat", "pedunculated", "carpetted", "sessile/flat", "sessile/pedunculated", "flat/pedunculated" ] },
 		 { "name": "pud-forrest", "label": "Forrest classification", "options": [ "pulsatile bleeding (Forrest Ia)", "oozing of blood (Forrest Ib)", "a visible vessel (Forrest IIa)", "an adherent clot (Forrest IIb)", "a pigmented spot (Forrest IIc)", "a clean-base (Forrest III)" ] },
@@ -451,13 +498,15 @@
 		 { "name": "single-few-multiple-angiectasias", "label": "Number", "options": [ ["single", "a single angiectasia"], ["few", "a few angiectasias"], ["multiple", "multiple angiectasias"] ] },
 		 { "name": "small-large", "label": "Size", "options": [ "small", "large" ] },
 		 { "name": "small-medium-large", "label": "Size", "options": [ "small", "medium", "large" ] },
+		 { "name": "snare-forceps", "label": "Snare/forceps", "options": [ "snare", "forceps" ] },
 		 { "name": "sphincterotome-balloon", "label": "Cannulated with", "options": [ [ "sphincterotome", "a sphincterotome" ], [ "balloon", "an extraction balloon" ] ] },
 		 { "name": "sr-obstructing", "label": "Obstructing?", "options": [ "Widely patent, non-obstructing", "Partially obstructing", "Obstructing" ] },
-		 { "name": "stent-removal", "label": "Stent removal", "options": [ [ "", "" ], [ "with snare", "Removed with snare" ], [ "with forceps", "Removed with forceps" ] ] },
+		 { "name": "stent-placement", "label": "Location", "options": [ [ "stricture", "across the stricture" ], [ "CBD", "in the CBD" ], [ "left hepatic duct", "in the left hepatic duct" ], [ "right hepatic duct", "in the right hepatic duct" ], [ "left/right hepatic ducts", "in the left and right hepatic ducts" ] ] },
 		 { "name": "stomach-location", "label": "Location", "options": [ "gastric fundus", "gastric body", "gastric antrum", "cardia", "incisura", "pylorus", "gastrojejunal anastomosis" ] },
 		 { "name": "stomach-location-modifier", "label": "Location", "options": [ [ "", "" ], [ "greater curvature", "greater curvature of the" ], [ "lesser curvature", "lesser curvature of the" ], [ "anterior wall", "anterior wall of the" ], [ "posterior wall", "posterior wall of the" ] ] },
 		 { "name": "stones-sludge", "label": "Stones/sludge", "options": [ [ "none", "without stones/sludge" ], [ "sludge", "with sludge" ], [ "stone (one)", "with a stone" ], [ "stones (few)", "with a few stones" ], [ "sludge/stones", "with sludge and stones" ] ] },
-		 { "name": "stricture-type", "label": "Appearance", "options": [ "Benign-appearing", "Malignant-appearing", "Indeterminate" ] },
+		 { "name": "stones-sludge-pus", "label": "Stones/sludge/pus", "options": [ [ "stone (single)", "a stone" ], [ "stones (few)", "a few stones" ], [ "stones (multiple)", "multiple stones" ],[ "stones (fragments)", "stone fragments" ], [ "sludge", "sludge" ], [ "pus", "pus" ] ] },
+		 { "name": "stricture-type", "label": "Appearance", "options": [ "benign-appearing", "malignant-appearing", "indeterminate" ] },
 		 { "name": "traversable", "label": "Traversable", "options": [ "traversable", "not traversable" ] },
 		 { "name": "uc-extent", "label": "UC extent", "options": [ "left-sided UC", "pancolonic UC" ] },
 		 { "name": "uc-mayo", "label": "Severity", "options": [ "Mayo 0", "Mayo 1", "Mayo 2", "Mayo 3" ] }

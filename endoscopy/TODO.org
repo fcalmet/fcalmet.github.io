@@ -44,21 +44,21 @@
 
 * ERCP
 - [X] periampullary diverticulum
-- [ ] scout film
+- [X] scout film
 - [X] cannulation: double wire, over PD stent
 - [X] sphincterotomy
 - [X] precut
 - [X] sphincteroplasty
-- [ ] stenosis
-- [ ] brushings
+- [X] stenosis
+- [X] brushings
 - [ ] cholangioscopy
-- [ ] TTS dilation
-- [ ] balloon sweeps
-- [ ] basket
-- [ ] stones
+- [X] TTS dilation
+- [X] balloon sweeps
+- [X] basket
+- [X] stones
 - [ ] post-sphincterotomy bleeding
 - [X] prior sphincterotomy
-- [ ] CBD dilation
+- [X] CBD dilation
 - [ ] selective cannulation of left/right systems
 - [ ] epi injection
 - [ ] clips

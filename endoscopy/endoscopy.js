@@ -49,7 +49,7 @@ function populateFindingList(procedure) {
 /** POPULATE DIVS **/
 /*******************/
 
-function populateDivOptions(div, options, eventCtrlEnter = null, eventEnter = null) {
+function populateDivOptions(div, options, eventCtrlEnter = null, eventEnter = null, eventDblClick = null) {
   const divOptions = $(div);
   clearDiv(div);
   var index = 0;
@@ -80,17 +80,9 @@ function populateDivOptions(div, options, eventCtrlEnter = null, eventEnter = nu
 	  if (selOption.label) {
 		divOptions.append(createLabel(selOption.label, selOption.name));
 	  }
-	  const select = createSelect(id, selOption.options.length, multiSelect, 'keydown',
-								  (event) => {
-									if (event.ctrlKey && event.key === 'Enter' && eventCtrlEnter !== null) {
-									  event.preventDefault();
-									  eventCtrlEnter();
-									} else if (event.key === 'Enter' && eventEnter !== null) {
-									  event.preventDefault();
-									  eventEnter();
-									}
-								  }
-								 );
+
+	  const select = createSelect(id, selOption.options.length, multiSelect, eventCtrlEnter, eventEnter, eventDblClick);
+
 	  selOption.options.forEach(option => {
 		if (typeof(option) === 'string') option = [option, option];
 		select.appendChild(createOption(option[0], option[1]));
@@ -132,7 +124,7 @@ function selectProcedure() {
 function selectFinding() {
   const selectedOption = $('finding-list').selectedOptions[0];
   const options = getOptions(selectedOption.value);
-  populateDivOptions('finding-options', options, addFinding, addFinding);
+  populateDivOptions('finding-options', options, addFinding, addFinding, addFinding);
   const organ = selectedOption.dataset.organ;
   const section = db.sections.find(it => it.organ === organ);
   populateInterventions(section.interventions);
@@ -142,7 +134,7 @@ function selectFinding() {
 function selectIntervention() {
   console.log('selectIntervention');
   const options = getOptions($('intervention-list').selectedOptions[0].value);
-  populateDivOptions('intervention-options', options, addFinding, addIntervention);
+  populateDivOptions('intervention-options', options, addFinding, addIntervention, addIntervention);
 }
 
 function addIntervention() {
@@ -276,13 +268,21 @@ function createInputNumber(id = '', eventName = false, eventFunction = null) {
   return element;
 }
 
-function createSelect(id = '', size = 1, multiSelect = false, eventName = false, eventFunction = null) {
+function createSelect(id = '', size = 1, multiSelect = false, eventCtrlEnter = null, eventEnter = null, eventDblClick = null) {
   const element = document.createElement('select');
   element.id = id;
   element.size = size;
   element.multiple = multiSelect;
-  if (eventName)
-	element.addEventListener(eventName, eventFunction);
+  element.addEventListener('keydown', (event) => {
+	if (event.ctrlKey && event.key === 'Enter' && eventCtrlEnter !== null) {
+	  event.preventDefault();
+	  eventCtrlEnter();
+	} else if (event.key === 'Enter' && eventEnter !== null) {
+	  event.preventDefault();
+	  eventEnter();
+	}
+  });
+  element.addEventListener('dblclick', eventDblClick);
   return element;
 }
 

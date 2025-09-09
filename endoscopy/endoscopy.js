@@ -62,15 +62,7 @@ function populateDivOptions(div, options, eventCtrlEnter = null, eventEnter = nu
 	if (opt[0] === '#') { // ADD NUMBER
 	  divOptions.append(
 		createLabel(opt.slice(1), id),
-		createInputNumber(id, 'keydown', (event) => {
-		  if (event.ctrlKey && event.key === 'Enter' && eventCtrlEnter !== null) {
-			event.preventDefault();
-			eventCtrlEnter();
-		  } else if (event.key === 'Enter' && eventEnter !== null) {
-			event.preventDefault();
-			eventEnter();
-		  }
-		})
+		createInputNumber(id, 'keydown', eventCtrlEnter, eventEnter)
 	  );
 	} else {
 	  const multiSelect = opt[0] === '*';
@@ -259,12 +251,19 @@ function createLabel(textContent = '', htmlFor = '') {
   return element;
 }
 
-function createInputNumber(id = '', eventName = false, eventFunction = null) {
+function createInputNumber(id = '', eventCtrlEnter = null, eventEnter = null) {
   const element = document.createElement('input');
   element.type = 'number';
   element.id = id;
-  if (eventName)
-	element.addEventListener(eventName, eventFunction);
+  element.addEventListener('keydown', (event) => {
+	if (event.ctrlKey && event.key === 'Enter' && eventCtrlEnter !== null) {
+	  event.preventDefault();
+	  eventCtrlEnter();
+	} else if (event.key === 'Enter' && eventEnter !== null) {
+	  event.preventDefault();
+	  eventEnter();
+	}
+  });
   return element;
 }
 

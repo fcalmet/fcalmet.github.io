@@ -43,6 +43,7 @@
 - [ ] LAMS
 
 * ERCP
+- [ ] balloon sweeps with nothing removed
 - [X] periampullary diverticulum
 - [X] scout film
 - [X] cannulation: double wire, over PD stent

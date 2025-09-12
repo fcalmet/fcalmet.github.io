@@ -41,6 +41,8 @@
 - [X] steatosis
 - [ ] lymphadenopathy
 - [ ] LAMS
+- [ ] anechoic
+- [ ] duplication cyst
 
 * ERCP
 - [ ] balloon sweeps with nothing removed

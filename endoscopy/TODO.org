@@ -5,40 +5,20 @@
   - [ ] Sum: [sumcount 1, 2, 3] → sum count of index 1, 2, 3
   - [ ] Count: [sum 1, 2, 3] → sum value from number 1, 2, 3
   - [ ] If sum count greater than: [if_sumcount 1, 2, 3 > 4 ? string1 : string2] → if sumcount 1,2,3 is >4, return string1 else string2
+- [ ] EMR: include wording for NBI demarcation and lifting
 
 * EGD
-- [X] previously placed clips
-- [X] Cameron lesions
-- [X] hiatal hernia
-- [X] achalasia
-- [X] sel
-- [X] ectopic pancreas
-- [x] gastrojejunal anastomosis as location (for strictures, ulcers)
-- [x] remove combined locations (e.g. gastric fundus/body and body/antrum)
-- [X] add stenosis for stomach (for GJA stenosis for example)
-- [X] add Ovesco
+- [ ] post-operative anatomy
 
 * Colonoscopy
 - [ ] Crohn disease
 - [ ] stricture
-- [ ] post-operative anatomy
-- [X] add coagrasper
-- [X] add Ovesco
 
 * Enteroscopy
 - [ ] lymphangiectasias
 - [ ] tattoo placed at deepest extent reached
 
 * EUS
-- [X] subepithelial lesion
-- [X] pancreatic cyst
-- [X] fiducials
-- [X] chronic pancreatitis
-- [X] gallbladder polyps
-- [X] gallbladder stones
-- [X] CBD stones/dilation
-- [X] liver cysts
-- [X] steatosis
 - [ ] lymphadenopathy
 - [ ] LAMS
 - [ ] anechoic
@@ -46,22 +26,9 @@
 
 * ERCP
 - [ ] balloon sweeps with nothing removed
-- [X] periampullary diverticulum
-- [X] scout film
-- [X] cannulation: double wire, over PD stent
-- [X] sphincterotomy
-- [X] precut
-- [X] sphincteroplasty
-- [X] stenosis
-- [X] brushings
+- [ ] separate biliary interventions from finding
 - [ ] cholangioscopy
-- [X] TTS dilation
-- [X] balloon sweeps
-- [X] basket
-- [X] stones
 - [ ] post-sphincterotomy bleeding
-- [X] prior sphincterotomy
-- [X] CBD dilation
 - [ ] selective cannulation of left/right systems
 - [ ] epi injection
 - [ ] clips

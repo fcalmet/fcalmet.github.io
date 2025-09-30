@@ -521,6 +521,86 @@ function calculateVocalPenn() {
   setResult(interpretation)
 }
 
+/*************************/
+/** VCTE interpretation **/
+/*************************/
+
+function getVcte(etiology, ls, cap) {
+  const db = {
+	"chen2016": { "steatosis": [222, 247, 274], "sn": [0.89, 0.81, 1], "sp": [0.85, 0.93, 0.86], "ppv": [0.86, 0.97, 0.32], "npv": [0.89, 0.81, 1] },
+	"desai2016": { "steatosis": [225], "sn": [0.87], "sp": [0.83], "ppv": [0.71], "npv": [0.93] },
+	"eddowes2019": { "steatosis": [302, 331, 337], "sn": [0.8, 0.7, 0.72], "sp": [0.83, 0.76, 0.63], "ppv": [0.97, 0.84, 0.52], "npv": [0.37, 0.58, 0.8] },
+	"eddowes2019-Sn": { "steatosis": [274, 290, 302], "sn": [0.9, 0.9, 0.9], "sp": [0.6, 0.44, 0.38], "ppv": [0.94, 0.74, 0.45], "npv": [0.47, 0.71, 0.87] },
+	"eddowes2019-Sp": { "steatosis": [325, 370, 398], "sn": [0.66, 0.34, 0.14], "sp": [0.9, 0.9, 0.9], "ppv": [0.98, 0.86, 0.44], "npv": [0.27, 0.43, 0.65] },
+	"karlas2014": { "steatosis": [234, 269, 301], "sn": [0.93, 0.97, 0.82], "sp": [0.87, 0.81, 0.76] },
+	"karlas2017": { "steatosis": [248, 268, 280], "sn": [0.69, 0.77, 0.88], "sp": [0.82, 0.81, 0.78] },
+	"petroff2021": { "steatosis": [230, 264], "sn": [0.71, 0.76], "sp": [0.68, 0.79] },
+	"sasso2012": { "steatosis": [222, 233, 290], "sn": [0.76, 0.87, 0.78], "sp": [0.71, 0.74, 0.93], "ppv": [0.53, 0.33, 0.15], "npv": [0.87, 0.98, 1] },
+	"afdhal2015": { "fibrosis": [0, 8.4, 9.6, 12.8], "sn": [0, 0.82, 0.88, 0.84], "sp": [0, 0.79, 0.82, 0.86], "ppv": [0, 0.76, 0.69, 0.6], "npv": [0, 0.85, 0.94, 0.96] },
+	"castera2005": { "fibrosis": [0, 7.1, 9.5, 12.5], "sn": [0, 0.67, 0.73, 0.87], "sp": [0, 0.89, 0.91, 0.91], "ppv": [0, 0.95, 0.87, 0.77], "npv": [0, 0.48, 0.81, 0.95] },
+	"chon2012": { "fibrosis": [0, 7.9, 8.8, 11.7], "sn": [0, 0.74, 0.74, 0.85], "sp": [0, 0.78, 0.64, 0.82] },
+	"corpechot2012": { "fibrosis": [7.1, 8.8, 10.7, 16.9], "sn": [0.64, 0.67, 0.9, 0.93], "sp": [1, 1, 0.93, 0.99], "ppv": [1, 1, 0.84, 0.93], "npv": [0.25, 0.75, 0.96, 0.99] },
+	"eddowes2019": { "fibrosis": [0, 8.2, 9.7, 13.6], "sn": [0, 0.71, 0.71, 0.85], "sp": [0, 0.7, 0.75, 0.79], "ppv": [0, 0.78, 0.63, 0.29], "npv": [0, 0.61, 0.81, 0.98] },
+	"eddowes2019-Sn": { "fibrosis": [0, 6.1, 7.1, 10.9], "sn": [0, 0.9, 0.9, 0.9], "sp": [0, 0.38, 0.5, 0.7], "ppv": [0, 0.69, 0.52, 0.23], "npv": [0, 0.72, 0.89, 0.99] },
+	"eddowes2019-Sp": { "fibrosis": [0, 12.1, 14.1, 20.9], "sn": [0, 0.44, 0.48, 0.59], "sp": [0, 0.9, 0.9, 0.9], "ppv": [0, 0.88, 0.74, 0.37], "npv": [0, 0.52, 0.74, 0.96] },
+	"hartl2016": { "fibrosis": [0, 5.8, 10.4, 16.0], "sn": [0, 0.9, 0.83, 0.88], "sp": [0, 0.72, 0.98, 1], "ppv": [0, 0.83, 0.92, 1], "npv": [0, 0.84, 0.91, 0.98] },
+	"lee2018": { "fibrosis": [0, 0, 8.6, 11.5], "sn": [0, 0, 0.79, 0.83], "sp": [0, 0, 0.83, 0.84], "ppv": [0, 0, 0.71, 0.54], "npv": [0, 0, 0.88, 0.96] },
+	"li2016": { "fibrosis": [0, 7.2, 9.4, 12.2], "sn": [0, 0.81, 0.82, 0.86], "sp": [0, 0.82, 0.87, 0.88] },
+	"nguyen-khac2018": { "fibrosis": [7.0, 9.0, 12.1, 18.6], "sn": [0.79, 0.78, 0.81, 0.84], "sp": [0.71, 0.77, 0.83, 0.85], "ppv": [0.94, 0.9, 0.85, 0.74], "npv": [0.38, 0.49, 0.72, 0.87] },
+	"pavlov2016": { "fibrosis": [0, 7.5, 9.5, 12.5], "sn": [0, 0.94, 0.92, 0.95], "sp": [0, 0.89, 0.7, 0.71] },
+	"sanchez-conde2010": { "fibrosis": [0, 7, 11.5, 14], "sn": [0, 0.77, 0.8, 1], "sp": [0, 0.75, 0.91, 0.94], "ppv": [0, 0.7, 0.6, 0.57], "npv": [0, 0.81, 0.96, 1] },
+	"siddiqui2019-Sn": { "fibrosis": [4.9, 5.6, 6.5, 12.1], "sn": [0.9, 0.9, 0.9, 0.9], "sp": [0.31, 0.44, 0.47, 0.82], "ppv": [0.8, 0.62, 0.45, 0.34], "npv": [0.48, 0.81, 0.91, 0.99] },
+	"siddiqui2019-Sp": { "fibrosis": [9.4, 11.9, 12.1, 14.9], "sn": [0.46, 0.4, 0.52, 0.69], "sp": [0.9, 0.9, 0.9, 0.9], "ppv": [0.93, 0.8, 0.71, 0.41], "npv": [0.34, 0.59, 0.8, 0.97] },
+	"tsochatzis2011": { "fibrosis": [6.5, 7.2, 9.6, 14.5], "sn": [0.78, 0.79, 0.82, 0.83], "sp": [0.83, 0.78, 0.86, 0.89] },
+	"wong2010": { "fibrosis": [0, 7, 8.7, 10.3], "sn": [0, 0.79, 0.84, 0.92], "sp": [0, 0.76, 0.83, 0.88], "ppv": [0, 0.7, 0.6, 0.46], "npv": [0, 0.84, 0.95, 0.99] }
+  }
+
+  const etiologySteatosisMap = { "multietiology": [ "karlas2017" ], "alcohol": [ "karlas2017" ], "aih": [ "karlas2017" ], "pbc": [ "karlas2017" ], "hbv": [ "petroff2021", "chen2016", "karlas2017" ], "hiv-hcv": [ "karlas2017" ], "hcv": [ "petroff2021", "sasso2012", "karlas2017" ], "nash-nafld": [ "petroff2021", "karlas2017", "karlas2014", "eddowes2019", "eddowes2019-Sn", "eddowes2019-Sp" ], "pediatric": [ "desai2016" ] }
+  const etiologyFibrosisMap = { "multietiology": [ "tsochatzis2011" ], "alcohol": [ "nguyen-khac2018", "tsochatzis2011", "pavlov2016" ], "aih": [ "hartl2016", "tsochatzis2011" ], "pbc": [ "corpechot2012", "tsochatzis2011" ], "hbv": [ "li2016", "chon2012", "tsochatzis2011" ], "hiv-hcv": [ "sanchez-conde2010", "tsochatzis2011" ], "hcv": [ "castera2005", "afdhal2015", "tsochatzis2011" ], "nash-nafld": [ "eddowes2019", "eddowes2019-Sn", "eddowes2019-Sp", "siddiqui2019-Sn", "siddiqui2019-Sp", "wong2010", "tsochatzis2011" ], "pediatric": [ "lee2018" ] }
+
+  const steatosisCutoffs = db[etiologySteatosisMap[etiology][0]].steatosis
+  const fibrosisCutoffs = db[etiologyFibrosisMap[etiology][0]].fibrosis
+
+  const steatosis = (cap < steatosisCutoffs[0]) ? "S0" :
+		(steatosisCutoffs.length === 1) ?  "S1-S3" :
+		(cap < steatosisCutoffs[1]) ? (steatosisCutoffs[0] === 0 ? "S0-S1" : "S1") :
+		(steatosisCutoffs.length === 2) ? "S2-S3" :
+		(cap < steatosisCutoffs[2]) ? (steatosisCutoffs[1] === 0 ? "S0-S2" : "S2") : "S3"
+
+  const fibrosis = (ls < fibrosisCutoffs[0]) ? "F0" :
+		(fibrosisCutoffs.length === 1) ? "F1-F4" :
+		(ls < fibrosisCutoffs[1]) ? (fibrosisCutoffs[0] === 0 ? "F0-F1" : "F1") :
+		(fibrosisCutoffs.length === 2) ? "F2-F4" :
+		(ls < fibrosisCutoffs[2]) ? (fibrosisCutoffs[1] === 0 ? "F0-F2" : "F2") :
+		(fibrosisCutoffs.length === 3) ? "F3-F4" :
+		(ls < fibrosisCutoffs[3]) ? (fibrosisCutoffs[2] === 0 ? "F0-F3" : "F3") : "F4"
+
+  return {
+	steatosis: steatosis,
+	fibrosis: fibrosis
+  }
+}
+
+function getVcteInterpretation(vcte) {
+  return `
+	<ul>
+	  <li>VCTE
+		<ul><li>Steatosis: ${vcte.steatosis}</li></ul>
+		<ul><li>Fibrosis: ${vcte.fibrosis}</li></ul>
+	  </li>
+	</ul>`
+}
+
+function calculateVcte() {
+  const etiology = document.querySelector('input[name="etiology"]:checked').value
+  const ls = parseFloat(document.getElementById('ls').value) || -1;
+  const cap = parseFloat(document.getElementById('cap').value) || -1;
+  if (ls < 0 || cap < 0) return setResult()
+  const vcte = getVcte(etiology, ls, cap)
+  const interpretation = getVcteInterpretation(vcte)
+  setResult(interpretation)
+}
+
 /******************/
 /** CLIF-OF/AD/C **/
 /******************/

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--
+	 Copyright (C) 2025 by Fernando Calmet
+
+	 Author: Fernando Calmet
+
+	 This program is free software; you can redistribute it and/or modify
+	 it under the terms of the GNU General Public License as published by
+	 the Free Software Foundation, either version 3 of the License, or
+	 (at your option) any later version.
+
+	 This program is distributed in the hope that it will be useful,
+	 but WITHOUT ANY WARRANTY; without even the implied warranty of
+	 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	 GNU General Public License for more details.
+
+	 You should have received a copy of the GNU General Public License
+	 along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<html lang="en">
+  <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>VCTE</title>
+	<link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+	<h1>VCTE Calculator</h1>
+	<div class="app-container two">
+	  <div class="panel">
+
+		<div class="radio-field">
+		  <label for="etiology">Etiology:</label>
+		  <div id="etiology">
+			<label><input type="radio" onchange="calculateVcte()" name="etiology" value="multietiology" checked /> Multietiology</label>
+			<label><input type="radio" onchange="calculateVcte()" name="etiology" value="alcohol" /> Alcohol</label>
+			<label><input type="radio" onchange="calculateVcte()" name="etiology" value="aih" /> AIH</label>
+			<label><input type="radio" onchange="calculateVcte()" name="etiology" value="pbc" /> PBC</label>
+			<label><input type="radio" onchange="calculateVcte()" name="etiology" value="hbv" /> HBV</label>
+			<label><input type="radio" onchange="calculateVcte()" name="etiology" value="hiv-hcv" /> HIV/HCV</label>
+			<label><input type="radio" onchange="calculateVcte()" name="etiology" value="hcv" /> HCV</label>
+			<label><input type="radio" onchange="calculateVcte()" name="etiology" value="nash-nafld" /> NASH/NAFLD</label>
+			<label><input type="radio" onchange="calculateVcte()" name="etiology" value="pediatric" /> Pediatric</label>
+		  </div>
+		</div>
+
+		<div class="text-field">
+          <label for="ls">Liver stiffness (<em>kPa</em>):</label>
+          <input type="number" oninput="calculateVcte()" id="ls" />
+		</div>
+
+		<div class="text-field">
+          <label for="cap">Controlled attenuation parameter (<em>dB/m</em>):</label>
+          <input type="number" oninput="calculateVcte()" id="cap" />
+		</div>
+
+	  </div>
+	  <div class="panel results">
+		<h2>Results</h2>
+		<div id="result"></div>
+	  </div>
+	</div>
+	<footer id="footer-nav"></footer>
+	<script src="hepatology.js"></script>
+  </body>
+</html>

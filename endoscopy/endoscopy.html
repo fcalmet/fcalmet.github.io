@@ -57,7 +57,7 @@
 		 { "name": "EGD", "sections": [ "Esophagus", "Stomach", "Duodenum", "Jejunum" ] },
 		 { "name": "Colonoscopy", "sections": [ "DRE", "Ileum", "Colon" ] },
 		 { "name": "Enteroscopy", "sections": [ "Esophagus", "Stomach", "Duodenum", "Jejunum", "Ileum", "Colon" ] },
-		 { "name": "ERCP", "sections": [ "Scout film (ERCP)", "Endoscopic (ERCP)", "Biliary access (ERCP)", "Cholangiogram (ERCP)" ] },
+		 { "name": "ERCP", "sections": [ "Scout film (ERCP)", "Endoscopic (ERCP)", "Biliary access (ERCP)", "Cholangiogram (ERCP)", "Biliary interventions (ERCP)" ] },
 		 { "name": "EUS", "sections": [ "Endoscopic (EUS)", "Luminal (EUS)", "Pancreas (EUS)", "CBD (EUS)", "Gallbladder (EUS)", "Major papilla (EUS)", "Liver (EUS)", "Lymph nodes (EUS)" ] }
 	   ],
 
@@ -310,13 +310,19 @@
 			 { "name": "Filling defects", "text": "Cholangiogram significant for a CBD measuring {#CBD size (mm)} mm with {filling-defects}" },
 			 { "name": "Stricture", "text": "Cholangiogram significant for a {#Length (mm)} mm long, {mild-moderate-severe}, {stricture-type} stricture in the {biliary-stricture-location} with upstream dilation to {#Upstream dilation to (mm)} mm" }
 		   ],
-		   "interventions": [
+		   "interventions": []
+		 },
+
+		 { "organ": "Biliary interventions (ERCP)",
+		   "findings": [
 			 { "name": "Balloon sweeps", "text": "Balloon sweeps performed with a {extraction-balloon-size} balloon with removal of {*stones-sludge-pus}" },
 			 { "name": "Basket sweeps", "text": "{#Stones removed} stone(s) removed with a basket" },
 			 { "name": "Stents (plastic)", "text": "{#Number} {#Width (Fr)} Fr × {#Length (cm)} cm {plastic-stent-type} plastic stents placed {stent-placement}" },
 			 { "name": "Stents (metal)", "text": "{#Number} {#Width (mm)} × {#Length (mm)} mm {metal-stent-type} self-expanding metal stent placed {stent-placement}" },
 			 { "name": "Stricture brushings", "text": "Stricture brushings performed for cytology" },
 			 { "name": "Stricture dilation", "text": "Stricture dilation performed to {#Size (mm)} mm" }
+		   ],
+		   "interventions": [
 		   ]
 		 },
 

@@ -527,6 +527,26 @@ function calculateVocalPenn() {
 
 function getVcte(etiology, ls, cap) {
   const db = {
+	"rinella": { "steatosis": [0, 288], "sn": [0, 0.75], "sp": [0, 0.77], "ppv": [0, 0.887], "npv": [0, 0.56] },
+	"sterling": { "steatosis": [275], "sn": [0], "sp": [0] },
+	"petroff": { "steatosis": [294, 310, 331], "sn": [0.79, 0.79, 0.72], "sp": [0.74, 0.59, 0.62] },
+	"duarte-rojo-masld": { "fibrosis": [0, 7.0, 10.0, 13.0], "sn": [0, 0.76, 0.82, 0.9], "sp": [0, 0.73, 0.79, 0.89] },
+	"eddowes": { "fibrosis": [0, 8.2, 9.7, 13.6], "sn": [0, 0.71, 0.71, 0.85], "sp": [0, 0.7, 0.75, 0.79], "ppv": [0, 0.78, 0.63, 0.29], "npv": [0, 0.61, 0.81, 0.98] },
+	"eddowes-sn": { "fibrosis": [0, 6.1, 7.1, 10.9], "sn": [0, 0.9, 0.9, 0.9], "sp": [0, 0.38, 0.5, 0.7], "ppv": [0, 0.69, 0.52, 0.23], "npv": [0, 0.72, 0.89, 0.99] },
+	"eddowes-sp": { "fibrosis": [0, 12.1, 14.1, 20.9], "sn": [0, 0.44, 0.48, 0.59], "sp": [0, 0.9, 0.9, 0.9], "ppv": [0, 0.88, 0.74, 0.37], "npv": [0, 0.52, 0.74, 0.96] },
+	"nobili": { "fibrosis": [5.1, 7.4, 10.2], "sn": [0.97, 1, 1], "sp": [0.91, 0.92, 1], "ppv": [0.97, 0.8, 1], "npv": [0.91, 1, 1] },
+	"nguyen-khac": { "fibrosis": [7.0, 9.0, 12.1, 18.6], "sn": [0.79, 0.78, 0.81, 0.84], "sp": [0.71, 0.77, 0.83, 0.85], "ppv": [0.94, 0.9, 0.85, 0.74], "npv": [0.38, 0.49, 0.72, 0.87] },
+	"duarte-rojo-hcv": { "fibrosis": [0, 7.0, 10.0, 13.0], "sn": [0, 0.75, 0.87, 0.88], "sp": [0, 0.84, 0.88, 0.94] },
+	"duarte-rojo-hbv": { "fibrosis": [0, 7.0, 8.0, 11.0], "sn": [0, 0.69, 0.87, 0.81], "sp": [0, 0.83, 0.83, 0.87] },
+	"li": { "fibrosis": [0, 7.2, 9.4, 12.2], "sn": [0, 0.81, 0.82, 0.86], "sp": [0, 0.82, 0.87, 0.88] },
+	"sandmann": { "fibrosis": [0, 0, 10.2, 12.5], "sn": [0, 0, 0.55, 0.91], "sp": [0, 0, 0.86, 0.84], "ppv": [0, 0, 0.9, 0.5], "npv": [0, 0, 0.45, 0.98] },
+	"roulot": { "fibrosis": [0, 8.0, 10.4, 12.0], "sn": [0, 0.75, 0.7, 0.7], "sp": [0, 0.72, 0.83, 0.86], "ppv": [0, 0.91, 0.52, 0.72], "npv": [0, 0.42, 0.72, 0.85] },
+	"duarte-rojo-pbc": { "fibrosis": [0, 8.8, 10.7, 16.9], "sn": [0, 0.67, 0.9, 0.93], "sp": [0, 1, 0.93, 0.99] },
+	"corpechot": { "fibrosis": [7.1, 8.8, 10.7, 16.9], "sn": [0.64, 0.67, 0.9, 0.93], "sp": [1, 1, 0.93, 0.99], "ppv": [1, 1, 0.84, 0.93], "npv": [0.25, 0.75, 0.96, 0.99] },
+	"duarte-rojo-psc": { "fibrosis": [0, 8.7, 9.6, 14.4], "sn": [0, 0, 0.9, 0], "sp": [0, 0, 0, 0] },
+	"legros": { "fibrosis": [0, 6.4, 13.9], "sn": [0, 1, 0.64], "sp": [0, 0.81, 1], "ppv": [0, 0.61, 1], "npv": [0, 1, 0.9] },
+	"paternostro": { "fibrosis": [0, 0, 0, 9.9], "sn": [0, 0, 0, 1], "sp": [0, 0, 0, 0.83] },
+	  
 	"chen2016": { "steatosis": [222, 247, 274], "sn": [0.89, 0.81, 1], "sp": [0.85, 0.93, 0.86], "ppv": [0.86, 0.97, 0.32], "npv": [0.89, 0.81, 1] },
 	"desai2016": { "steatosis": [225], "sn": [0.87], "sp": [0.83], "ppv": [0.71], "npv": [0.93] },
 	"eddowes2019": { "steatosis": [302, 331, 337], "sn": [0.8, 0.7, 0.72], "sp": [0.83, 0.76, 0.63], "ppv": [0.97, 0.84, 0.52], "npv": [0.37, 0.58, 0.8] },
@@ -555,6 +575,8 @@ function getVcte(etiology, ls, cap) {
 	"wong2010": { "fibrosis": [0, 7, 8.7, 10.3], "sn": [0, 0.79, 0.84, 0.92], "sp": [0, 0.76, 0.83, 0.88], "ppv": [0, 0.7, 0.6, 0.46], "npv": [0, 0.84, 0.95, 0.99] }
   }
 
+//  const etiologySteatosisMap = { "masld": [ "rinella", "sterling", "petroff" ], "pmasld": [ "rinella", "sterling" ], "ald": [ "rinella", "sterling" ], "hcv": [ "rinella", "sterling" ], "hbv": [ "rinella", "sterling" ], "hbv-hdv": [ "rinella", "sterling" ], "pbc": [ "rinella", "sterling" ], "psc": [ "rinella", "sterling" ], "hh": [ "rinella", "sterling" ], "wd": [ "rinella", "sterling" ] }
+//  const etiologyFibrosisMap = { "masld": [ "duarte-rojo-masld", "eddowes" ], "pmasld": [ "nobili" ], "ald": [ "nguyen-khac" ], "hcv": [ "duarte-rojo-hcv", "castera", "afdhal" ], "hbv": [ "duarte-rojo-hbv", "li" ], "hbv-hdv": [ "sandmann", "roulot" ], "pbc": [ "duarte-rojo-pbc", "corpechot" ], "psc": [ "duarte-rojo-psc" ], "hh": [ "legros" ], "wd": [ "paternostro" ] }
   const etiologySteatosisMap = { "multietiology": [ "karlas2017" ], "alcohol": [ "karlas2017" ], "aih": [ "karlas2017" ], "pbc": [ "karlas2017" ], "hbv": [ "petroff2021", "chen2016", "karlas2017" ], "hiv-hcv": [ "karlas2017" ], "hcv": [ "petroff2021", "sasso2012", "karlas2017" ], "nash-nafld": [ "petroff2021", "karlas2017", "karlas2014", "eddowes2019", "eddowes2019-Sn", "eddowes2019-Sp" ], "pediatric": [ "desai2016" ] }
   const etiologyFibrosisMap = { "multietiology": [ "tsochatzis2011" ], "alcohol": [ "nguyen-khac2018", "tsochatzis2011", "pavlov2016" ], "aih": [ "hartl2016", "tsochatzis2011" ], "pbc": [ "corpechot2012", "tsochatzis2011" ], "hbv": [ "li2016", "chon2012", "tsochatzis2011" ], "hiv-hcv": [ "sanchez-conde2010", "tsochatzis2011" ], "hcv": [ "castera2005", "afdhal2015", "tsochatzis2011" ], "nash-nafld": [ "eddowes2019", "eddowes2019-Sn", "eddowes2019-Sp", "siddiqui2019-Sn", "siddiqui2019-Sp", "wong2010", "tsochatzis2011" ], "pediatric": [ "lee2018" ] }
 

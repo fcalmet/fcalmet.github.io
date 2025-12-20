@@ -57,7 +57,7 @@
 		 { "name": "EGD", "sections": [ "Esophagus", "Stomach", "Duodenum", "Jejunum" ] },
 		 { "name": "Colonoscopy", "sections": [ "DRE", "Ileum", "Colon" ] },
 		 { "name": "Enteroscopy", "sections": [ "Esophagus", "Stomach", "Duodenum", "Jejunum", "Ileum", "Colon" ] },
-		 { "name": "ERCP", "sections": [ "Scout film (ERCP)", "Endoscopic (ERCP)", "Biliary access (ERCP)", "Cholangiogram (ERCP)", "Biliary interventions (ERCP)" ] },
+		 { "name": "ERCP", "sections": [ "Scout film (ERCP)", "Endoscopic (ERCP)", "Biliary access (ERCP)", "Cholangiogram (ERCP)", "Biliary interventions (ERCP)", "End of procedure (ERCP)" ] },
 		 { "name": "EUS", "sections": [ "Endoscopic (EUS)", "Luminal (EUS)", "Pancreas (EUS)", "CBD (EUS)", "Gallbladder (EUS)", "Major papilla (EUS)", "Liver (EUS)", "Lymph nodes (EUS)" ] }
 	   ],
 
@@ -317,10 +317,19 @@
 		   "findings": [
 			 { "name": "Balloon sweeps", "text": "Balloon sweeps performed with a {extraction-balloon-size} balloon with removal of {*stones-sludge-pus}" },
 			 { "name": "Basket sweeps", "text": "{#Stones removed} stone(s) removed with a basket" },
-			 { "name": "Stents (plastic)", "text": "{#Number} {#Width (Fr)} Fr × {#Length (cm)} cm {plastic-stent-type} plastic stents placed {stent-placement}" },
-			 { "name": "Stents (metal)", "text": "{#Number} {#Width (mm)} × {#Length (mm)} mm {metal-stent-type} self-expanding metal stent placed {stent-placement}" },
+			 { "name": "Stents (plastic)", "text": "{#Number} {#Width (Fr)} Fr × {#Length (cm)} cm {plastic-stent-type} plastic stent(s) placed {stent-placement}" },
+			 { "name": "Stents (metal)", "text": "{#Number} {#Width (mm)} × {#Length (mm)} mm {metal-stent-type} self-expanding metal stent(s) placed {stent-placement}" },
 			 { "name": "Stricture brushings", "text": "Stricture brushings performed for cytology" },
 			 { "name": "Stricture dilation", "text": "Stricture dilation performed to {#Size (mm)} mm" }
+		   ],
+		   "interventions": [
+		   ]
+		 },
+
+		 { "organ": "End of procedure (ERCP)",
+		   "findings": [
+			 { "name": "Normal final cholangiogram", "text": "No filling defects noted on final occlusion cholangiogram" },
+			 { "name": "PD stent removed", "text": "PD stent removed at the end of the procedure" }
 		   ],
 		   "interventions": [
 		   ]

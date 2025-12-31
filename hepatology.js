@@ -327,8 +327,8 @@ function calculateMayoPostop() {
 
 function getMeld(creatinine, bilirubin, inr, isRrt) {
   if (isRrt) creatinine = 4.0
-  const meld = 9.57 * Math.log(Math.max(creatinine, 1.0))
-	  + 3.78 * Math.log(Math.min(Math.max(bilirubin, 1.0), 4.0))
+  const meld = 9.57 * Math.log(Math.min(Math.max(creatinine, 1.0), 4.0))
+	  + 3.78 * Math.log(Math.max(bilirubin, 1.0))
 	  + 11.2 * Math.log(inr)
 	  + 6.43
   return Math.round(meld)

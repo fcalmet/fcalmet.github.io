@@ -644,7 +644,7 @@ function getClif(bilirubin, creatinine, isRrt, brain, inr, circulatory, respirat
 
 	}
   } else {
-	if (age > 0 && wbc > 0 & sodium > 0) { // Calculate CLIF-C AD score
+	if (age > 0 && wbc > 0 && sodium > 0) { // Calculate CLIF-C AD score
 	  clif.adAclfScore = 10 * (0.03 * age + 0.66 * Math.log(creatinine) + 1.71 * Math.log(inr) + 0.88 * Math.log(wbc) - 0.05 * sodium + 8)
 	  clif.p1 = 1 - Math.exp(-0.00012 * Math.exp(0.1083 * clif.adAclfScore))
 	  clif.p3 = 1 - Math.exp(-0.00056 * Math.exp(0.1007 * clif.adAclfScore))

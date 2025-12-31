@@ -283,7 +283,7 @@ function calculateMdf() {
 /********************************************/
 
 function getMayoPostop(age, creatinine, bilirubin, inr, asa, isAlcoholCholestasis) {
-  const meld = Math.max(Math.round(9.57 * Math.log(Math.max(creatinine, 1)) + 3.78 * Math.log(Math.max(bilirubin, 1)) + 11.2 * Math.log(Math.max(inr, 1)) + (isAlcoholCholestasis ? 0 : 6.43)), 8)
+  const meld = Math.max(Math.round(9.57 * Math.log(Math.min(Math.max(creatinine, 1), 4)) + 3.78 * Math.log(Math.max(bilirubin, 1)) + 11.2 * Math.log(Math.max(inr, 1)) + (isAlcoholCholestasis ? 0 : 6.43)), 8)
   const yd = Math.exp(0.02382 * (age - 60) + (asa > 3 ? 0.88884 : 0) + 0.11798 * (meld - 8))
   const yy = Math.exp(0.0266 * (age - 60) + (asa > 3 ? 0.58926 : 0) + 0.07430 * (meld - 8))
   return {

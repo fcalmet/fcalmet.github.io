@@ -600,7 +600,7 @@ function calculateVcte() {
 /******************/
 
 function getClif(bilirubin, creatinine, isRrt, brain, inr, circulatory, respiratory, age, wbc, sodium) {
-  var clif = {
+  let clif = {
 	liver: bilirubin >= 12 ? 3 : (bilirubin >= 6 ? 2 : 1),
 	kidney: (isRrt || creatinine >= 3.5) ? 3 : (creatinine >= 2 ? 2 : 1),
 	brain: brain,
@@ -835,11 +835,11 @@ function getHcv(genotype, cirrhosis, priorTreatment, tradeNames) {
 }
 
 function getHcvInterpretation(hcv) {
-  var html = `
+  let html = `
     <ul>
       <li>Recommended Regimens:
         <ul>`
-  for (var i = 0; i < hcv.recs.length; i++) {
+  for (let i = 0; i < hcv.recs.length; i++) {
 	html += `<li>${hcv.recs[i].drug} ×${hcv.recs[i].weeks} weeks (Rating: ${hcv.recs[i].rating})`;
 	if (hcv.recs[i].notes != '')
 	  html += `<ul><li>${hcv.recs[i].notes}</li></ul>`;
@@ -853,7 +853,7 @@ function getHcvInterpretation(hcv) {
 	html += `
       <li>Alternative Regimens:
         <ul>`
-	for (var i = 0; i < hcv.alt.length; i++) {
+	for (let i = 0; i < hcv.alt.length; i++) {
 	  html += `<li>${hcv.alt[i].drug} ×${hcv.alt[i].weeks} weeks (Rating: ${hcv.alt[i].rating})`;
 	  if (hcv.alt[i].notes != '')
 		html += `<ul><li>${hcv.alt[i].notes}</li></ul>`;

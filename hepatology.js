@@ -329,7 +329,7 @@ function getMeld(creatinine, bilirubin, inr, isRrt) {
   if (isRrt) creatinine = 4.0
   const meld = 9.57 * Math.log(Math.min(Math.max(creatinine, 1.0), 4.0))
 	  + 3.78 * Math.log(Math.max(bilirubin, 1.0))
-	  + 11.2 * Math.log(inr)
+	  + 11.2 * Math.log(Math.max(inr, 1.0))
 	  + 6.43
   return Math.round(meld)
 }
@@ -343,6 +343,7 @@ function getMeldMortality(meld) {
 
 function getMeldNa(creatinine, bilirubin, inr, sodium, isRrt) {
   let meldNa = getMeld(creatinine, bilirubin, inr, isRrt)
+  sodium = Math.min(Math.max(sodium, 125), 137)
   if (meldNa > 11) {
 	meldNa = meldNa + 1.32 * (137 - sodium) - (0.033 * meldNa * (137 - sodium))
   }

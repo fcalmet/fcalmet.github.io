@@ -168,7 +168,7 @@ function calculateCpt() {
   const ascites = parseInt(document.querySelector('input[name="ascites"]:checked').value);
   const encephalopathy = parseInt(document.querySelector('input[name="encephalopathy"]:checked').value);
   const cpt = getCpt(bilirubin, albumin, inr, ascites, encephalopathy)
-  const interpretation = getCptInterpretation(bilirubin + albumin + inr + ascites + encephalopathy)
+  const interpretation = getCptInterpretation(cpt)
   setResult(interpretation)
 }
 

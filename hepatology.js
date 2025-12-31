@@ -229,10 +229,10 @@ function getLille(age, albumin, bilirubin0, bilirubin7, creatinine, pt) {
 }
 
 function getLilleInterpretation(lille) {
-  const lilleMortality = lille > 0.45 ? 0.25 : 0.85
+  const lilleSurvival = lille > 0.45 ? 0.25 : 0.85
   return `<ul>
 	  <li>Lille Score:</td><td>${lille.toFixed(3)}
-		<ul><li>6-month survival:</td><td>${toPercent(lilleMortality)}</li></ul>
+		<ul><li>6-month survival:</td><td>${toPercent(lilleSurvival)}</li></ul>
 	  </li>
 	</ul>`
 }

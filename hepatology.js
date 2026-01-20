@@ -255,14 +255,14 @@ function calculateLille() {
 /*******************/
 
 function getMdf(pt, ptRef, bilirubin) {
-  return 4.6 * (pt - ptRef) + bilirubin
+  return 4.6 * Math.max((pt - ptRef), 0) + bilirubin
 }
 
 function getMdfInterpretation(mdf) {
   const interpretation = (mdf > 32 ? 'Poor' : 'Good') + ' prognosis'
   return `
 	<ul>
-	  <li>Maddrey score: ${mdf.toFixed()}
+	  <li>Maddrey score: ${mdf.toFixed(1)}
 		<ul><li>${interpretation}</li></ul>
 	  </li>
 	</ul>`

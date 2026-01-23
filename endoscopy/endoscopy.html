@@ -170,6 +170,7 @@
 			 { "name": "Nodule", "text": "A {#Size (mm)} mm nodule in the {duodenum-location}" },
 			 { "name": "Polyp", "text": "A {#Size (mm)} mm polyp in the {duodenum-location}" },
 			 { "name": "Subepithelial lesion", "text": "A {#Size (mm)} mm subepithelial lesion in the {duodenum-location}" },
+			 { "name": "Stenosis", "text": "Stenosis in the {duodenum-location}, {traversable} with an {gastroscope-type}" },
 			 { "name": "Ulcer", "text": "{#Number} ulcer(s) measuring up to {#Size (mm)} mm with {pud-forrest} in the {*duodenum-location}" }
 		   ],
 		   "interventions": [
@@ -199,9 +200,16 @@
 		   "interventions": []
 		 },
 
-		 { "organ": "Ileum",
+		 { "organ": "Jejunum",
 		   "findings": [
-			 { "name": "Normal", "text": "Normal examined terminal ileum" }
+			 { "name": "Normal", "text": "Normal examined jejunum" },
+			 { "name": "Angiectasia", "text": "{single-few-multiple-angiectasias} {bleeding-type} {*jejunum-location}" },
+			 { "name": "Dieulafoy", "text": "A Dieulafoy lesion {bleeding-type} {jejunum-location}" },
+			 { "name": "Mass", "text": "{stricture-type} mass in the {jejunum-location}" },
+			 { "name": "Polyp (single)", "text": "A {#Size (mm)} mm {polyp-morphology} polyp in the {jejunum-location}" },
+			 { "name": "Polyp (multiple)", "text": "{#Number} {#Min size (mm)}-{#Max size (mm)} mm {polyps-morphology} polyps in the {*jejunum-location}" },
+			 { "name": "Stenosis", "text": "Stenosis in the {jejunum-location}, {traversable} with an {endoscope-type}" },
+			 { "name": "Tattoo (max. insertion)", "text": "Tattoo placed at site of maximum insertion" }
 		   ],
 		   "interventions": [
 			 { "name": "Biopsies", "text": "Biopsied" },
@@ -218,7 +226,39 @@
 			 { "name": "Epinephrine injection", "text": "Epinephrine injection performed" },
 			 { "name": "Polypectomy (cold forceps)", "text": "Removed with cold biopsy forceps" },
 			 { "name": "Polypectomy (cold snare)", "text": "Removed with cold snare" },
-			 { "name": "Polypectomy (hot snare)", "text": "Removed with hot snare" }
+			 { "name": "Polypectomy (hot snare)", "text": "Removed with hot snare" },
+			 { "name": "Tattoo", "text": "Tattooed" }
+		   ]
+		 },
+
+		 { "organ": "Ileum",
+		   "findings": [
+			 { "name": "Normal", "text": "Normal examined terminal ileum" },
+			 { "name": "Angiectasia", "text": "{single-few-multiple-angiectasias} {bleeding-type} {*ileum-location}" },
+			 { "name": "Dieulafoy", "text": "A Dieulafoy lesion {bleeding-type} {ileum-location}" },
+			 { "name": "Mass", "text": "{stricture-type} mass in the {ileum-location}" },
+			 { "name": "Polyp (single)", "text": "A {#Size (mm)} mm {polyp-morphology} polyp in the {ileum-location}" },
+			 { "name": "Polyp (multiple)", "text": "{#Number} {#Min size (mm)}-{#Max size (mm)} mm {polyps-morphology} polyps in the {*ileum-location}" },
+			 { "name": "Stenosis", "text": "Stenosis in the {ileum-location}, {traversable} with an {endoscope-type}" },
+			 { "name": "Tattoo (max. insertion)", "text": "Tattoo placed at site of maximum insertion" }
+		   ],
+		   "interventions": [
+			 { "name": "Biopsies", "text": "Biopsied" },
+			 { "name": "Biopsies (random)", "text": "Random biopsies taken" },
+			 { "name": "Cautery (APC)", "text": "Treated with APC" },
+			 { "name": "Cautery (bipolar)", "text": "Treated with bipolar cautery" },
+			 { "name": "Cautery (coagrasper)", "text": "Treated with coagrasper cautery" },
+			 { "name": "Clip (over-the-scope)", "text": "Over-the-scope clip deployed" },
+			 { "name": "Clips", "text": "{#Clips deployed} clip(s) deployed" },
+			 { "name": "Dilation (TTS balloon)", "text": "TTS balloon dilation performed to {#Size (mm)} mm" },
+			 { "name": "EMR (band)", "text": "Removed by band-EMR" },
+			 { "name": "EMR (one piece)", "text": "Lesion delineated with NBI and submucosal lift performed. Removed by EMR in one piece" },
+			 { "name": "EMR (piecemeal)", "text": "Lesion delineated with NBI and submucosal lift performed. Removed by EMR in piecemeal fashion" },
+			 { "name": "Epinephrine injection", "text": "Epinephrine injection performed" },
+			 { "name": "Polypectomy (cold forceps)", "text": "Removed with cold biopsy forceps" },
+			 { "name": "Polypectomy (cold snare)", "text": "Removed with cold snare" },
+			 { "name": "Polypectomy (hot snare)", "text": "Removed with hot snare" },
+			 { "name": "Tattoo", "text": "Tattooed" }
 		   ]
 		 },
 
@@ -454,6 +494,7 @@
 		 { "name": "duodenopathy-type", "label": "Duodenopathy type", "options": [ "", "erythematous", "erosive" ] },
 		 { "name": "duodenum-location", "label": "Location", "options": [ [ "entire examined duodenum", "entire examined duodenum" ], [ "D1", "duodenal bulb" ], [ "D2", "second portion of the duodenum" ], [ "D3", "third portion of the duodenum" ], [ "D4", "fourth portion of the duodenum" ], [ "periampullary region", "periampullary region" ] ] },
 		 { "name": "echogenicity", "label": "Echogenicity", "options": [ "hypoechoic", "isoechoic", "hyperechoic", "heterogeneous" ] },
+		 { "name": "endoscope-type", "label": "Endoscope type", "options": [ "adult gastroscope", "ultraslim gastroscope", "adult colonoscope", "pediatric colonoscope", "ultraslim colonoscope", "enteroscope" ] },
 		 { "name": "endoscopic-fluoroscopic", "label": "Visualization", "options": [ "endoscopic", "fluoroscopic", "endoscopic/fluoroscopic" ] },
 		 { "name": "esophageal-stent-size", "label": "Stent Size", "options": [ "18 mm x 10 cm", "18 mm x 12 cm", "18 mm x 15 cm", "23 mm x 10 cm", "23 mm x 12 cm", "23 mm x 15 cm" ] },
 		 { "name": "esophageal-surgery", "label": "Surgery", "options": [ "esophagectomy with gastric pull-up", "esophagectomy with colonic interposition" ] },
@@ -468,6 +509,8 @@
 		 { "name": "gastroscope-type", "label": "Gastroscope type", "options": [ "adult gastroscope", "ultraslim gastroscope" ] },
 		 { "name": "gev-hrs", "label": "High risk stigmata", "options": [ [ "", "" ], [ "no", "without high risk stigmata" ], [ "yes", "with high risk stigmata" ] ] },
 		 { "name": "gv-type", "label": "GV Type", "options": [ [ "GOV1 (lesser curvature)", "lesser curvature in continuity with esophageal varices (GOV1)" ], [ "GOV2 (fundal)", "gastric fundus in continuity with esophageal varices (GOV2)" ], [ "IGV1 (fundus)", "gastric fundus (IGV1)" ], [ "IGV2 (body)", "gastric body (IGV2)" ], [ "IGV2 (antrum)", "gastric antrum (IGV2)" ] ] },
+		 { "name": "jejunum-location", "label": "Location", "options": [ "proximal jejunum", "mid-jejunum", "distal jejunum", "examined jejunum", "entire jejunum" ] },
+		 { "name": "ileum-location", "label": "Location", "options": [ "proximal ileum", "mid-ileum", "distal ileum", "terminal ileum", "examined ileum", "entire ileum" ] },
 		 { "name": "la-grade", "label": "LA grade", "options": [ "A", "B", "C", "D" ] },
 		 { "name": "metal-stent-type", "label": "Stent type", "options": [ "uncovered", "partially covered", "fully covered" ] },
 		 { "name": "mild-moderate-severe", "label": "Severity", "options": [ "mild", "moderate", "severe" ] },

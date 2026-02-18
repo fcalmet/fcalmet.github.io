@@ -313,8 +313,9 @@
 
 		 { "organ": "Endoscopic (ERCP)",
 		   "findings": [
-			 { "name": "Normal", "text": "Normal esophagus, stomach, and examined duodenum on examination with the duodenoscope" },
+			 { "name": "Normal endoscopy", "text": "Normal esophagus, stomach, and examined duodenum on examination with the duodenoscope" },
 			 { "name": "Normal major papilla", "text": "Normal major papilla" },
+			 { "name": "Prominent major papilla", "text": "Prominent major papilla" },
 			 { "name": "Periampullary diverticulum", "text": "Major papilla located {periampullary-location} a {small-medium-large} duodenal diverticulum" },
 			 { "name": "Prior sphincterotomy", "text": "Major papilla with evidence of prior sphincterotomy" },
 			 { "name": "Prior CBD stents in place", "text": "{#Number} {plastic-metal} stent(s) seen emerging from the biliary orifice" },
@@ -329,17 +330,9 @@
 		   "findings": [
 			 { "name": "CBD cannulation", "text": "CBD cannulation performed with {sphincterotome-balloon}" },
 			 { "name": "CBD cannulation (difficult)", "text": "Difficult CBD cannulation performed with a sphincterotome using {*difficult-cannulation-technique}" },
-			 { "name": "PD cannulation", "text": "PD cannulation performed with {sphincterotome-balloon}" },
-			 { "name": "Biliary sphincterotomy", "text": "Biliary sphincterotomy performed" },
-			 { "name": "Biliary sphincteroplasty", "text": "Biliary sphincteroplasty performed to {#Size (mm)} mm" },
-			 { "name": "Pancreatic sphincterotomy", "text": "Pancreatic sphincterotomy performed" },
-			 { "name": "Pancreatic sphincteroplasty", "text": "Pancreatic sphincteroplasty performed to {#Size (mm)} mm" }
+			 { "name": "PD cannulation", "text": "PD cannulation performed with {sphincterotome-balloon}" }
 		   ],
-		   "interventions": [
-			 { "name": "Clip(s)", "text": "{#Number} clip(s) deployed for hemostasis" },
-			 { "name": "Epinephrine", "text": "Epinephrine injected for hemostasis" },
-			 { "name": "Epinephrine + Clip(s)", "text": "Epinephrine injected and {#Number} clip(s) deployed for hemostasis" }
-		   ]
+		   "interventions": []
 		 },
 
 		 { "organ": "Cholangiogram (ERCP)",
@@ -355,14 +348,21 @@
 
 		 { "organ": "Biliary interventions (ERCP)",
 		   "findings": [
+			 { "name": "Biliary sphincterotomy", "text": "Biliary sphincterotomy performed" },
+			 { "name": "Biliary sphincteroplasty", "text": "Biliary sphincteroplasty performed to {#Size (mm)} mm" },
+			 { "name": "Pancreatic sphincterotomy", "text": "Pancreatic sphincterotomy performed" },
+			 { "name": "Pancreatic sphincteroplasty", "text": "Pancreatic sphincteroplasty performed to {#Size (mm)} mm" },
 			 { "name": "Balloon sweeps", "text": "Balloon sweeps performed with a {extraction-balloon-size} balloon with removal of {*stones-sludge-pus}" },
 			 { "name": "Basket sweeps", "text": "{#Stones removed} stone(s) removed with a basket" },
 			 { "name": "Stents (plastic)", "text": "{#Number} {#Width (Fr)} Fr × {#Length (cm)} cm {plastic-stent-type} plastic stent(s) placed {stent-placement}" },
-			 { "name": "Stents (metal)", "text": "{#Number} {#Width (mm)} × {#Length (mm)} mm {metal-stent-type} self-expanding metal stent(s) placed {stent-placement}" },
+			 { "name": "Stents (metal)", "text": "{#Number} {#Width (mm)} × {#Length (mm)} mm {metal-stent-type}, self-expanding metal stent(s) placed {stent-placement}" },
 			 { "name": "Stricture brushings", "text": "Stricture brushings performed for cytology" },
 			 { "name": "Stricture dilation", "text": "Stricture dilation performed to {#Size (mm)} mm" }
 		   ],
 		   "interventions": [
+			 { "name": "Clip(s)", "text": "{#Number} clip(s) deployed for hemostasis" },
+			 { "name": "Epinephrine", "text": "Epinephrine injected for hemostasis" },
+			 { "name": "Epinephrine + Clip(s)", "text": "Epinephrine injected and {#Number} clip(s) deployed for hemostasis" }
 		   ]
 		 },
 
@@ -370,6 +370,7 @@
 		   "findings": [
 			 { "name": "Normal final cholangiogram", "text": "No filling defects noted on final occlusion cholangiogram" },
 			 { "name": "Ampullary biopsies", "text": "Ampullary biopsies taken at the end of the procedure" },
+			 { "name": "Sphincterotomy bleeding", "text": "Persistent post-sphincterotomy oozing was treated with {*hemostasis}" },
 			 { "name": "PD stent removed", "text": "PD stent removed at the end of the procedure" }
 		   ],
 		   "interventions": [
@@ -509,6 +510,7 @@
 		 { "name": "gastroscope-type", "label": "Gastroscope type", "options": [ "adult gastroscope", "ultraslim gastroscope" ] },
 		 { "name": "gev-hrs", "label": "High risk stigmata", "options": [ [ "", "" ], [ "no", "without high risk stigmata" ], [ "yes", "with high risk stigmata" ] ] },
 		 { "name": "gv-type", "label": "GV Type", "options": [ [ "GOV1 (lesser curvature)", "lesser curvature in continuity with esophageal varices (GOV1)" ], [ "GOV2 (fundal)", "gastric fundus in continuity with esophageal varices (GOV2)" ], [ "IGV1 (fundus)", "gastric fundus (IGV1)" ], [ "IGV2 (body)", "gastric body (IGV2)" ], [ "IGV2 (antrum)", "gastric antrum (IGV2)" ] ] },
+		 { "name": "hemostasis", "label": "Hemostasis", "options": [ "epinephrine injection", "PuraStat", "hemostatic spray" ] },
 		 { "name": "jejunum-location", "label": "Location", "options": [ "proximal jejunum", "mid-jejunum", "distal jejunum", "examined jejunum", "entire jejunum" ] },
 		 { "name": "ileum-location", "label": "Location", "options": [ "proximal ileum", "mid-ileum", "distal ileum", "terminal ileum", "examined ileum", "entire ileum" ] },
 		 { "name": "la-grade", "label": "LA grade", "options": [ "A", "B", "C", "D" ] },

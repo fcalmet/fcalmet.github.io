@@ -26,9 +26,6 @@
 
 * ERCP
 - [ ] balloon sweeps with nothing removed
-- [ ] separate biliary interventions from finding
 - [ ] cholangioscopy
-- [ ] post-sphincterotomy bleeding
 - [ ] selective cannulation of left/right systems
-- [ ] epi injection
 - [ ] clips

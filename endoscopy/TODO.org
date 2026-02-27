@@ -9,6 +9,7 @@
 
 * EGD
 - [ ] post-operative anatomy
+- [ ] LAMS in stomach/duodenum: removal with forceps
 
 * Colonoscopy
 - [ ] Crohn disease

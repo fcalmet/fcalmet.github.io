@@ -10,6 +10,7 @@
 * EGD
 - [ ] post-operative anatomy
 - [ ] LAMS in stomach/duodenum: removal with forceps
+- [ ] necrosectomy
 
 * Colonoscopy
 - [ ] Crohn disease
@@ -24,9 +25,12 @@
 - [ ] LAMS
 - [ ] anechoic
 - [ ] duplication cyst
+- [ ] pseudocyst drainage: LAMS (sizes), dilation, plastic stents
 
 * ERCP
 - [ ] balloon sweeps with nothing removed
 - [ ] cholangioscopy
 - [ ] selective cannulation of left/right systems
 - [ ] clips
+- [ ] basket
+- [ ] lithotripsy

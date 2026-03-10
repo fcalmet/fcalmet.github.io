@@ -9,7 +9,6 @@
 
 * EGD
 - [ ] post-operative anatomy
-- [X] LAMS in stomach/duodenum: removal with forceps
 - [ ] necrosectomy
 
 * Colonoscopy
@@ -35,5 +34,3 @@
 - [ ] basket
 - [ ] lithotripsy
 - [ ] normal (limited) pancreatogram - no acinarization
-- [X] scout film: external drainage
-- [X] Goff sphincterotomy

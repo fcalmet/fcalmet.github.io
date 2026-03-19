@@ -302,9 +302,9 @@ function $(id) {
 function sanitizeSentence(str) {
   return firstNumberToText(
 	str.trim()
-	  .replace(/(\d+)\s(.+?)\(s\)/g, (_, num, word) =>
-		num === '1' ? `${num} ${word}` : `${num} ${word}s`
-	  ) // Check for '(s)': if preceding number is 1, delete, otherwise, replace with 's'
+	  .replace(/(\d+)\s([^\(]+)\((e?s)\)/g, (_, num, word, suffix) =>
+		num === '1' ? `${num} ${word}` : `${num} ${word}${suffix}`
+	  )
   ).replace(/^./, c => c.toUpperCase()) // capitalize first letter
 	.replace(/([^.!?])$/, '$1.') // ensure ending punctuation
 	.replace(/ {2,}/g, ' ');

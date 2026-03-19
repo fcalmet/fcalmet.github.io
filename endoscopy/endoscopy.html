@@ -278,6 +278,7 @@
 
 		 { "organ": "Colon",
 		   "findings": [
+			 { "name": "Bowel prep", "text": "{adequate-inadequate} preparation (BBPS {bbps-rc}/{bbps-tc}/{bbps-lc}, total: [sum 1, 2, 3])" },
 			 { "name": "Right colon retroflexion", "text": "Retroflexion performed in the right colon" },
 			 { "name": "Normal", "text": "Normal colon" },
 			 { "name": "Angiectasia", "text": "{single-few-multiple-angiectasias} {bleeding-type} in the {*colon-location}" },
@@ -499,6 +500,10 @@
 	   ],
 
 	   "selection": [
+		 { "name": "adequate-inadequate", "label": "Bowel prep", "options": [ "adequate", "inadequate" ] },
+		 { "name": "bbps-lc", "label": "Left colon", "options": [ [ "No residue", "3" ], [ "Minor residue", "2" ], [ "Significant residue", "1" ], [ "Unprepared segment", "0" ] ] },
+		 { "name": "bbps-tc", "label": "Transverse colon", "options": [ [ "No residue", "3" ], [ "Minor residue", "2" ], [ "Significant residue", "1" ], [ "Unprepared segment", "0" ] ] },
+		 { "name": "bbps-rc", "label": "Right colon", "options": [ [ "No residue", "3" ], [ "Minor residue", "2" ], [ "Significant residue", "1" ], [ "Unprepared segment", "0" ] ] },
 		 { "name": "bile-leak-grade", "label": "Grade", "options": [ [ "Low-grade", "noted on high-pressure cholangiogram, consistent with low-grade bile leak" ], [ "High-grade", "noted on initial cholangiogram, consistent with high-grade bile leak" ] ] },
 		 { "name": "bile-leak-location", "label": "Location", "options": [ [ "cystic duct remnant", "arising from the cystic duct remnant" ], [ "gallbladder remnant", "arising from the gallbladder remnant" ], [ "accessory duct of Luschka", "arising from an accessory duct of Lushka" ] ] },
 		 { "name": "biliary-stent-location", "label": "Location", "options": [ "CBD", "left hepatic duct", "right hepatic duct", "left and right hepatic duct", "PD" ] },

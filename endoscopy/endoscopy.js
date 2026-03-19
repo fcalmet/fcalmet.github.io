@@ -64,7 +64,7 @@ function populateDivOptions(div, options, eventCtrlEnter = null, eventEnter = nu
 		createLabel(opt.slice(1), id),
 		createInputNumber(id, 'keydown', eventCtrlEnter, eventEnter)
 	  );
-	} else {
+	} else if (opt[0] != '[') { // Skip functions such as [sum ...]
 	  const multiSelect = opt[0] === '*';
 	  if (multiSelect) opt = opt.slice(1);
 	  // ADD ITEM DEFINED IN SELECTION
@@ -322,7 +322,18 @@ function getOptions(str) {
 
 function parseOptions(template, values) {
   let i = 0;
-  return template.replace(/\{.*?\}/g, () => values[i++] ?? '');
+  const substituted = template.replace(/\{.*?\}/g, () => values[i++] ?? '');
+  return processSum(substituted, values)
+}
+
+function processSum(str, values) {
+  // [sum a, b, c] -> returns sum of values in indices a, b, c
+  // e.g. [sum 0, 1, 3] -> return sum of 0th, 1st, and 3rd values
+  return str.replace(/\[sum\s+([\d,\s]+)\]/g, (_, indices) => {
+    return indices.split(',')
+      .map(i => parseFloat(values[i.trim()]) || 0)
+      .reduce((a, b) => a + b, 0);
+  });
 }
 
 function firstNumberToText(str) {

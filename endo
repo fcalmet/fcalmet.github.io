@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="refresh" content="0; url=endoscopy/endoscopy.html" />
+    <script>
+      window.location.replace("endoscopy/endoscopy.html");
+    </script>
+  </head>
+  <body>
+  <a href="endoscopy/endoscopy.html">Redirecting...</a>
+  </body>
+</html>
